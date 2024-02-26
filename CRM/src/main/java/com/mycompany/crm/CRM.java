@@ -1,16 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
+
 
 package com.mycompany.crm;
 
-/**
- *
- * @author admin
- */
+import com.mycompany.crm.utils.FrequentMethods;
+import java.io.IOException;
+
 public class CRM {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         System.out.println("Hello World!");
+        FrequentMethods fm = new FrequentMethods();
+        String nombre = fm.input().readLine();
+        System.out.println("Mi nombre es " + nombre);
+        
+        
+    }
+    
+    public static String getDni(){
+        return "";
     }
 }

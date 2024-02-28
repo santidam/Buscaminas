@@ -19,21 +19,20 @@ public class InputData {
         System.out.print(msj);
         return new BufferedReader(new InputStreamReader(System.in));
     }
+
     
     public static String inputStrLine(String msj) throws IOException{
         return scanner(msj).readLine();
     }
-    
-    public static int inputInt(String msj) throws IOException{ 
-        int num = -1;
-    
-        try{
-            num = scanner(msj).read();
-        }catch(InputMismatchException ex){
-            System.out.println("No valido");
-        }
-        
-        return num;
+
+    public static int inputInt(String msj) throws IOException{
+        String num = inputStrLine(msj);
+        return CastData.toInt(num);
     }
-    
+
+    public static double inputDouble(String msj) throws IOException{
+        String num = inputStrLine(msj);
+        return CastData.toDouble(num);
+    }
+
 }

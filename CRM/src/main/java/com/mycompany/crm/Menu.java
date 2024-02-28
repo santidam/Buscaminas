@@ -14,14 +14,30 @@ import java.io.IOException;
  */
 public class Menu {
     
-    public static void start() throws IOException{
+    public void start() throws IOException{
+
+        //variables
         String dni = "";
-      
+        String tel = "";
+
+        //dni
         do{
            dni = InputData.inputStrLine("Escribe tu DNI: ");
         }while(!Validations.valDni(dni));
+
+        //teléfono
+        do {
+            tel = InputData.inputStrLine("Escribe tu número de teléfono: ");
+        } while (!Validations.valPhone(tel));
+
+        //nombre
+        String nombre = InputData.inputStrLine("Escribe tu nombre completo: ");
+        if (Validations.valName(nombre)) {
+            System.out.println("Mi nombre es " + nombre);
+        }
+
+        //email
         
-        int num = InputData.inputInt("Escribe un número entero: ");
     }
     
 }

@@ -21,9 +21,9 @@ public class Menu {
         String tel = "";
 
         //dni
-        do{
+        /*do{
            dni = InputData.inputStrLine("Escribe tu DNI: ");
-        }while(!Validations.valDni(dni));
+        }while(!Validations.valDni(dni));*/
 
         //teléfono
         do {
@@ -31,13 +31,13 @@ public class Menu {
         } while (!Validations.valPhone(tel));
 
         //nombre
-        String nombre = InputData.inputStrLine("Escribe tu nombre completo: ");
+        /*String nombre = InputData.inputStrLine("Escribe tu nombre completo: ");
         if (Validations.valName(nombre)) {
             System.out.println("Mi nombre es " + nombre);
-        }
+        }*/
 
         //email
-        
+
     }
     
 }

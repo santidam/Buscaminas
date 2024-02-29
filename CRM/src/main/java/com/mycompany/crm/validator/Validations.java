@@ -41,16 +41,16 @@ public class Validations {
         }
         String[] partes = name.split("\\s+");
 
-        if (partes.length != 2){
-            System.out.println("Error: debes introducir el nombre y el apellido");
-            return false;
-        }
+//        if (partes.length != 2){
+//            System.out.println("Error: debes introducir el nombre y el apellido");
+//            return false;
+//        }
 
         for (String part : partes) {
             if (part.length() < 2 || part.length() > 20) {
                 System.out.println("Error: cada parte del nombre debe tener al menos 2 caracteres y un máximo de 20.");
                 return false;
-            } else if (!part.matches("[a-zA-Z]+")) {
+            } else if (!part.matches("[\\p{L}]+")) {
                 System.out.println("Error: solo puedes introducir caracteres alfabéticos en cada parte del nombre.");
                 return false;
             }

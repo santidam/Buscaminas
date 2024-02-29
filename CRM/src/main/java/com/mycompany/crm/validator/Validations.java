@@ -15,7 +15,7 @@ import com.mycompany.crm.utils.InputData;
 public class Validations {
 
     public static boolean valPhone(String tel){
-        //TODO Valentina
+        //TODO Valentinalinda
         if(tel.length() == 9) {
             for (int i = 0; i < tel.length(); i++) {
             if (!Character.isDigit(tel.charAt(i))) {

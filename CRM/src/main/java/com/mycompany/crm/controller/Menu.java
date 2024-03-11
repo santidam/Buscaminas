@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.crm;
+package com.mycompany.crm.controller;
 
 import com.mycompany.crm.utils.InputData;
 import com.mycompany.crm.validator.Validations;

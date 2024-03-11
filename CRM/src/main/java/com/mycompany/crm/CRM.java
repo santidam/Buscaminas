@@ -2,6 +2,8 @@
 
 package com.mycompany.crm;
 
+import com.mycompany.crm.controller.Menu;
+
 import java.io.IOException;
 
 

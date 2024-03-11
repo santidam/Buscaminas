@@ -31,7 +31,7 @@ public class Validations {
     }
 
 
-    public static boolean valName(String name){
+    public static boolean valName(String name, String tipo){
         //TODO Santi
         name = name.trim();
 
@@ -40,18 +40,22 @@ public class Validations {
             return false;
         }
         String[] partes = name.split("\\s+");
-
-//        if (partes.length != 2){
-//            System.out.println("Error: debes introducir el nombre y el apellido");
-//            return false;
-//        }
+        
+        if (tipo.equals("apellido") && partes.length != 2){
+            System.out.println("Error: debes introducir dos apellidos");
+            return false;
+        }
+        if (tipo.equals("nombre") && partes.length > 2){
+            System.out.println("Error: debes introducir un máximo de dos nombres");
+            return false;
+        }
 
         for (String part : partes) {
             if (part.length() < 2 || part.length() > 20) {
-                System.out.println("Error: cada parte del nombre debe tener al menos 2 caracteres y un máximo de 20.");
+                System.out.println("Error: cada parte del " + tipo + " debe tener al menos 2 caracteres y un máximo de 20.");
                 return false;
             } else if (!part.matches("[\\p{L}]+")) {
-                System.out.println("Error: solo puedes introducir caracteres alfabéticos en cada parte del nombre.");
+                System.out.println("Error: solo puedes introducir caracteres alfabéticos en cada parte del " + tipo);
                 return false;
             }
         }

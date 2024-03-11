@@ -15,18 +15,18 @@ import com.mycompany.crm.utils.InputData;
 public class Validations {
 
     public static boolean valPhone(String tel){
-        //TODO Valentina
+        //TODO Valentinalinda
         if(tel.length() == 9) {
-            System.out.println("Numero de telefono ingresado correctamente.");
-            return tel.matches("\\d+");
+            for (int i = 0; i < tel.length(); i++) {
+            if (!Character.isDigit(tel.charAt(i))) {
+                System.out.println("El número de teléfono introducido no es válido.");
+                return false;
+            }
         }
+        System.out.println("Número de teléfono ingresado correctamente.");
+        return true;
+       }
         System.out.println("El numero de telefono introducido no es valido.");
-        return false;
-    }
-
-    public static boolean valEmail(String email){
-        //TODO Marcos y David
-
         return false;
     }
 

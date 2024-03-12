@@ -102,5 +102,56 @@ public class Validations {
         }      
         return numDni;
     }
-    
+
+    public static boolean valEmail(String email) {
+        if (email.isEmpty()) {
+            System.out.println("El correo electrónico no puede estar vacío.");
+            return false;
+        } else {
+            if (email.startsWith("-") || email.endsWith("-") || email.startsWith(".") || email.endsWith(".") || email.contains("..")) {
+                System.out.println("El correo electrónico no puede comenzar o terminar con '-' o '.' ni contener '..'");
+                return false;
+            } else {
+                if (!email.contains("@") || email.indexOf("@") != email.lastIndexOf("@")) {
+                    System.out.println("El correo electrónico debe contener un solo '@'.");
+                    return false;
+                } else {
+                    String[] emailSeparado = email.split("@");
+                    if (emailSeparado.length < 2) {
+                        System.out.println("El correo electrónico debe tener caracteres antes y después de '@'.");
+                        return false;
+                    } else {
+                        String[] dominioEmail = emailSeparado[1].split("\\.");
+                        if (dominioEmail.length < 2) {
+                            System.out.println("El dominio del correo electrónico debe contener '.'.");
+                            return false;
+                        } else {
+                            if (dominioEmail[0].length() > 63 || dominioEmail[1].length() > 63) {
+                                System.out.println("Ninguna parte del dominio del correo electrónico puede exceder los 63 caracteres.");
+                                return false;
+                            } else {
+                                if (!email.matches("^[a-zA-Z0-9.ñÑ_-]+@[a-zA-Z0-9.ñÑ-]+$")) {
+                                    System.out.println("El correo electrónico solo puede contener caracteres alfanuméricos y . _ -");
+                                    return false;
+                                } else {
+                                    if (emailSeparado[0].isEmpty() || emailSeparado[0].length() > 64) {
+                                        System.out.println("La parte local del correo electrónico (antes de @) debe tener entre 1 y 64 caracteres.");
+                                        return false;
+                                    } else {
+                                        if (emailSeparado[1].isEmpty() || emailSeparado[1].length() > 64) {
+                                            System.out.println("La parte del dominio del correo electrónico (después de @) debe tener entre 1 y 64 caracteres.");
+                                            return false;
+                                        } else {
+                                            System.out.println("El correo electrónico es válido.");
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

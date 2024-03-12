@@ -41,10 +41,14 @@ public class Menu {
         } while (!Validations.valName(apellido,"apellido"));
         
         System.out.println("El nombre que has escrito es: " + nombre +" "+ apellido);
-        
 
         //email
-        
+        String email;
+        do {
+            email = InputData.inputStrLine("Escribe tu correo electrónico: ");
+        } while (!Validations.valEmail(email));
+
     }
-    
+        
 }
+

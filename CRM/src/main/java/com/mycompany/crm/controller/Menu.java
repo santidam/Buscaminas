@@ -19,7 +19,8 @@ public class Menu {
         //variables
         String dni = "";
         String tel = "";
-
+        String nombre = "";
+        String apellido = "";
         //dni
         do{
            dni = InputData.inputStrLine("Escribe tu DNI: ");
@@ -31,10 +32,16 @@ public class Menu {
         } while (!Validations.valPhone(tel));
 
         //nombre
-        String nombre = InputData.inputStrLine("Escribe tu nombre completo: ");
-        if (Validations.valName(nombre)) {
-            System.out.println("Mi nombre es " + nombre);
-        }
+        do {
+            nombre = InputData.inputStrLine("Escribe tu nombre: ");
+        } while (!Validations.valName(nombre,"nombre"));
+        
+        do {
+            apellido = InputData.inputStrLine("Escribe tus apellidos: ");
+        } while (!Validations.valName(apellido,"apellido"));
+        
+        System.out.println("El nombre que has escrito es: " + nombre +" "+ apellido);
+        
 
         //email
         

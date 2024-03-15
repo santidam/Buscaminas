@@ -10,6 +10,7 @@ import com.mycompany.crm.validator.Validations;
  * @author admin
  */
 public class Menu {
+
     private Validations val = new Validations();
     public void start(String[] args) {
 
@@ -80,5 +81,6 @@ public class Menu {
                 System.out.println("Esta es la lista de todos los empleados:");
             }
         }
+
     }
 }

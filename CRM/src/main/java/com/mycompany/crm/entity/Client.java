@@ -4,26 +4,25 @@ public class Client {
 
     private String dni;
     private String nombre;
-    private String primerApellido;
-    private String segundoApellido;
+    private String apellidos;
     private String email;
-    private String phonenNumber;
+    private String phoneNumber;
 
-    public Client(String dni, String nombre, String primerApellido, String segundoApellido, String email, String phonenNumber) {
+    public Client(String dni, String nombre, String apellidos, String email, String phoneNumber) {
         this.dni = dni;
         this.nombre = nombre;
-        this.primerApellido = primerApellido;
-        this.segundoApellido = segundoApellido;
+        this.apellidos = apellidos;
         this.email = email;
-        this.phonenNumber = phonenNumber;
+        this.phoneNumber = phoneNumber;
     }
+
 
     public void setEmail(String email) {
         this.email = email;
     }
 
     public void setPhonenNumber(String phonenNumber) {
-        this.phonenNumber = phonenNumber;
+        this.phoneNumber = phonenNumber;
     }
 
     public String getDni() {
@@ -34,19 +33,22 @@ public class Client {
         return nombre;
     }
 
-    public String getPrimerApellido() {
-        return primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return segundoApellido;
-    }
+    public String getApellidos(){ return apellidos;}
 
     public String getEmail() {
         return email;
     }
 
-    public String getPhonenNumber() {
-        return phonenNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "dni= " + dni + '\n' +
+                ", nombre= " + nombre + '\n' +
+                ", apellidos= " + apellidos + '\n' +
+                ", email= " + email + '\n' +
+                ", phoneNumber= " + phoneNumber + '\n';
     }
 }

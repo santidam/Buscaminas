@@ -4,40 +4,83 @@
  */
 package com.mycompany.crm.controller;
 
-import com.mycompany.crm.utils.InputData;
 import com.mycompany.crm.validator.Validations;
-import java.io.IOException;
-
 /**
  *
  * @author admin
  */
 public class Menu {
-    
-    public void start() throws IOException{
 
-        //variables
-        String dni = "";
-        String tel = "";
+    private Validations val = new Validations();
+    public void start(String[] args) {
 
-        //dni
-        /*do{
-           dni = InputData.inputStrLine("Escribe tu DNI: ");
-        }while(!Validations.valDni(dni));*/
 
-        //teléfono
-        do {
-            tel = InputData.inputStrLine("Escribe tu número de teléfono: ");
-        } while (!Validations.valPhone(tel));
+        if (args[1].equalsIgnoreCase("altaCliente")) {
+            if (val.valLength(args.length, 6)) {
+                if(val.valPhone(args[2])) {
+                    if(val.valName(args[3], "nombre")) {
+                        if (val.valName(args[4], "apellido")){
+                            if (val.valEmail(args[5])){
+                                System.out.println("Cliente dado de alta con éxito.");
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-        //nombre
-        /*String nombre = InputData.inputStrLine("Escribe tu nombre completo: ");
-        if (Validations.valName(nombre)) {
-            System.out.println("Mi nombre es " + nombre);
-        }*/
 
-        //email
+        if (args[1].equalsIgnoreCase("altaEmpleado")) {
+            if (val.valLength(args.length, 7)) {
+                if (val.valDni(args[2])) {
+                    if (val.valName(args[3], "nombre")) {
+                        if (val.valName(args[4], "apellido")) {
+                            if (val.area) {
+                                if (val.posicion) {
+                                    System.out.println("Empleado dado de alta con éxito.");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (args[1].equalsIgnoreCase("bajaEmpleado")) {
+            if (val.valLength(args.length, 3)) {
+                if (val.valDni(args[2])) {
+                    System.out.println("Empleado dado de baja con éxito.");
+                }
+            }
+        }
+
+        if (args[1].equalsIgnoreCase("cliente")) {
+            if (val.valLength(args.length, 3) {
+                if (val.valPhone(args[2])) {
+                    System.out.println("Esta es toda la información del cliente con teléfono:" + args[2]);
+                }
+            }
+        }
+
+        if (args[1].equalsIgnoreCase("empleado")) {
+            if (val.valLength(args.length, 3)) {
+                if (val.valDni(args[2])) {
+                    System.out.println("Esta es toda la información del empleado con DNI:" + args[2]);
+                }
+            }
+        }
+
+        if (args[1].equalsIgnoreCase("listClientes")) {
+            if (val.valLength(args.length, 2)) {
+                System.out.println("Esta es la lista de todos los clientes:");
+            }
+        }
+
+        if (args[1].equalsIgnoreCase("listEmpleados")) {
+            if (val.valLength(args.length, 2)) {
+                System.out.println("Esta es la lista de todos los empleados:");
+            }
+        }
 
     }
-    
 }

@@ -14,24 +14,39 @@ import com.mycompany.crm.utils.InputData;
  */
 public class Validations {
 
-    public static boolean valPhone(String tel){
-        //TODO Valentinalinda
-        if(tel.length() == 9) {
-            for (int i = 0; i < tel.length(); i++) {
-            if (!Character.isDigit(tel.charAt(i))) {
-                System.out.println("El número de teléfono introducido no es válido.");
-                return false;
-            }
-        }
-        System.out.println("Número de teléfono ingresado correctamente.");
-        return true;
-       }
-        System.out.println("El numero de telefono introducido no es valido.");
-        return false;
+    public Validations() {
     }
 
 
-    public static boolean valName(String name, String tipo){
+    public boolean valLength(int argsLength,int lengthEsperada){
+        boolean Validacion = false;
+        if (argsLength == lengthEsperada){
+            Validacion = true;
+        } else {
+            System.out.println("ERROR. El número de argumentos es incorrecto.");
+        }
+        return Validacion;
+    }
+    public boolean valPhone(String tel){
+        //TODO Valentinalinda
+        boolean esCorrecto = true;
+        if(tel.length() == 9) {
+            for (int i = 0; i < tel.length(); i++) {
+                if (!Character.isDigit(tel.charAt(i))) {
+                    System.out.println("El número de teléfono introducido no es válido.");
+                    esCorrecto = false;
+                }
+            }
+       }else{
+            System.out.println("El numero de telefono introducido no es valido.");
+            esCorrecto =false;
+        }
+
+        return esCorrecto;
+    }
+
+
+    public boolean valName(String name, String tipo){
         //TODO Santi
         name = name.trim();
 
@@ -63,7 +78,7 @@ public class Validations {
         return true;
     }
 
-    public static boolean valDni(String dni){
+    public boolean valDni(String dni){
         //TODO Jordi
         dni = dni.strip().toUpperCase();
         boolean isValid = false;
@@ -90,7 +105,7 @@ public class Validations {
         return isValid;
     }
     
-    public static String getNumDni(String dni){
+    public String getNumDni(String dni){
         String validNumbers = "0123456789";
         String numDni = "";
         for(int i = 0; i<dni.length()-1; i++){
@@ -103,7 +118,7 @@ public class Validations {
         return numDni;
     }
 
-    public static boolean valEmail(String email) {
+    public boolean valEmail(String email) {
         if (email.isEmpty()) {
             System.out.println("El correo electrónico no puede estar vacío.");
             return false;

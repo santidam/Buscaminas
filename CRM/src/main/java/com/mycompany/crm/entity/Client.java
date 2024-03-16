@@ -2,51 +2,46 @@ package com.mycompany.crm.entity;
 
 public class Client {
 
-    private String dni;
     private String nombre;
-    private String primerApellido;
-    private String segundoApellido;
+    private String apellidos;
     private String email;
-    private String phonenNumber;
+    private String phoneNumber;
 
-    public Client(String dni, String nombre, String primerApellido, String segundoApellido, String email, String phonenNumber) {
-        this.dni = dni;
+    public Client(String nombre, String apellidos, String email, String phoneNumber) {
         this.nombre = nombre;
-        this.primerApellido = primerApellido;
-        this.segundoApellido = segundoApellido;
+        this.apellidos = apellidos;
         this.email = email;
-        this.phonenNumber = phonenNumber;
+        this.phoneNumber = phoneNumber;
     }
+
 
     public void setEmail(String email) {
         this.email = email;
     }
 
     public void setPhonenNumber(String phonenNumber) {
-        this.phonenNumber = phonenNumber;
-    }
-
-    public String getDni() {
-        return dni;
+        this.phoneNumber = phonenNumber;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getPrimerApellido() {
-        return primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return segundoApellido;
-    }
+    public String getApellidos(){ return apellidos;}
 
     public String getEmail() {
         return email;
     }
 
-    public String getPhonenNumber() {
-        return phonenNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return " nombre= " + nombre + '\n' +
+                ", apellidos= " + apellidos + '\n' +
+                ", email= " + email + '\n' +
+                ", phoneNumber= " + phoneNumber + '\n';
     }
 }

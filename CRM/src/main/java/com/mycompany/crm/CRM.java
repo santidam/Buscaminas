@@ -11,6 +11,11 @@ public class CRM {
 
     public static void main(String[] args) throws IOException {
         Menu crm = new Menu();
-        crm.start();
+
+
+
+        crm.start(args);
+        
+
     }
 }

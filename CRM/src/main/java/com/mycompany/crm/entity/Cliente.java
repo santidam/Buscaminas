@@ -41,8 +41,8 @@ public class Cliente {
     public String toString() {
         return  nombre + ';' +
                 apellidos + ';' +
-                phoneNumber + ';' +
-                email + '\n';
+                email + ';' +
+                phoneNumber;
 
     }
 }

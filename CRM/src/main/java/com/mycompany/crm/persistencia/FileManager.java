@@ -1,12 +1,16 @@
 package com.mycompany.crm.persistencia;
+import com.mycompany.crm.entity.Cliente;
+import com.mycompany.crm.entity.Empleado;
+
 import java.io.*;
+import java.util.ArrayList;
 
 public class FileManager {
 
     private File directory;
     private String pathFile;
 
-    public FileManager(String folder, String file){
+    public FileManager(String folder, String file) {
         this.directory = new File(folder);
         this.pathFile = folder + File.separator + file;
     }
@@ -26,35 +30,43 @@ public class FileManager {
         } catch (IOException e) {
             System.out.println("ERROR. El fichero no existe");
         }
-
     }
 
-    public void leer(){
+    public ArrayList<Object> leer(boolean esCliente) {
         String linea;
-        if(this.directory.exists()){
-            if(new File(this.pathFile).exists()){
-                try{
+        ArrayList<Object> objects = new ArrayList<>();
+        Object obj;
+        if (this.directory.exists()) {
+            if (new File(this.pathFile).exists()) {
+                try {
                     BufferedReader br = new BufferedReader(new FileReader(this.pathFile));
-                    do {
-                        linea = br.readLine();
-                        toObject(linea);
-                    }while(linea != null);
+                    while((linea = br.readLine()) != null){
+                        obj = toObject(linea, esCliente);
+                        objects.add(obj);
+                    }
+                    br.close();
 
-
-                }catch(IOException e){
+                } catch (IOException e) {
                     System.out.println("ERROR. El fichero no existe");
                 }
-            }else{
+            } else {
                 System.out.println("ERROR. El fichero no existe");
             }
 
-        }else{
-            System.out.println("ERROR. El directorio '" + this.directory.getName() + "' no existe");
         }
+        return objects;
     }
 
-    public void toObject(String linea){
+    private Object toObject(String linea, boolean esCliente) {
+        String[] datos = linea.split(";");
+        Object obj;
+        if (esCliente) {
+            obj = new Cliente(datos[0], datos[1], datos[2], datos[3]);
 
+        } else {
+            obj = new Empleado(datos[0], datos[1], datos[2]);
+        }
+        return obj;
     }
 
 }

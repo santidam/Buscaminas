@@ -1,6 +1,6 @@
 package com.mycompany.crm.persistencia;
 
-import com.mycompany.crm.entity.Client;
+import com.mycompany.crm.entity.Cliente;
 import com.mycompany.crm.entity.Empleado;
 import com.mycompany.crm.utils.CastData;
 import com.mycompany.crm.validator.Validations;
@@ -31,7 +31,7 @@ public class FileManager {
 
     }
 
-    public void writeCliente(Client c){
+    public void writeCliente(Cliente c){
 
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(pathFileClientes, false));
@@ -42,10 +42,10 @@ public class FileManager {
             System.out.println(ex.getMessage());
         }
     }
-    public ArrayList<Client> readClient() {
+    public ArrayList<Cliente> readClient() {
         // Ejemplo de lectura pero falta implementar que lea esas líneas y las
         // cargue en un ArrayList<CoffeShop>
-        ArrayList<Client> listaClientes = new ArrayList<>();
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
 
         File f = new File(pathFileClientes);
         if (!f.exists()) {
@@ -58,7 +58,7 @@ public class FileManager {
                 while ((linea = br.readLine()) != null) {
                     // Aquí en realidad leeríais la línea y harías split, etc para crear los objetos y añadirlos al ArrayList que retornariais
                     String[] parameters = linea.split("-");
-                    Client c = readClient(parameters);
+                    Cliente c = readClient(parameters);
                     if (c != null) {
                         listaClientes.add(c);
                     }
@@ -74,15 +74,15 @@ public class FileManager {
     }
 
 
-    public Client readClient(String[] parameters){
+    public Cliente readClient(String[] parameters){
         if (parameters.length==4){
             String number = parameters[0];
             String name = parameters[1];
             String lastname = parameters[2];
             String email = parameters[3];
 
-            Client casa = new Client(number,name,lastname,email);
-            return casa;
+            Cliente c = new Cliente(number,name,lastname,email);
+            return c;
         }
         return null;
     }

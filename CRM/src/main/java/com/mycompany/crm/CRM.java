@@ -2,13 +2,10 @@
 
 package com.mycompany.crm;
 
-import com.mycompany.crm.controller.Menu;
-
-import java.io.IOException;
-
 
 public class CRM {
 
+<<<<<<< HEAD
     public static void main(String[] args) throws IOException {
         Menu crm = new Menu();
 
@@ -17,5 +14,10 @@ public class CRM {
         crm.start(args);
         
 
+=======
+    public static void main(String[] args) {
+        Menu menu = new Menu();
+        menu.start(args);
+>>>>>>> 3f460a36d0bf4bf58dde1f9e160fd54d47651861
     }
 }

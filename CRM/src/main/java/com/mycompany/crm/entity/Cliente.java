@@ -1,13 +1,15 @@
 package com.mycompany.crm.entity;
 
-public class Client {
+public class Cliente {
 
     private String nombre;
     private String apellidos;
     private String email;
     private String phoneNumber;
 
-    public Client(String nombre, String apellidos, String email, String phoneNumber) {
+
+    public Cliente(String nombre, String apellidos, String email, String phoneNumber) {
+
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -39,9 +41,11 @@ public class Client {
 
     @Override
     public String toString() {
-        return " nombre= " + nombre + '\n' +
-                ", apellidos= " + apellidos + '\n' +
-                ", email= " + email + '\n' +
-                ", phoneNumber= " + phoneNumber + '\n';
+
+        return "nombre: " + nombre + '\n' +
+                "apellidos: " + apellidos + '\n' +
+                "email: " + email + '\n' +
+                "phoneNumber: " + phoneNumber + '\n';
+
     }
 }

@@ -1,12 +1,16 @@
 package com.mycompany.crm.controller;
 
 import com.mycompany.crm.entity.Cliente;
+import com.mycompany.crm.persistencia.FileManager;
 
 import java.util.ArrayList;
 
 public class Gestor {
+    private FileManager clientesFile = new FileManager("Data", "clientes.txt");
+    private FileManager empleadosFile = new FileManager("Data", "empleados.txt");
 
     public void altaCliente(String phone, String name, String apellidos, String email){
+        Cliente cliente = new Cliente(name, apellidos, email, phone);
         System.out.println("Cliente dado de alta con éxito.");
     }
 

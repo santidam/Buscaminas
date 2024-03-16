@@ -8,11 +8,13 @@ public class Empleado {
     private String apellidos;
     private String phoneNumber;
     private String email;
-    private ArrayList<Empleado> empleados;
+
 
 
     public void registrarEmpleado(){}
-    public void registrarCliente(){}
+    public void registrarCliente(){
+        //si el empleado isAdmin
+    }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
@@ -42,7 +44,4 @@ public class Empleado {
         return email;
     }
 
-    public ArrayList<Empleado> getEmpleados() {
-        return empleados;
-    }
 }

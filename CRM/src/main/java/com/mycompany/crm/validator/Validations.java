@@ -33,7 +33,7 @@ public class Validations {
     }
 
     public void valAltaEmpleado(String[] args){
-        if (valLength(args.length, 6)) {
+        if (valLength(args.length, 4)) {
             if (valDni(args[1])) {
                 if (valName(args[2], "nombre")) {
                     if (valName(args[3], "apellido")) {
@@ -118,7 +118,7 @@ public class Validations {
         }
         String[] partes = name.split("\\s+");
         
-        if (tipo.equals("apellido") && partes.length != 2){
+        if (tipo.equals("apellido") && partes.length > 1){
             System.out.println("Error: debes introducir dos apellidos");
             return false;
         }
@@ -219,7 +219,6 @@ public class Validations {
                                             System.out.println("La parte del dominio del correo electrónico (después de @) debe tener entre 1 y 64 caracteres.");
                                             return false;
                                         } else {
-                                            System.out.println("El correo electrónico es válido.");
                                             return true;
                                         }
                                     }

@@ -1,4 +1,9 @@
 package com.mycompany.crm.persistencia;
+import com.mycompany.crm.entity.Cliente;
+import com.mycompany.crm.entity.Empleado;
+
+import java.io.*;
+import java.util.ArrayList;
 
 import com.mycompany.crm.entity.Cliente;
 import com.mycompany.crm.entity.Empleado;
@@ -10,141 +15,107 @@ import java.util.ArrayList;
 
 public class FileManager {
 
-    private String folder;
-    private String fileNameClientes;
-    private String fileNameEmpleados;
-    private String pathFileClientes;
-    private String pathFileEmpleados;
-    private File folderFile;
-
-    public FileManager() {
-        folder = "." +File.separator+"dades";
-        fileNameClientes = "clientes.txt";
-        fileNameEmpleados = "empleados.txt";
-        pathFileClientes = folder + File.separator + fileNameClientes;
-        pathFileEmpleados = folder + File.separator + fileNameEmpleados;
-
-        folderFile = new File(folder);
-        if (!folderFile.exists()){
-            folderFile.mkdir();
-        }
-
-    }
-
-    public void writeCliente(Cliente c){
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(pathFileClientes, false));
-            bw.write((c.toString()));
-            bw.newLine();
-            bw.close();
-        }catch (IOException ex){
-            System.out.println(ex.getMessage());
-        }
-    }
-    public ArrayList<Cliente> readClient() {
-        // Ejemplo de lectura pero falta implementar que lea esas líneas y las
-        // cargue en un ArrayList<CoffeShop>
-        ArrayList<Cliente> listaClientes = new ArrayList<>();
-
-        File f = new File(pathFileClientes);
-        if (!f.exists()) {
-            return listaClientes;
-            // aquí devolverías el arrayList de coffeshop vacío, ya que si no existe la carpeta no hay datos por leer
-        } else {
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(f));
-                String linea;
-                while ((linea = br.readLine()) != null) {
-                    // Aquí en realidad leeríais la línea y harías split, etc para crear los objetos y añadirlos al ArrayList que retornariais
-                    String[] parameters = linea.split(";");
-                    Cliente c = readClient(parameters);
-                    if (c != null) {
-                        listaClientes.add(c);
-                    }
-                }
-                br.close();
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-
-//        Gestor.setListaCasa(listaClientes);
-        return listaClientes;
-    }
 
 
-    public Cliente readClient(String[] parameters){
-        if (parameters.length==4){
-            String number = parameters[0];
-            String name = parameters[1];
-            String lastname = parameters[2];
-            String email = parameters[3];
-
-            Cliente c = new Cliente(number,name,lastname,email);
-            return c;
-        }
-        return null;
-    }
-
-    public void writeEmpleado(Empleado e){
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(pathFileEmpleados, false));
-            bw.write((e.toString()));
-            bw.newLine();
-            bw.close();
-        }catch (IOException ex){
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public ArrayList<Empleado> readEmpleado() {
-        // Ejemplo de lectura pero falta implementar que lea esas líneas y las
-        // cargue en un ArrayList<CoffeShop>
-        ArrayList<Empleado> listaEmpleados = new ArrayList<>();
-
-        File f = new File(pathFileEmpleados);
-        if (!f.exists()) {
-            return listaEmpleados;
-            // aquí devolverías el arrayList de coffeshop vacío, ya que si no existe la carpeta no hay datos por leer
-        } else {
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(f));
-                String linea;
-                while ((linea = br.readLine()) != null) {
-                    // Aquí en realidad leeríais la línea y harías split, etc para crear los objetos y añadirlos al ArrayList que retornariais
-                    String[] parameters = linea.split(";");
-                    Empleado e = readEmpleado(parameters);
-                    if (e != null) {
-                        listaEmpleados.add(e);
-                    }
-                }
-                br.close();
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-
-//        Gestor.setListaCasa(listaClientes);
-        return listaEmpleados;
-    }
-    public Empleado readEmpleado(String[] parameters) {
-        if (parameters.length == 5) {
-            String dni = parameters[0];
-            String name = parameters[1];
-            String lastname = parameters[2];
-            String telefono = parameters[3];
-            String email = parameters[4];
-
-            Empleado e = new Empleado(dni, name, lastname, telefono, email);
-            return e;
-        }
-        return null;
-    }
-}
 
     //leer
     //Un fichero para clientes; Un fichero para empleados
     //escribir
+
+
+    private File directory;
+    private String pathFile;
+
+    public FileManager(String folder, String file) {
+        this.directory = new File(folder);
+        this.pathFile = folder + File.separator + file;
+    }
+
+    public void escribir(Object obj, boolean esCliente) {
+
+        if (!this.directory.exists()) {
+            this.directory.mkdir();
+        }
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(pathFile, true));
+            if (esCliente){
+                Cliente c = (Cliente) obj;
+                bw.write(c.toString());
+                bw.newLine();
+            }else{
+                Empleado e = (Empleado) obj;
+                bw.write(e.toString());
+                bw.newLine();
+            }
+            bw.close();
+
+        } catch (IOException e) {
+            System.out.println("ERROR. El fichero no existe");
+        }
+    }
+
+    public void sobreEscribir(ArrayList<Object> objetos, boolean esCliente) {
+
+        if (!this.directory.exists()) {
+            this.directory.mkdir();
+        }
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(pathFile, false));
+            for (Object o: objetos) {
+                if (!esCliente) {
+                    Empleado e = (Empleado) o;
+                    bw.write(e.toString());
+                }else {
+                    Cliente c = (Cliente) o;
+                    bw.write(c.toString());
+                }
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("ERROR. El fichero no existe");
+        }
+    }
+
+    public ArrayList<Object> leer(boolean esCliente) {
+        String linea;
+        ArrayList<Object> objects = new ArrayList<>();
+        Object obj;
+        if (this.directory.exists()) {
+            if (new File(this.pathFile).exists()) {
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(this.pathFile));
+                    while((linea = br.readLine()) != null){
+                        obj = toObject(linea, esCliente);
+                        objects.add(obj);
+                    }
+                    br.close();
+
+                } catch (IOException e) {
+                    System.out.println("ERROR. El fichero no existe");
+                }
+            } else {
+                System.out.println("ERROR. El fichero no existe");
+            }
+
+        }
+        return objects;
+    }
+
+    private Object toObject(String linea, boolean esCliente) {
+        String[] datos = linea.split(";");
+        Object obj;
+        if (esCliente) {
+            obj = new Cliente(datos[0], datos[1], datos[2], datos[3]);
+
+        } else {
+            obj = new Empleado(datos[0], datos[1], datos[2]);
+        }
+        return obj;
+    }
+
+}
+
 

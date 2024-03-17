@@ -7,6 +7,8 @@ public class Empleado {
     private String nombre;
     private String apellidos;
 
+    private ArrayList<Cliente> clientes;
+
 
 
 
@@ -14,11 +16,15 @@ public class Empleado {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.clientes = new ArrayList<>();
     }
 
-    public void registrarEmpleado(){}
-    public void registrarCliente(){
-        //si el empleado isAdmin
+    public void addCliente(Cliente c){
+        this.clientes.add(c);
+    }
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
     }
 
     public String getDni() {

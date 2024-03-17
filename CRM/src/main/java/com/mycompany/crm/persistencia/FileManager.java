@@ -5,22 +5,8 @@ import com.mycompany.crm.entity.Empleado;
 import java.io.*;
 import java.util.ArrayList;
 
-import com.mycompany.crm.entity.Cliente;
-import com.mycompany.crm.entity.Empleado;
-import com.mycompany.crm.utils.CastData;
-import com.mycompany.crm.validator.Validations;
-
-import java.io.*;
-import java.util.ArrayList;
 
 public class FileManager {
-
-
-
-
-    //leer
-    //Un fichero para clientes; Un fichero para empleados
-    //escribir
 
 
     private File directory;
@@ -96,10 +82,7 @@ public class FileManager {
                 } catch (IOException e) {
                     System.out.println("ERROR. El fichero no existe");
                 }
-            } else {
-                System.out.println("ERROR. El fichero no existe");
             }
-
         }
         return objects;
     }

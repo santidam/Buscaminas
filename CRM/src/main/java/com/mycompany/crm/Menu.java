@@ -43,6 +43,9 @@ public class Menu {
                 case "listempleados":
                    val.valEmpleadosList(args);
                     break;
+                case "asignarcliente":
+                    val.valAsignarCliente(args);
+                    break;
             }
         }catch(ArrayIndexOutOfBoundsException e){
             System.out.println("ERROR. No has puesto ningun argumento");

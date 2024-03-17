@@ -80,6 +80,15 @@ public class Validations {
         }
     }
 
+    public void valAsignarCliente(String[] args){
+        if (valLength(args.length, 3)){
+            if (valPhone(args[1])){
+                if (valDni(args[2])){
+                    System.out.println();
+                }
+            }
+        }
+    }
     public boolean valLength(int argsLength,int lengthEsperada){
         boolean Validacion = false;
         if (argsLength == lengthEsperada){

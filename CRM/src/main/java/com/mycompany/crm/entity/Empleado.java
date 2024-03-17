@@ -6,22 +6,18 @@ public class Empleado {
     private String dni;
     private String nombre;
     private String apellidos;
-    private String phoneNumber;
-    private String email;
 
 
+
+    public Empleado(String dni, String nombre, String apellidos) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
 
     public void registrarEmpleado(){}
     public void registrarCliente(){
         //si el empleado isAdmin
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getDni() {
@@ -36,12 +32,11 @@ public class Empleado {
         return apellidos;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 
-    public String getEmail() {
-        return email;
+    @Override
+    public String toString() {
+        return dni + ';' +
+               nombre + ';' +
+               apellidos;
     }
-
 }

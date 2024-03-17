@@ -9,6 +9,7 @@ public class Empleado {
 
 
 
+
     public Empleado(String dni, String nombre, String apellidos) {
         this.dni = dni;
         this.nombre = nombre;

@@ -7,7 +7,9 @@ public class Cliente {
     private String email;
     private String phoneNumber;
 
+
     public Cliente(String nombre, String apellidos, String email, String phoneNumber) {
+
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -39,10 +41,12 @@ public class Cliente {
 
     @Override
     public String toString() {
+
         return  nombre + ';' +
                 apellidos + ';' +
                 email + ';' +
                 phoneNumber;
+
 
     }
 }

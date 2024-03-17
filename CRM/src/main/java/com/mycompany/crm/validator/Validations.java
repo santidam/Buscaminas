@@ -33,7 +33,7 @@ public class Validations {
     }
 
     public void valAltaEmpleado(String[] args){
-        if (valLength(args.length, 6)) {
+        if (valLength(args.length, 4)) {
             if (valDni(args[1])) {
                 if (valName(args[2], "nombre")) {
                     if (valName(args[3], "apellido")) {
@@ -118,7 +118,7 @@ public class Validations {
         }
         String[] partes = name.split("\\s+");
         
-        if (tipo.equals("apellido") && partes.length != 1){
+        if (tipo.equals("apellido") && partes.length > 1){
             System.out.println("Error: debes introducir dos apellidos");
             return false;
         }

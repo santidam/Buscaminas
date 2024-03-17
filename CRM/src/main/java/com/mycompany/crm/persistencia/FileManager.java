@@ -57,7 +57,7 @@ public class FileManager {
                 String linea;
                 while ((linea = br.readLine()) != null) {
                     // Aquí en realidad leeríais la línea y harías split, etc para crear los objetos y añadirlos al ArrayList que retornariais
-                    String[] parameters = linea.split("-");
+                    String[] parameters = linea.split(";");
                     Cliente c = readClient(parameters);
                     if (c != null) {
                         listaClientes.add(c);
@@ -114,7 +114,7 @@ public class FileManager {
                 String linea;
                 while ((linea = br.readLine()) != null) {
                     // Aquí en realidad leeríais la línea y harías split, etc para crear los objetos y añadirlos al ArrayList que retornariais
-                    String[] parameters = linea.split("-");
+                    String[] parameters = linea.split(";");
                     Empleado e = readEmpleado(parameters);
                     if (e != null) {
                         listaEmpleados.add(e);

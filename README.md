@@ -31,8 +31,8 @@
 
 # OPCIONES DEL PROYECTO
 
-*altacliente (<)phone(>) nombre apellido email<br>
-*altaEmpleado dni nombre apellido<br>
+- altacliente &lt;phone&gt; nombre apellido email<br>
+- altaEmpleado dni nombre apellido<br>
 *bajaEmpleado dni<br>
 *cliente phone<br>
 *empleado dni<br>

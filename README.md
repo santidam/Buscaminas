@@ -31,7 +31,7 @@
 
 # OPCIONES DEL PROYECTO
 
-altacliente <phone> <nombre> <apellido> <email><br>
+altacliente '<phone>' <nombre> <apellido> <email><br>
 altaEmpleado <dni> <nombre> <apellido><br>
 bajaEmpleado <dni><br>
 cliente <phone><br>

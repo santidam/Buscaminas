@@ -1,31 +1,43 @@
 # Customer_Relationship_ManagerCRM
 
-# Packages
-	- exception: para excepciones (NO TOCAR de momento)
-	- utils:
-		- InputData: Esta clase contiene todos los métodos relacionados con inputs(string, int, double, etc)
-		- CastData: Esta clase contiene métodos para convertir un string a diferentes tipos de variables
-	- Validator:
-		- Validations: Esta clase contiene los métodos que validan que los datos estén introducidos correctamente
-	- crm:
-		- CRM: Es el main (NO TOCAR)
-		- Menu: En esta clase llamaremos a los métodos que vayamos creando en otras (de momento)
+# INSTALAR MAVEN
 
-# Tareas/Modificar
+1. Descargar Apache Maven https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
+2. Descomprimir con CMD desde el directorio del archivo de descarga: tar xzvf apache-maven-3.9.6-bin.tar.gz
+3. Configurar PATH con CMD: setx PATH "%PATH%;ruta_al_directorio_bin_de_Maven"
+4. Confirmar la configuración de Maven:
+	En el nuevo símbolo del sistema, escribe mvn -v y presiona Enter.
+	Deberías ver la versión de Maven y otra información relacionada, lo que confirmará que Maven se ha configurado correctamente y está en tu PATH.
 
-## Valentina
-- Si escribo letras me acepta el número de telefono
-- Estás usando regular expresions y no sé si la profe nos deja usar cosas que no hayamos utilizado en este proyecto
+# COMPILAR UN PROYECTO MAVEN
 
-## Santi
-- Estás usando regular expresions y no sé si la profe nos deja usar cosas que no hayamos utilizado en este proyecto
-- si escribo mal el nombre no da error, pero se cierra el programa. Es preferible que me lo pregunte hasta que lo haga bien
-- Las regular expresions que utilizas son inglesas, por esto no me acepta apellidos como "Muñoz" (que lleva"ñ")
-  ni tampoco nombres con acentos (Pero se puede preguntar a la profe si nos deja)
-- Una persona tiene dos apellidos y puede tener un nombre compuesto
-	ej: Carlos Santiago González Muñoz
-- Puedes hacerlo por partes, es decir, pides primero el nombre y luego los apellidos (que aquí sí que serían 2 palabras)
+1. Clonar el repositorio en tu pc
+2. Asegurarte de que tienes Maven instalado, si no, mira el apartado anterior
+3. En la terminal del PC dirígete a la carpeta del proyecto donde se encuentre el archivo pom.xml
+4. Comando: mvn compile
+5. Comando: mvn package
 
-## Marcos y David
-- Hacer método para validar email 	
-		
+# EJECUTAR EL PROGRAMA
+
+1. Abre la terminal y dirígite a la ubicación donde tengas el proyecto, por ejemplo:
+
+	```C:\Users\admin\Desktop\Customer_Relationship_ManagerCRM\CRM```
+
+3. Accede a la carpeta "target"
+4. Pon el siguiente comando en la terminal del pc:
+
+	```java -jar CRM-1.0-SNAPSHOT.jar <opcion> <args1> <args2> ... <argsN>```
+
+# OPCIONES DEL PROYECTO
+
+- altacliente &lt;phone&gt; &lt;nombre&gt; &lt;apellido&gt; &lt;email&gt;<br>
+- altaEmpleado &lt;dni&gt; &lt;nombre&gt; &lt;apellido&gt;<br>
+- bajaEmpleado &lt;dni&gt;<br>
+- cliente &lt;phone&gt;<br>
+- empleado &lt;dni&gt;<br>
+- listClientes<br>
+- listEmpleados<br>
+
+
+
+

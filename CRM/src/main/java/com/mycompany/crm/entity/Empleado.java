@@ -6,20 +6,22 @@ public class Empleado {
     private String dni;
     private String nombre;
     private String apellidos;
-    private String phoneNumber;
-    private String email;
-    private ArrayList<Empleado> empleados;
 
+    private ArrayList<Cliente> clientes;
 
-    public void registrarEmpleado(){}
-    public void registrarCliente(){}
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public Empleado(String dni, String nombre, String apellidos) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.clientes = new ArrayList<>();
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void addCliente(Cliente c){
+        this.clientes.add(c);
+    }
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
     }
 
     public String getDni() {
@@ -34,15 +36,11 @@ public class Empleado {
         return apellidos;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public ArrayList<Empleado> getEmpleados() {
-        return empleados;
+    @Override
+    public String toString() {
+        return dni + ';' +
+               nombre + ';' +
+               apellidos;
     }
 }

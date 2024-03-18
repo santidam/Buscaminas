@@ -5,8 +5,8 @@
 package com.mycompany.crm.validator;
 
 
+import com.mycompany.crm.controller.Gestor;
 import com.mycompany.crm.utils.CastData;
-import com.mycompany.crm.utils.InputData;
 
 /**
  *
@@ -14,9 +14,71 @@ import com.mycompany.crm.utils.InputData;
  */
 public class Validations {
 
+    private Gestor gestor = new Gestor();
     public Validations() {
     }
 
+    public void valAltaCliente(String[] args){
+        if (valLength(args.length, 5)) {
+            if (valPhone(args[1])) {
+                if (valName(args[2], "nombre")) {
+                    if (valName(args[3], "apellido")) {
+                        if (valEmail(args[4])) {
+                            gestor.altaCliente(args[1], args[2], args[3], args[4]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void valAltaEmpleado(String[] args){
+        if (valLength(args.length, 4)) {
+            if (valDni(args[1])) {
+                if (valName(args[2], "nombre")) {
+                    if (valName(args[3], "apellido")) {
+                        gestor.altaEmpleado(args[1], args[2], args[3]);
+                    }
+                }
+            }
+        }
+    }
+
+    public void valBajaEmpleado(String[] args){
+        if (valLength(args.length, 2)) {
+            if (valDni(args[1])) {
+                gestor.bajaEmpleado(args[1]);
+            }
+        }
+    }
+
+    public void valClienteInfo(String[] args){
+        if (valLength(args.length, 2)) {
+            if (valPhone(args[1])) {
+                gestor.infoCliente(args[1]);
+            }
+        }
+    }
+
+    public void valEmpleadoInfo(String[] args){
+        if (valLength(args.length, 2)) {
+            if (valDni(args[1])) {
+                gestor.infoEmpleado(args[1]);
+            }
+        }
+    }
+
+    public void valClientesList(String[] args){
+        if (valLength(args.length, 1)) {
+            gestor.listClientes();
+        }
+    }
+
+    public void valEmpleadosList(String[] args){
+        if (valLength(args.length, 1)) {
+            gestor.listEmpleados();
+        }
+    }
 
     public boolean valLength(int argsLength,int lengthEsperada){
         boolean Validacion = false;
@@ -56,7 +118,7 @@ public class Validations {
         }
         String[] partes = name.split("\\s+");
         
-        if (tipo.equals("apellido") && partes.length != 2){
+        if (tipo.equals("apellido") && partes.length > 1){
             System.out.println("Error: debes introducir dos apellidos");
             return false;
         }
@@ -94,7 +156,6 @@ public class Validations {
             resto = numDni%23;
             if (letter == validLetters.charAt(resto)){
                 isValid = true;
-                System.out.println("DNI registrado correctamente");
             } else{
                 System.out.println("El último carácter solo puede ser una letra y tiene que ser válida");
             }
@@ -157,7 +218,6 @@ public class Validations {
                                             System.out.println("La parte del dominio del correo electrónico (después de @) debe tener entre 1 y 64 caracteres.");
                                             return false;
                                         } else {
-                                            System.out.println("El correo electrónico es válido.");
                                             return true;
                                         }
                                     }

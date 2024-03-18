@@ -1,15 +1,15 @@
 package com.mycompany.crm.entity;
 
-public class Client {
+public class Cliente {
 
-    private String dni;
     private String nombre;
     private String apellidos;
     private String email;
     private String phoneNumber;
 
-    public Client(String dni, String nombre, String apellidos, String email, String phoneNumber) {
-        this.dni = dni;
+
+    public Cliente(String nombre, String apellidos, String email, String phoneNumber) {
+
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -23,10 +23,6 @@ public class Client {
 
     public void setPhonenNumber(String phonenNumber) {
         this.phoneNumber = phonenNumber;
-    }
-
-    public String getDni() {
-        return dni;
     }
 
     public String getNombre() {
@@ -45,10 +41,12 @@ public class Client {
 
     @Override
     public String toString() {
-        return "dni= " + dni + '\n' +
-                ", nombre= " + nombre + '\n' +
-                ", apellidos= " + apellidos + '\n' +
-                ", email= " + email + '\n' +
-                ", phoneNumber= " + phoneNumber + '\n';
+
+        return  nombre + ';' +
+                apellidos + ';' +
+                email + ';' +
+                phoneNumber;
+
+
     }
 }

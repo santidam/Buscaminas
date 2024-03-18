@@ -9,25 +9,24 @@
 	En el nuevo símbolo del sistema, escribe mvn -v y presiona Enter.
 	Deberías ver la versión de Maven y otra información relacionada, lo que confirmará que Maven se ha configurado correctamente y está en tu PATH.
 
-# EJECUTAR EL PROGRAMA
+# COMPILAR UN PROYECTO MAVEN
 
 1. Clonar el repositorio en tu pc
-2. Asegurarte de que tienes Maven instalado, si no, mira el siguiente apartado
-3. Abre la terminal y dirígite a la ubicación donde tengas el proyecto, por ejemplo:
+2. Asegurarte de que tienes Maven instalado, si no, mira el apartado anterior
+3. En la terminal del PC dirígete a la carpeta del proyecto donde se encuentre el archivo pom.xml
+4. Comando: mvn compile
+5. Comando: mvn package
+
+# EJECUTAR EL PROGRAMA
+
+1. Abre la terminal y dirígite a la ubicación donde tengas el proyecto, por ejemplo:
 
 	```C:\Users\admin\Desktop\Customer_Relationship_ManagerCRM\CRM```
 
-4. Accede a la carpeta "target"
-5. Pon el siguiente comando en la terminal del pc:
+3. Accede a la carpeta "target"
+4. Pon el siguiente comando en la terminal del pc:
 
 	```java -jar CRM-1.0-SNAPSHOT.jar <opcion> <args1> <args2> ... <argsN>```
-
-
-# COMPILAR UN PROYECTO MAVEN
-
-1. En la terminal del PC dirígete a la carpeta del proyecto donde se encuentre el archivo pom.xml
-2. Comando: mvn compile
-3. Comando: mvn package
 
 # OPCIONES DEL PROYECTO
 

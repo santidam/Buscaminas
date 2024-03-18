@@ -31,13 +31,13 @@
 
 # OPCIONES DEL PROYECTO
 
-- altacliente &lt;phone&gt; nombre apellido email<br>
-- altaEmpleado dni nombre apellido<br>
-*bajaEmpleado dni<br>
-*cliente phone<br>
-*empleado dni<br>
-*listClientes<br>
-*listEmpleados<br>
+- altacliente &lt;phone&gt; &lt;nombre&gt; &lt;apellido&gt; &lt;email&gt;<br>
+- altaEmpleado &lt;dni&gt; &lt;nombre&gt; &lt;apellido&gt;<br>
+- bajaEmpleado &lt;dni&gt;<br>
+- cliente &lt;phone&gt;<br>
+- empleado &lt;dni&gt;<br>
+- listClientes<br>
+- listEmpleados<br>
 
 
 

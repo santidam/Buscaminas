@@ -31,13 +31,13 @@
 
 # OPCIONES DEL PROYECTO
 
-altacliente <phone> <nombre> <apellido> <email>
-altaEmpleado <dni> <nombre> <apellido>
-bajaEmpleado <dni>
-cliente <phone>
-empleado <dni>
-listClientes
-listEmpleados
+altacliente <phone> <nombre> <apellido> <email><br>
+altaEmpleado <dni> <nombre> <apellido><br>
+bajaEmpleado <dni><br>
+cliente <phone><br>
+empleado <dni><br>
+listClientes<br>
+listEmpleados<br>
 
 
 

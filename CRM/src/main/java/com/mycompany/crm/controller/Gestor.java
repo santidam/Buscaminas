@@ -81,19 +81,16 @@ public class Gestor {
                 System.out.println("ERROR El empleado no se encuentra registrado en la base de datos");
             } else {
                 Empleado e = (Empleado) empleados.get(indiceEmpleado);
-                ArrayList<Cliente> clientes = e.getClientes();
                 System.out.println("*******   INFO EMPLEADO   *******" +
                         "\nNombre: " + e.getNombre() +
                         "\nApellido: " + e.getApellidos() +
-                        "\nDNI: " + e.getDni() +
-                        "\nClientes: ");
-                for(Cliente c : clientes){
-                    System.out.println("\t-Nombre: " + c.getNombre() + "Telefono: " + c.getPhoneNumber() + "Email: " + c.getEmail());
-                }
+                        "\nDNI: " + e.getDni());
+
                 System.out.println("-----------------------------------");
             }
         }
     }
+
     public void listClientes(){
         ArrayList<Object> clientes = clientesFile.leer(true);
         if(!clientes.isEmpty()) {
@@ -126,24 +123,6 @@ public class Gestor {
         }else {
             System.out.println("No hay ningún empleado registrado");
         }
-
-    }
-
-    public void asignarCliente(String phoneNumberCliente, String dniEmpleado){
-        ArrayList<Object> clientes = clientesFile.leer(true);
-        ArrayList<Object> empleados = empleadosFile.leer(false);
-
-        if(!clientes.isEmpty() && !empleados.isEmpty()){
-            int posCliente = buscarCliente(clientes, phoneNumberCliente);
-            int posEmpleado = buscarEmpleado(empleados, dniEmpleado);
-            if(posEmpleado != -1 && posCliente != -1){
-                Empleado e = (Empleado) empleados.get(posEmpleado);
-                Cliente c = (Cliente) clientes.get(posCliente);
-                e.addCliente(c);
-            }
-        }else{
-            System.out.println("ERROR. Comprueba que hayan clientes y empleados registrados en la base de datos");
-        }
     }
 
     public int buscarCliente(ArrayList<Object> empleados, String phoneNumber){
@@ -175,7 +154,5 @@ public class Gestor {
         }
         return posEmpleado;
     }
-
-
 
 }

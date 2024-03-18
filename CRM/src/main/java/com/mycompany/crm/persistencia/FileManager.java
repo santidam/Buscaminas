@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 
 public class FileManager {
-
-
     private File directory;
     private String pathFile;
 
@@ -92,7 +90,6 @@ public class FileManager {
         Object obj;
         if (esCliente) {
             obj = new Cliente(datos[0], datos[1], datos[2], datos[3]);
-
         } else {
             obj = new Empleado(datos[0], datos[1], datos[2]);
         }

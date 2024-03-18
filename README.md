@@ -9,7 +9,7 @@
 	```C:\Users\admin\Desktop\Customer_Relationship_ManagerCRM\CRM```
 
 4. Accede a la carpeta "target"
-5. Po el siguiente comando en la termina:
+5. Pon el siguiente comando en la terminal del pc:
 
 	```java -jar CRM-1.0-SNAPSHOT.jar <opcion> <args1> <args2> ... <argsN>```
 
@@ -25,7 +25,19 @@
 
 # COMPILAR UN PROYECTO MAVEN
 
+1. En la terminal del PC dirígete a la carpeta del proyecto donde se encuentre el archivo pom.xml
+2. Comando: mvn compile
+3. Comando: mvn package
+
 # OPCIONES DEL PROYECTO
+
+altacliente <phone> <nombre> <apellido> <email>
+altaEmpleado <dni> <nombre> <apellido>
+bajaEmpleado <dni>
+cliente <phone>
+empleado <dni>
+listClientes
+listEmpleados
 
 
 

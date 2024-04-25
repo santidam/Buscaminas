@@ -38,11 +38,11 @@ public class Gestor {
     public void bajaEmpleado(String dni){
         ArrayList<Object> empleados = empleadosFile.leer(false);
         if (empleados.isEmpty()){
-            System.out.println("ERROR no existe ningún empleado en la base de datos");
+            System.out.println("ERROR. No existe ningún empleado en la base de datos");
         }else{
             int indiceEmpleado = buscarEmpleado(empleados,dni);
             if (indiceEmpleado==-1){
-                System.out.println("ERROR el empleado no está registrado en la base de datos");
+                System.out.println("ERROR. El empleado no está registrado en la base de datos");
             }else{
                 empleados.remove(indiceEmpleado);
                 empleadosFile.sobreEscribir(empleados,false);
@@ -73,6 +73,7 @@ public class Gestor {
 
     public void infoEmpleado(String dni) {
         ArrayList<Object> empleados = empleadosFile.leer(false);
+
         if (empleados.isEmpty()) {
             System.out.println("ERROR no existe ningún empleado en la base de datos");
         } else {
@@ -81,10 +82,15 @@ public class Gestor {
                 System.out.println("ERROR El empleado no se encuentra registrado en la base de datos");
             } else {
                 Empleado e = (Empleado) empleados.get(indiceEmpleado);
+                ArrayList<Cliente> clientes = e.getClientes();
                 System.out.println("*******   INFO EMPLEADO   *******" +
                         "\nNombre: " + e.getNombre() +
                         "\nApellido: " + e.getApellidos() +
-                        "\nDNI: " + e.getDni());
+                        "\nDNI: " + e.getDni() +
+                        "\nClientes: ");
+                for(Cliente c : clientes){
+                    System.out.println("\t-Nombre: " + c.getNombre() + "Telefono: " + c.getPhoneNumber() + "Email: " + c.getEmail());
+                }
                 System.out.println("-----------------------------------");
             }
         }
@@ -122,6 +128,27 @@ public class Gestor {
             System.out.println("No hay ningún empleado registrado");
         }
 
+    }
+
+    public void asignarCliente(String phoneNumberCliente, String dniEmpleado){
+        ArrayList<Object> clientes = clientesFile.leer(true);
+        ArrayList<Object> empleados = empleadosFile.leer(false);
+
+        if(!clientes.isEmpty() && !empleados.isEmpty()){
+            int posCliente = buscarCliente(clientes, phoneNumberCliente);
+            int posEmpleado = buscarEmpleado(empleados, dniEmpleado);
+            if(posEmpleado != -1 && posCliente != -1){
+                Empleado e = (Empleado) empleados.get(posEmpleado);
+                Cliente c = (Cliente) clientes.get(posCliente);
+                e.addCliente(c);
+                empleadosFile.sobreEscribir(empleados,false);
+                System.out.println("Cliente asignado correctamente");
+            }else{
+                System.out.println("ERROR. El cliente o el empleado introducido no se encuentra en la base de datos");
+            }
+        }else{
+            System.out.println("ERROR. Comprueba que hayan clientes y empleados registrados en la base de datos");
+        }
     }
 
     public int buscarCliente(ArrayList<Object> empleados, String phoneNumber){

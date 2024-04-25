@@ -19,11 +19,13 @@ public class Empleado {
     
 
     public void addCliente(Cliente c){
-        clientes.add(c);
+
+        this.clientes.add(c);
     }
-    public void registrarEmpleado(){}
-    public void registrarCliente(){
-        //si el empleado isAdmin
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+
     }
 
     public String getDni() {
@@ -36,6 +38,21 @@ public class Empleado {
 
     public String getApellidos() {
         return apellidos;
+    }
+
+    public String clientesToString() {
+        StringBuilder stringClientes = new StringBuilder();
+        if (clientes.isEmpty()) {
+            return "";
+        }
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente c = clientes.get(i);
+            stringClientes.append(c.getPhoneNumber());
+            if (i != clientes.size() - 1) {
+                stringClientes.append(",");
+            }
+        }
+        return stringClientes.toString();
     }
 
 

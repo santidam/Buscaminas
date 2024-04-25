@@ -84,7 +84,7 @@ public class Validations {
         if (valLength(args.length, 3)){
             if (valPhone(args[1])){
                 if (valDni(args[2])){
-                    System.out.println();
+                    gestor.asignarCliente(args[1],args[2]);
                 }
             }
         }
@@ -165,7 +165,6 @@ public class Validations {
             resto = numDni%23;
             if (letter == validLetters.charAt(resto)){
                 isValid = true;
-                System.out.println("DNI registrado correctamente");
             } else{
                 System.out.println("El último carácter solo puede ser una letra y tiene que ser válida");
             }

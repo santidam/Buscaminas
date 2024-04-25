@@ -1,18 +1,5 @@
 # Customer_Relationship_ManagerCRM
 
-# EJECUTAR EL PROGRAMA
-
-1. Clonar el repositorio en tu pc
-2. Asegurarte de que tienes Maven instalado, si no, mira el siguiente apartado
-3. Abre la terminal y dirígite a la ubicación donde tengas el proyecto, por ejemplo:
-
-	```C:\Users\admin\Desktop\Customer_Relationship_ManagerCRM\CRM```
-
-4. Accede a la carpeta "target"
-5. Pon el siguiente comando en la terminal del pc:
-
-	```java -jar CRM-1.0-SNAPSHOT.jar <opcion> <args1> <args2> ... <argsN>```
-
 # INSTALAR MAVEN
 
 1. Descargar Apache Maven https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
@@ -22,22 +9,34 @@
 	En el nuevo símbolo del sistema, escribe mvn -v y presiona Enter.
 	Deberías ver la versión de Maven y otra información relacionada, lo que confirmará que Maven se ha configurado correctamente y está en tu PATH.
 
-
 # COMPILAR UN PROYECTO MAVEN
 
-1. En la terminal del PC dirígete a la carpeta del proyecto donde se encuentre el archivo pom.xml
-2. Comando: mvn compile
-3. Comando: mvn package
+1. Clonar el repositorio en tu pc
+2. Asegurarte de que tienes Maven instalado, si no, mira el apartado anterior
+3. En la terminal del PC dirígete a la carpeta del proyecto donde se encuentre el archivo pom.xml
+4. Comando: mvn compile
+5. Comando: mvn package
+
+# EJECUTAR EL PROGRAMA
+
+1. Abre la terminal y dirígite a la ubicación donde tengas el proyecto, por ejemplo:
+
+	```C:\Users\admin\Desktop\Customer_Relationship_ManagerCRM\CRM```
+
+3. Accede a la carpeta "target"
+4. Pon el siguiente comando en la terminal del pc:
+
+	```java -jar CRM-1.0-SNAPSHOT.jar <opcion> <args1> <args2> ... <argsN>```
 
 # OPCIONES DEL PROYECTO
 
-altacliente '<phone>' <nombre> <apellido> <email><br>
-altaEmpleado <dni> <nombre> <apellido>
-bajaEmpleado <dni>
-cliente <phone>
-empleado <dni>
-listClientes
-listEmpleados
+- altacliente &lt;phone&gt; &lt;nombre&gt; &lt;apellido&gt; &lt;email&gt;<br>
+- altaEmpleado &lt;dni&gt; &lt;nombre&gt; &lt;apellido&gt;<br>
+- bajaEmpleado &lt;dni&gt;<br>
+- cliente &lt;phone&gt;<br>
+- empleado &lt;dni&gt;<br>
+- listClientes<br>
+- listEmpleados<br>
 
 
 

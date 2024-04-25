@@ -1,7 +1,7 @@
 package com.mycompany.crm.controller;
 
 import com.mycompany.crm.entity.Cliente;
-import com.mycompany.crm.entity.Empleado;
+import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.persistencia.FileManager;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class Gestor {
         ArrayList<Object> clientes = clientesFile.leer(true);
 
         if (buscarCliente(clientes, phone) == -1) {
-            Cliente cliente = new Cliente(name, apellidos, email, phone);
+            Cliente cliente = new Cliente(name, email, phone);
             clientesFile.escribir(cliente, true);
             System.out.println("El cliente ha sido registrado correctamente");
         } else {
@@ -23,12 +23,12 @@ public class Gestor {
         }
     }
 
-    public void altaEmpleado(String dni, String name, String apellidos){
+    public void altaEmpleado(String dni, String name, String apellidos, String codigoEmpleado){
 
         ArrayList<Object> empleados = empleadosFile.leer(false);
 
         if (buscarEmpleado(empleados, dni) == -1) {
-            Empleado empleado = new Empleado(dni, name, apellidos);
+            Comercial empleado = new Comercial(dni, name, apellidos);
             empleadosFile.escribir(empleado, false);
             System.out.println("El empleado ha sido registrado correctamente");
         } else {
@@ -63,7 +63,6 @@ public class Gestor {
                 Cliente c = (Cliente) clientes.get(posCliente);
                 System.out.println("*******   INFO CLIENTE   *******"+
                         "\nNombre: "+c.getNombre()+
-                        "\nApellido: "+c.getApellidos()+
                         "\nTeléfono: "+c.getPhoneNumber()+
                         "\nEmail: "+c.getEmail());
                 System.out.println("-----------------------------------");
@@ -80,7 +79,7 @@ public class Gestor {
             if (indiceEmpleado == -1) {
                 System.out.println("ERROR El empleado no se encuentra registrado en la base de datos");
             } else {
-                Empleado e = (Empleado) empleados.get(indiceEmpleado);
+                Comercial e = (Comercial) empleados.get(indiceEmpleado);
                 System.out.println("*******   INFO EMPLEADO   *******" +
                         "\nNombre: " + e.getNombre() +
                         "\nApellido: " + e.getApellidos() +
@@ -97,7 +96,7 @@ public class Gestor {
             System.out.println("*******   CLIENTES   *******");
             for (Object cliente : clientes) {
                 Cliente c = (Cliente) cliente;
-                System.out.println("Nombre: " + c.getNombre() +" "+c.getApellidos()+ "\n" +
+                System.out.println("Nombre: " + c.getNombre() + "\n" +
                         "Teléfono: " + c.getPhoneNumber() + "\n" +
                         "Email: " + c.getEmail());
                 System.out.println("-----------------------------------");
@@ -113,7 +112,7 @@ public class Gestor {
         if(!empleados.isEmpty()) {
             System.out.println("*******   Empleados   *******");
             for (Object empleado : empleados) {
-                Empleado e = (Empleado) empleado;
+                Comercial e = (Comercial) empleado;
                 System.out.println("Nombre: " + e.getNombre() +" "+e.getApellidos()+ "\n" +
                         "DNI: " + e.getDni());
 
@@ -125,12 +124,12 @@ public class Gestor {
         }
     }
 
-    public int buscarCliente(ArrayList<Object> empleados, String phoneNumber){
+    public int buscarCliente(ArrayList<Object> clientes, String phoneNumber){
         int posCliente = -1;
         int i = 0;
-        if(!empleados.isEmpty()){
-            while(posCliente == -1 && i<empleados.size()){
-                Cliente cliente = (Cliente) empleados.get(i);
+        if(!clientes.isEmpty()){
+            while(posCliente == -1 && i<clientes.size()){
+                Cliente cliente = (Cliente) clientes.get(i);
                 if(cliente.getPhoneNumber().equalsIgnoreCase(phoneNumber)){
                     posCliente = i;
                 }
@@ -145,7 +144,7 @@ public class Gestor {
         int i = 0;
         if(!empleados.isEmpty()){
             while(posEmpleado == -1 && i<empleados.size()){
-                Empleado empleado = (Empleado) empleados.get(i);
+                Comercial empleado = (Comercial) empleados.get(i);
                 if(empleado.getDni().equalsIgnoreCase(dni)){
                     posEmpleado = i;
                 }

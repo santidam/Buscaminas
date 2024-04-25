@@ -1,27 +1,18 @@
 package com.mycompany.crm.entity;
 
-import java.util.ArrayList;
+public class Comercial {
 
-public class Empleado {
     private String dni;
     private String nombre;
     private String apellidos;
+    private int porcentajeComision;
 
-    private ArrayList<Cliente> clientes;
-
-    public Empleado(String dni, String nombre, String apellidos) {
+    public Comercial(){}
+    public Comercial(String dni, String nombre, String apellidos) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
-        this.clientes = new ArrayList<>();
-    }
-
-    public void addCliente(Cliente c){
-        this.clientes.add(c);
-    }
-
-    public ArrayList<Cliente> getClientes() {
-        return clientes;
+        this.porcentajeComision = 5;
     }
 
     public String getDni() {
@@ -36,11 +27,12 @@ public class Empleado {
         return apellidos;
     }
 
+    public int getPorcentajeComision() {
+        return porcentajeComision;
+    }
 
     @Override
     public String toString() {
-        return dni + ';' +
-               nombre + ';' +
-               apellidos;
+        return dni + ";" + nombre + ";" + apellidos + ";" + porcentajeComision;
     }
 }

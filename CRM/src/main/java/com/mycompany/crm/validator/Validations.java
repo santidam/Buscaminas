@@ -33,11 +33,11 @@ public class Validations {
     }
 
     public void valAltaEmpleado(String[] args){
-        if (valLength(args.length, 4)) {
+        if (valLength(args.length, 5)) {
             if (valDni(args[1])) {
                 if (valName(args[2], "nombre")) {
                     if (valName(args[3], "apellido")) {
-                        gestor.altaEmpleado(args[1], args[2], args[3]);
+                        gestor.altaEmpleado(args[1], args[2], args[3], args[4]);
                     }
                 }
             }

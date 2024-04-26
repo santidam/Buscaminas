@@ -44,7 +44,7 @@ public class Menu {
                    val.valEmpleadosList(args);
                     break;
                 case "asignarcliente":
-                    val.valAsignarCliente(args);
+//                    val.valAsignarCliente(args);
                     break;
             }
         }catch(ArrayIndexOutOfBoundsException e){

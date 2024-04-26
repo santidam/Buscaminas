@@ -1,35 +1,36 @@
 package com.mycompany.crm.entity;
 
+import java.util.ArrayList;
+
 public class Cliente {
 
     private String nombre;
-    private String apellidos;
     private String email;
     private String phoneNumber;
+    private Comercial comercial;
+
+    private ArrayList<Accion> acciones;
 
 
-    public Cliente(String nombre, String apellidos, String email, String phoneNumber) {
+    public Cliente(String nombre, String email, String phoneNumber) {
 
         this.nombre = nombre;
-        this.apellidos = apellidos;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.comercial = new Comercial();
     }
 
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void asignarComercial(Comercial comercial){
+        this.comercial = comercial;
     }
 
-    public void setPhonenNumber(String phonenNumber) {
-        this.phoneNumber = phonenNumber;
+    public void guardarAccion(Accion accion){
+        this.acciones.add(accion);
     }
 
     public String getNombre() {
         return nombre;
     }
-
-    public String getApellidos(){ return apellidos;}
 
     public String getEmail() {
         return email;
@@ -43,7 +44,6 @@ public class Cliente {
     public String toString() {
 
         return  nombre + ';' +
-                apellidos + ';' +
                 email + ';' +
                 phoneNumber;
 

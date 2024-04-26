@@ -1,14 +1,12 @@
 package com.mycompany.crm.persistencia;
 import com.mycompany.crm.entity.Cliente;
-import com.mycompany.crm.entity.Empleado;
+import com.mycompany.crm.entity.Comercial;
 
 import java.io.*;
 import java.util.ArrayList;
 
 
 public class FileManager {
-
-
     private File directory;
     private String pathFile;
 
@@ -30,7 +28,7 @@ public class FileManager {
                 bw.write(c.toString());
                 bw.newLine();
             }else{
-                Empleado e = (Empleado) obj;
+                Comercial e = (Comercial) obj;
                 bw.write(e.toString());
                 bw.newLine();
             }
@@ -51,7 +49,7 @@ public class FileManager {
             BufferedWriter bw = new BufferedWriter(new FileWriter(pathFile, false));
             for (Object o: objetos) {
                 if (!esCliente) {
-                    Empleado e = (Empleado) o;
+                    Comercial e = (Comercial) o;
                     bw.write(e.toString());
                 }else {
                     Cliente c = (Cliente) o;
@@ -91,10 +89,9 @@ public class FileManager {
         String[] datos = linea.split(";");
         Object obj;
         if (esCliente) {
-            obj = new Cliente(datos[0], datos[1], datos[2], datos[3]);
-
+            obj = new Cliente(datos[0], datos[1], datos[2]);
         } else {
-            obj = new Empleado(datos[0], datos[1], datos[2]);
+            obj = new Comercial(datos[0], datos[1], datos[2]);
         }
         return obj;
     }

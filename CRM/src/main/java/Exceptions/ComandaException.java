@@ -4,7 +4,7 @@ package Exceptions;
 import java.util.Arrays;
 import java.util.List;
 
-public class ComandaExeption  extends Exception{
+public class ComandaException  extends Exception{
 
     public static final int OPERACION_INCORRECTA = 0;
     public static final int ARGS_INCORRECTOS = 1;
@@ -64,7 +64,7 @@ public class ComandaExeption  extends Exception{
     private final int code;
 
 
-    public ComandaExeption(int code) {
+    public ComandaException(int code) {
         this.code = code;
     }
 

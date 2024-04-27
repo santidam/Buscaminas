@@ -11,37 +11,36 @@ import com.mycompany.crm.validator.Validations;
  */
 public class Menu {
 
-    private Validations val = new Validations();
     public void start(String[] args) {
 
         try {
             switch(args[0].toLowerCase()){
                 case "altacliente":
-                    val.valAltaCliente(args);
+//                    val.valAltaCliente(args);
                     break;
 
                 case "altaempleado":
-                    val.valAltaEmpleado(args);
+//                    val.valAltaEmpleado(args);
                     break;
 
                 case "bajaempleado":
-                    val.valBajaEmpleado(args);
+//                    val.valBajaEmpleado(args);
                     break;
 
                 case "cliente":
-                    val.valClienteInfo(args);
+//                    val.valClienteInfo(args);
                     break;
 
                 case "empleado":
-                    val.valEmpleadoInfo(args);
+//                    val.valEmpleadoInfo(args);
                     break;
 
                 case "listclientes":
-                    val.valClientesList(args);
+//                    val.valClientesList(args);
                     break;
 
                 case "listempleados":
-                   val.valEmpleadosList(args);
+//                   val.valEmpleadosList(args);
                     break;
                 case "asignarcliente":
 //                    val.valAsignarCliente(args);

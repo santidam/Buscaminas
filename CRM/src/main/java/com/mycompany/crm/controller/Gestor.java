@@ -10,13 +10,27 @@ import java.util.ArrayList;
 public class Gestor {
     private FileManager clientesFile = new FileManager("Data", "clientes.txt");
     private FileManager empleadosFile = new FileManager("Data", "empleados.txt");
+    private Comercial comercial;
+    
+    public void login(String dni) throws ComandaException{
+        ArrayList<Object> empleados = empleadosFile.leer(false);
+        int indice = buscarEmpleado(empleados, dni);
 
-    public void altaCliente(String phone, String name, String apellidos, String email) throws ComandaException {
+        if (indice == -1) {
+            System.out.println("ERROR. Usuario no existe");
+            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+        } else {
+            this.comercial = (Comercial) empleados.get(indice);
+        }
+    }
+
+    public void altaCliente(String phone, String name, String contacto, String email) throws ComandaException {
 
         ArrayList<Object> clientes = clientesFile.leer(true);
 
         if (buscarCliente(clientes, phone) == -1) {
-            Cliente cliente = new Cliente(name, email, phone);
+            Cliente cliente = new Cliente(name, email, phone, contacto);
+            cliente.asignarComercial(this.comercial);
             clientesFile.escribir(cliente, true);
             System.out.println("El cliente ha sido registrado correctamente");
         } else {
@@ -25,7 +39,7 @@ public class Gestor {
         }
     }
 
-    public void altaEmpleado(String dni, String name, String apellidos, String codigoEmpleado) throws ComandaException {
+    public void altaEmpleado(String dni, String name, String apellidos) throws ComandaException {
 
         ArrayList<Object> empleados = empleadosFile.leer(false);
 
@@ -56,8 +70,9 @@ public class Gestor {
         }
 
     }
-    public void infoCliente(String phoneNumber) throws ComandaException {
+    public String infoCliente(String phoneNumber) throws ComandaException {
         ArrayList<Object> clientes = clientesFile.leer(true);
+        String s = "";
         if (clientes.isEmpty()){
             System.out.println("ERROR no existe ningún cliente en la base de datos");
             throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
@@ -68,13 +83,15 @@ public class Gestor {
                 throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
             }else{
                 Cliente c = (Cliente) clientes.get(posCliente);
-                System.out.println("*******   INFO CLIENTE   *******"+
-                        "\nNombre: "+c.getNombre()+
+                s+="*******   INFO CLIENTE   *******"+
+                        "\nNombre de Empresa: "+c.getNombre()+
+                        "\nContacto "+ c.getContacto()+
                         "\nTeléfono: "+c.getPhoneNumber()+
-                        "\nEmail: "+c.getEmail());
-                System.out.println("-----------------------------------");
+                        "\nEmail: "+c.getEmail();
+                
             }
         }
+        return s;
     }
 
     public void infoEmpleado(String dni) throws ComandaException{

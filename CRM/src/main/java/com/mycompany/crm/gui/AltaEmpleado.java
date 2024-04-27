@@ -4,6 +4,9 @@
  */
 package com.mycompany.crm.gui;
 
+import Exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
+
 /**
  *
  * @author admin
@@ -26,33 +29,118 @@ public class AltaEmpleado extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        titulo = new javax.swing.JLabel();
+        nombre = new javax.swing.JTextField();
+        nombreLabel = new javax.swing.JLabel();
+        apellidosLabel = new javax.swing.JLabel();
+        apellido = new javax.swing.JTextField();
+        dni = new javax.swing.JTextField();
+        numeroLabel = new javax.swing.JLabel();
+        okBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
-        jLabel1.setText("Alta Empleado");
+        titulo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        titulo.setText("Alta Empleado");
+
+        nombre.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreActionPerformed(evt);
+            }
+        });
+
+        nombreLabel.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        nombreLabel.setText("Nombre");
+
+        apellidosLabel.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        apellidosLabel.setText("Apellidos");
+
+        apellido.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        dni.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        numeroLabel.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        numeroLabel.setText("DNI");
+
+        okBtn.setText("REGISTRAR");
+        okBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(223, 223, 223)
-                .addComponent(jLabel1)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(apellidosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numeroLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                    .addComponent(apellido)
+                    .addComponent(dni)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(134, 134, 134))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(okBtn)
+                .addGap(217, 217, 217))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addComponent(jLabel1)
-                .addContainerGap(338, Short.MAX_VALUE))
+                .addGap(59, 59, 59)
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(apellidosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numeroLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addComponent(okBtn)
+                .addContainerGap(105, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreActionPerformed
+
+    private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
+        try {
+            Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(), apellido.getText());
+            javax.swing.JOptionPane.showMessageDialog(this, "Empleado registrado correctamente","Alta Empleado",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_okBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField apellido;
+    private javax.swing.JLabel apellidosLabel;
+    private javax.swing.JTextField dni;
+    private javax.swing.JTextField nombre;
+    private javax.swing.JLabel nombreLabel;
+    private javax.swing.JLabel numeroLabel;
+    private javax.swing.JButton okBtn;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }

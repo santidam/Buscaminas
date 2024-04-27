@@ -4,10 +4,14 @@
  */
 package com.mycompany.crm.gui;
 
+import Exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -65,7 +69,7 @@ public class LoginFrame extends javax.swing.JFrame {
         logname.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
         logname.setForeground(new java.awt.Color(60, 119, 199));
         logname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logname.setText("Whats CRM");
+        logname.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/letrasCRM5.png"))); // NOI18N
         bg.add(logname, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 250, 330, -1));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo2.jpg"))); // NOI18N
@@ -276,17 +280,35 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_passTextMousePressed
 
     private void loginBtnTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnTxtMouseClicked
-        if (!userText.getText().equals("admin") || !String.valueOf(passText.getPassword()).equals("1234")) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: intento de login con los datos:\nUsuario: "+ userText.getText()+"\nContraseña: "+String.valueOf(passText.getPassword()),"LOGIN",javax.swing.JOptionPane.ERROR_MESSAGE);
-        }else{
+//        if (!userText.getText().equals("admin") || !String.valueOf(passText.getPassword()).equals("1234")) {
+//            javax.swing.JOptionPane.showMessageDialog(this, "Error: intento de login con los datos:\nUsuario: "+ userText.getText()+"\nContraseña: "+String.valueOf(passText.getPassword()),"LOGIN",javax.swing.JOptionPane.ERROR_MESSAGE);
+//        }else{
+//            javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\nUsuario: "+ userText.getText()+"\nContraseña: "+String.valueOf(passText.getPassword()),"LOGIN",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+//
+//            MenuPrincipal m = new MenuPrincipal();
+//            m.setSize(810, 461);
+//            m.setLocationRelativeTo(null);
+//            m.setVisible(true);
+//            this.dispose();
+//
+//        }
+//        
+        try {
+           
+            Validations.getInstance().valLogin(userText.getText(),String.valueOf(passText.getPassword()));  
+            
             javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\nUsuario: "+ userText.getText()+"\nContraseña: "+String.valueOf(passText.getPassword()),"LOGIN",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
             MenuPrincipal m = new MenuPrincipal();
             m.setSize(810, 461);
             m.setLocationRelativeTo(null);
             m.setVisible(true);
             this.dispose();
-
+                
+          
+              
+            
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginBtnTxtMouseClicked
 

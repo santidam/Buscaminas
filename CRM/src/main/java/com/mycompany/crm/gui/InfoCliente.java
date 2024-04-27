@@ -4,6 +4,11 @@
  */
 package com.mycompany.crm.gui;
 
+import Exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author admin
@@ -29,13 +34,16 @@ public class InfoCliente extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         labelTelefono = new javax.swing.JLabel();
         telefonoTxt = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         okBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        info = new javax.swing.JTextArea();
+        titulo = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        labelTelefono.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         labelTelefono.setText("Número de teléfono");
 
         telefonoTxt.addActionListener(new java.awt.event.ActionListener() {
@@ -44,15 +52,20 @@ public class InfoCliente extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
-        jLabel2.setText("INFO CLIENTE");
-
         okBtn.setText("Buscar");
         okBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okBtnActionPerformed(evt);
             }
         });
+
+        info.setColumns(20);
+        info.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        info.setRows(5);
+        jScrollPane1.setViewportView(info);
+
+        titulo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        titulo.setText("Info Cliente");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -61,34 +74,36 @@ public class InfoCliente extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
+                        .addGap(18, 18, 18)
                         .addComponent(labelTelefono)
-                        .addGap(10, 10, 10)
+                        .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(telefonoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(telefonoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addComponent(okBtn))
+                            .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
-                        .addComponent(okBtn)))
-                .addContainerGap(255, Short.MAX_VALUE))
+                        .addGap(159, 159, 159)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(jLabel2)
-                .addGap(87, 87, 87)
+                .addGap(78, 78, 78)
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(telefonoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
-                .addComponent(okBtn)
-                .addContainerGap(187, Short.MAX_VALUE))
+                    .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(okBtn))
+                .addGap(75, 75, 75)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void telefonoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefonoTxtActionPerformed
@@ -96,15 +111,22 @@ public class InfoCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_telefonoTxtActionPerformed
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-        // TODO add your handling code here:
+        try {
+            String infoCliente = Validations.getInstance().valClienteInfo(telefonoTxt.getText());
+            info.setText(infoCliente);
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_okBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextArea info;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelTelefono;
     private javax.swing.JButton okBtn;
     private javax.swing.JTextField telefonoTxt;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }

@@ -48,6 +48,7 @@ public class AltaCliente extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(630, 460));
+        setPreferredSize(new java.awt.Dimension(630, 460));
 
         titulo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         titulo.setText("Alta Cliente");

@@ -26,24 +26,32 @@ public class Validations {
         }
         return v;
     }
+    public void valLogin(String dni, String password) throws ComandaException{
+        if (!password.equals("1234")) {
+            System.out.println("ERROR Cntraseña");
+            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+        }
+        gestor.login(dni);
 
-    public void valAltaCliente(String phone, String name, String apellidos, String email) throws ComandaException {
+    }
+
+    public void valAltaCliente(String phone, String nameEmpresa, String contacto, String email) throws ComandaException {
         if (valPhone(phone)) {
-                if (valName(name, "nombre")) {
-                    if (valName(apellidos, "apellido")) {
+                if (valName(nameEmpresa, "nombre")) {
+                    if (valName(contacto, "apellido")) {
                         if (valEmail(email)) {
-                            gestor.altaCliente(phone, name, apellidos, email);
+                            gestor.altaCliente(phone, nameEmpresa, contacto, email);
                         }
                     }
                 }
             }
     }
 
-    public void valAltaEmpleado(String dni, String name, String apellidos, String codigoEmpleado) throws ComandaException {
+    public void valAltaEmpleado(String dni, String name, String apellidos) throws ComandaException {
         if (valDni(dni)) {
             if (valName(name, "nombre")) {
                 if (valName(apellidos, "apellido")) {
-                    gestor.altaEmpleado(dni,name,apellidos,codigoEmpleado);
+                    gestor.altaEmpleado(dni,name,apellidos);
                 }
             }
         }
@@ -55,10 +63,10 @@ public class Validations {
         }
     }
 
-    public void valClienteInfo(String phone) throws ComandaException {
-        if (valPhone(phone)) {
-            gestor.infoCliente(phone);
-        }
+    public String valClienteInfo(String phone) throws ComandaException {
+        valPhone(phone);
+        return gestor.infoCliente(phone);
+        
     }
 
     public void valEmpleadoInfo(String dni) throws ComandaException{

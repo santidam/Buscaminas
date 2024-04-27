@@ -51,6 +51,7 @@ public class FileManager {
                 if (!esCliente) {
                     Comercial e = (Comercial) o;
                     bw.write(e.toString());
+                    bw.newLine();
                 }else {
                     Cliente c = (Cliente) o;
                     bw.write(c.toString());
@@ -89,7 +90,7 @@ public class FileManager {
         String[] datos = linea.split(";");
         Object obj;
         if (esCliente) {
-            obj = new Cliente(datos[0], datos[1], datos[2]);
+            obj = new Cliente(datos[0], datos[1], datos[2], datos[3]);
         } else {
             obj = new Comercial(datos[0], datos[1], datos[2]);
         }

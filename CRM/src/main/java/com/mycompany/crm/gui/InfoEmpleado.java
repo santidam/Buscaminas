@@ -29,6 +29,7 @@ public class InfoEmpleado extends javax.swing.JPanel {
         textBienvenida = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(630, 460));
 
         textBienvenida.setFont(new java.awt.Font("Roboto Black", 0, 36)); // NOI18N
         textBienvenida.setText("Info Empleado");

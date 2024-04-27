@@ -59,9 +59,12 @@ public class InfoCliente extends javax.swing.JPanel {
             }
         });
 
+        jScrollPane1.setBorder(null);
+
         info.setColumns(20);
         info.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         info.setRows(5);
+        info.setBorder(null);
         jScrollPane1.setViewportView(info);
 
         titulo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N

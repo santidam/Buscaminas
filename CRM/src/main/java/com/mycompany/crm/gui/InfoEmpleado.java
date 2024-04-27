@@ -39,8 +39,10 @@ public class InfoEmpleado extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(630, 460));
 
+        jScrollPane1.setBorder(null);
+
         info.setColumns(20);
-        info.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        info.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
         info.setRows(5);
         jScrollPane1.setViewportView(info);
 
@@ -79,7 +81,7 @@ public class InfoEmpleado extends javax.swing.JPanel {
                         .addGap(42, 42, 42)
                         .addComponent(okBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
+                        .addGap(69, 69, 69)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(199, Short.MAX_VALUE))
         );
@@ -93,9 +95,9 @@ public class InfoEmpleado extends javax.swing.JPanel {
                     .addComponent(dni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(okBtn))
-                .addGap(75, 75, 75)
+                .addGap(44, 44, 44)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

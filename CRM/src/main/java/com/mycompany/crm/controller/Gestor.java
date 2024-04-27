@@ -18,7 +18,7 @@ public class Gestor {
 
         if (indice == -1) {
             System.out.println("ERROR. Usuario no existe");
-            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+            throw new ComandaException(ComandaException.ERROR_USER);
         } else {
             this.comercial = (Comercial) empleados.get(indice);
         }
@@ -35,7 +35,7 @@ public class Gestor {
             System.out.println("El cliente ha sido registrado correctamente");
         } else {
             System.out.println("ERROR. El cliente ya se encuentra en la base de datos");
-            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+            throw new ComandaException(ComandaException.CLIENTE_EXISTE);
         }
     }
 
@@ -49,19 +49,19 @@ public class Gestor {
             System.out.println("El empleado ha sido registrado correctamente");
         } else {
             System.out.println("ERROR. El empleado ya se encuentra en la base de datos");
-            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+            throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
     }
     public void bajaEmpleado(String dni) throws ComandaException {
         ArrayList<Object> empleados = empleadosFile.leer(false);
         if (empleados.isEmpty()){
             System.out.println("ERROR. No existe ningún empleado en la base de datos");
-            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+            throw new ComandaException(ComandaException.NO_EMPLEADOS);
         }else{
             int indiceEmpleado = buscarEmpleado(empleados,dni);
             if (indiceEmpleado==-1){
                 System.out.println("ERROR. El empleado no está registrado en la base de datos");
-                throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+                throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
             }else{
                 empleados.remove(indiceEmpleado);
                 empleadosFile.sobreEscribir(empleados,false);
@@ -75,12 +75,12 @@ public class Gestor {
         String s = "";
         if (clientes.isEmpty()){
             System.out.println("ERROR no existe ningún cliente en la base de datos");
-            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+            throw new ComandaException(ComandaException.NO_CLIENTES);
         }else{
             int posCliente = buscarCliente(clientes, phoneNumber);
             if (posCliente == -1){
                 System.out.println("ERROR El cliente no se encuentra registrado en la base de datos");
-                throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+                throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
             }else{
                 Cliente c = (Cliente) clientes.get(posCliente);
                 s+="*******   INFO CLIENTE   *******"+
@@ -99,12 +99,12 @@ public class Gestor {
         String s = "";
         if (empleados.isEmpty()) {
             System.out.println("ERROR no existe ningún empleado en la base de datos");
-            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+            throw new ComandaException(ComandaException.NO_EMPLEADOS);
         } else {
             int indiceEmpleado = buscarEmpleado(empleados, dni);
             if (indiceEmpleado == -1) {
                 System.out.println("ERROR El empleado no se encuentra registrado en la base de datos");
-                throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+                throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
             } else {
                 Comercial e = (Comercial) empleados.get(indiceEmpleado);
                 s+="*******   INFO EMPLEADO   *******" +
@@ -132,7 +132,7 @@ public class Gestor {
 
         }else{
             System.out.println("No hay ningún cliente registrado");
-            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+            throw new ComandaException(ComandaException.NO_CLIENTES);
         }
 
     }
@@ -150,7 +150,7 @@ public class Gestor {
 
         }else {
             System.out.println("No hay ningún empleado registrado");
-            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
+            throw new ComandaException(ComandaException.NO_EMPLEADOS);
         }
     }
 

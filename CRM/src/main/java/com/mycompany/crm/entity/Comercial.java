@@ -7,6 +7,7 @@ public class Comercial {
     private String apellidos;
     private int porcentajeComision;
 
+
     public Comercial(){}
     public Comercial(String dni, String nombre, String apellidos) {
         this.dni = dni;

@@ -1,0 +1,6 @@
+SDAD;SANIT@gmail.com;123456789;mar vorralo
+pepe;santi@gmail.com;987654321;santi san
+santi;san@gmail.com;123456788;val van
+queso;pe@gmail.com;111222333;david dan
+motor;val@gmail.com;654987321;val val
+asdf;as_As@gmail.com;123456787;es ees

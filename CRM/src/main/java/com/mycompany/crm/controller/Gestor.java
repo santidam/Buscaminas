@@ -1,5 +1,6 @@
 package com.mycompany.crm.controller;
 
+import Exceptions.ComandaException;
 import com.mycompany.crm.entity.Cliente;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.persistencia.FileManager;
@@ -9,21 +10,36 @@ import java.util.ArrayList;
 public class Gestor {
     private FileManager clientesFile = new FileManager("Data", "clientes.txt");
     private FileManager empleadosFile = new FileManager("Data", "empleados.txt");
+    private Comercial comercial;
+    
+    public void login(String dni) throws ComandaException{
+        ArrayList<Object> empleados = empleadosFile.leer(false);
+        int indice = buscarEmpleado(empleados, dni);
 
-    public void altaCliente(String phone, String name, String apellidos, String email) {
+        if (indice == -1) {
+            System.out.println("ERROR. Usuario no existe");
+            throw new ComandaException(ComandaException.ERROR_USER);
+        } else {
+            this.comercial = (Comercial) empleados.get(indice);
+        }
+    }
+
+    public void altaCliente(String phone, String name, String contacto, String email) throws ComandaException {
 
         ArrayList<Object> clientes = clientesFile.leer(true);
 
         if (buscarCliente(clientes, phone) == -1) {
-            Cliente cliente = new Cliente(name, email, phone);
+            Cliente cliente = new Cliente(name, email, phone, contacto);
+            cliente.asignarComercial(this.comercial);
             clientesFile.escribir(cliente, true);
             System.out.println("El cliente ha sido registrado correctamente");
         } else {
             System.out.println("ERROR. El cliente ya se encuentra en la base de datos");
+            throw new ComandaException(ComandaException.CLIENTE_EXISTE);
         }
     }
 
-    public void altaEmpleado(String dni, String name, String apellidos, String codigoEmpleado){
+    public void altaEmpleado(String dni, String name, String apellidos) throws ComandaException {
 
         ArrayList<Object> empleados = empleadosFile.leer(false);
 
@@ -33,16 +49,19 @@ public class Gestor {
             System.out.println("El empleado ha sido registrado correctamente");
         } else {
             System.out.println("ERROR. El empleado ya se encuentra en la base de datos");
+            throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
     }
-    public void bajaEmpleado(String dni){
+    public void bajaEmpleado(String dni) throws ComandaException {
         ArrayList<Object> empleados = empleadosFile.leer(false);
         if (empleados.isEmpty()){
             System.out.println("ERROR. No existe ningún empleado en la base de datos");
+            throw new ComandaException(ComandaException.NO_EMPLEADOS);
         }else{
             int indiceEmpleado = buscarEmpleado(empleados,dni);
             if (indiceEmpleado==-1){
                 System.out.println("ERROR. El empleado no está registrado en la base de datos");
+                throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
             }else{
                 empleados.remove(indiceEmpleado);
                 empleadosFile.sobreEscribir(empleados,false);
@@ -51,77 +70,91 @@ public class Gestor {
         }
 
     }
-    public void infoCliente(String phoneNumber){
+    public String infoCliente(String phoneNumber) throws ComandaException {
         ArrayList<Object> clientes = clientesFile.leer(true);
+        String s = "";
         if (clientes.isEmpty()){
             System.out.println("ERROR no existe ningún cliente en la base de datos");
+            throw new ComandaException(ComandaException.NO_CLIENTES);
         }else{
             int posCliente = buscarCliente(clientes, phoneNumber);
             if (posCliente == -1){
                 System.out.println("ERROR El cliente no se encuentra registrado en la base de datos");
+                throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
             }else{
                 Cliente c = (Cliente) clientes.get(posCliente);
-                System.out.println("*******   INFO CLIENTE   *******"+
-                        "\nNombre: "+c.getNombre()+
+                s+="*******   INFO CLIENTE   *******"+
+                        "\nNombre de Empresa: "+c.getNombre()+
+                        "\nContacto "+ c.getContacto()+
                         "\nTeléfono: "+c.getPhoneNumber()+
-                        "\nEmail: "+c.getEmail());
-                System.out.println("-----------------------------------");
+                        "\nEmail: "+c.getEmail();
+                
             }
         }
+        return s;
     }
 
-    public void infoEmpleado(String dni) {
+    public String infoEmpleado(String dni) throws ComandaException{
         ArrayList<Object> empleados = empleadosFile.leer(false);
+        String s = "";
         if (empleados.isEmpty()) {
             System.out.println("ERROR no existe ningún empleado en la base de datos");
+            throw new ComandaException(ComandaException.NO_EMPLEADOS);
         } else {
             int indiceEmpleado = buscarEmpleado(empleados, dni);
             if (indiceEmpleado == -1) {
                 System.out.println("ERROR El empleado no se encuentra registrado en la base de datos");
+                throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
             } else {
                 Comercial e = (Comercial) empleados.get(indiceEmpleado);
-                System.out.println("*******   INFO EMPLEADO   *******" +
+                s+="*******   INFO EMPLEADO   *******" +
                         "\nNombre: " + e.getNombre() +
                         "\nApellido: " + e.getApellidos() +
-                        "\nDNI: " + e.getDni());
+                        "\nDNI: " + e.getDni();
 
-                System.out.println("-----------------------------------");
+                
             }
         }
+        return s;
     }
 
-    public void listClientes(){
+    public String listClientes()throws ComandaException{
         ArrayList<Object> clientes = clientesFile.leer(true);
+        String s = "";
         if(!clientes.isEmpty()) {
-            System.out.println("*******   CLIENTES   *******");
+            s+="*******   CLIENTES   *******\n";
             for (Object cliente : clientes) {
                 Cliente c = (Cliente) cliente;
-                System.out.println("Nombre: " + c.getNombre() + "\n" +
+                s+="Nombre: " + c.getNombre() + "\n" +
                         "Teléfono: " + c.getPhoneNumber() + "\n" +
-                        "Email: " + c.getEmail());
-                System.out.println("-----------------------------------");
+                        "Email: " + c.getEmail()+"\n";
+                s+="-----------------------------------\n";
             }
 
         }else{
             System.out.println("No hay ningún cliente registrado");
+            throw new ComandaException(ComandaException.NO_CLIENTES);
         }
-
+        return s;    
     }
-    public void listEmpleados(){
+    public String listEmpleados()throws ComandaException{
         ArrayList<Object> empleados = empleadosFile.leer(false);
+        String s = "";
         if(!empleados.isEmpty()) {
-            System.out.println("*******   Empleados   *******");
+            s+="*******   Empleados   *******\n";
             for (Object empleado : empleados) {
                 Comercial e = (Comercial) empleado;
-                System.out.println("Nombre: " + e.getNombre() +" "+e.getApellidos()+ "\n" +
-                        "DNI: " + e.getDni());
+                s+="Nombre: " + e.getNombre() +" "+e.getApellidos()+ "\n" +
+                        "DNI: " + e.getDni()+"\n";
 
-                System.out.println("-----------------------------------");
+                s+="-----------------------------------\n";
             }
 
         }else {
             System.out.println("No hay ningún empleado registrado");
+            throw new ComandaException(ComandaException.NO_EMPLEADOS);
         }
+        return s;
     }
 
     public int buscarCliente(ArrayList<Object> clientes, String phoneNumber){

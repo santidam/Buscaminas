@@ -38,7 +38,7 @@ public class AltaEmpleado extends javax.swing.JPanel {
         numeroLabel = new javax.swing.JLabel();
         okBtn = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 204, 255));
 
         titulo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         titulo.setText("Alta Empleado");

@@ -4,6 +4,9 @@
  */
 package com.mycompany.crm.gui;
 
+import Exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
+
 /**
  *
  * @author admin
@@ -26,33 +29,54 @@ public class ListaEmpleados extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textBienvenida = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        okBtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        info = new javax.swing.JTextArea();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 204, 255));
+        setToolTipText("");
+        setPreferredSize(new java.awt.Dimension(630, 460));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textBienvenida.setFont(new java.awt.Font("Roboto Black", 0, 36)); // NOI18N
-        textBienvenida.setText("Lista Empleado");
+        jLabel1.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
+        jLabel1.setText("Lista de Empleados");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(textBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(textBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        okBtn.setText("Buscar");
+        okBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnActionPerformed(evt);
+            }
+        });
+        add(okBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 110, 70));
+
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setOpaque(false);
+
+        info.setBackground(new java.awt.Color(204, 204, 255));
+        info.setColumns(20);
+        info.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        info.setRows(5);
+        jScrollPane2.setViewportView(info);
+
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 90, 390, 350));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
+        try {
+            String infoCliente = Validations.getInstance().valEmpleadosList();
+            info.setText(infoCliente);
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_okBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel textBienvenida;
+    private javax.swing.JTextArea info;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton okBtn;
     // End of variables declaration//GEN-END:variables
 }

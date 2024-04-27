@@ -75,12 +75,12 @@ public class Validations {
         return gestor.infoEmpleado(dni);
     }
 
-    public void valClientesList(String[] args) throws ComandaException {
-        gestor.listClientes();
+    public String valClientesList() throws ComandaException {
+        return gestor.listClientes();
     }
 
-    public void valEmpleadosList(String[] args) throws ComandaException {
-        gestor.listEmpleados();
+    public String valEmpleadosList() throws ComandaException {
+        return gestor.listEmpleados();
     }
 
 //    public void valAsignarCliente(String[] args){

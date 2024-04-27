@@ -118,40 +118,43 @@ public class Gestor {
         return s;
     }
 
-    public void listClientes()throws ComandaException{
+    public String listClientes()throws ComandaException{
         ArrayList<Object> clientes = clientesFile.leer(true);
+        String s = "";
         if(!clientes.isEmpty()) {
-            System.out.println("*******   CLIENTES   *******");
+            s+="*******   CLIENTES   *******\n";
             for (Object cliente : clientes) {
                 Cliente c = (Cliente) cliente;
-                System.out.println("Nombre: " + c.getNombre() + "\n" +
+                s+="Nombre: " + c.getNombre() + "\n" +
                         "Teléfono: " + c.getPhoneNumber() + "\n" +
-                        "Email: " + c.getEmail());
-                System.out.println("-----------------------------------");
+                        "Email: " + c.getEmail()+"\n";
+                s+="-----------------------------------\n";
             }
 
         }else{
             System.out.println("No hay ningún cliente registrado");
             throw new ComandaException(ComandaException.NO_CLIENTES);
         }
-
+        return s;    
     }
-    public void listEmpleados()throws ComandaException{
+    public String listEmpleados()throws ComandaException{
         ArrayList<Object> empleados = empleadosFile.leer(false);
+        String s = "";
         if(!empleados.isEmpty()) {
-            System.out.println("*******   Empleados   *******");
+            s+="*******   Empleados   *******\n";
             for (Object empleado : empleados) {
                 Comercial e = (Comercial) empleado;
-                System.out.println("Nombre: " + e.getNombre() +" "+e.getApellidos()+ "\n" +
-                        "DNI: " + e.getDni());
+                s+="Nombre: " + e.getNombre() +" "+e.getApellidos()+ "\n" +
+                        "DNI: " + e.getDni()+"\n";
 
-                System.out.println("-----------------------------------");
+                s+="-----------------------------------\n";
             }
 
         }else {
             System.out.println("No hay ningún empleado registrado");
             throw new ComandaException(ComandaException.NO_EMPLEADOS);
         }
+        return s;
     }
 
     public int buscarCliente(ArrayList<Object> clientes, String phoneNumber){

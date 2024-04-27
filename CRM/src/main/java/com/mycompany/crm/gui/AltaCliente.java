@@ -46,7 +46,7 @@ public class AltaCliente extends javax.swing.JPanel {
         jSeparator4 = new javax.swing.JSeparator();
         okBtn = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 204, 255));
         setMinimumSize(new java.awt.Dimension(630, 460));
         setPreferredSize(new java.awt.Dimension(630, 460));
 

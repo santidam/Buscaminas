@@ -4,6 +4,7 @@
  */
 package com.mycompany.crm.gui;
 
+import java.awt.Dialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -19,6 +20,11 @@ public class Agenda extends javax.swing.JPanel {
     public Agenda() {
         initComponents();
     }
+    public void cambiarDialog(Dialog a){
+        a.setSize(650, 473);
+        a.setLocationRelativeTo(null);
+        a.setVisible(true);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,19 +36,19 @@ public class Agenda extends javax.swing.JPanel {
     private void initComponents() {
 
         labelInfo = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        opcion = new javax.swing.JComboBox<>();
         okBtn = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 204, 255));
 
         labelInfo.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         labelInfo.setText("Seleciona una opcion");
 
-        jComboBox1.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Programar visita", "Registrar llamada", "Enviar correo", "Ver Agenda" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        opcion.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        opcion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Programar visita", "Registrar llamada", "Enviar correo", "Ver Agenda" }));
+        opcion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                opcionActionPerformed(evt);
             }
         });
 
@@ -61,45 +67,63 @@ public class Agenda extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(222, 222, 222)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(opcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(196, 196, 196)
-                        .addComponent(labelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(262, 262, 262)
+                        .addComponent(okBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(246, 246, 246)
-                        .addComponent(okBtn)))
-                .addContainerGap(247, Short.MAX_VALUE))
+                        .addGap(208, 208, 208)
+                        .addComponent(labelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
+                .addGap(73, 73, 73)
                 .addComponent(labelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(44, 44, 44)
+                .addComponent(opcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addComponent(okBtn)
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void opcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_opcionActionPerformed
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(Agenda.this);
+        String s = opcion.getSelectedItem().toString();
+        switch (s){
+            case "Programar visita":
+                AgendaVisita v = new AgendaVisita(parent,true);
+                cambiarDialog(v);
+                break;
+            case "Registrar llamada":
+                AgendaLlamada l = new AgendaLlamada(parent,true);
+                cambiarDialog(l);
+                break;
+            case "Enviar correo":
+                AgendaEmail e = new AgendaEmail(parent, true);
+                cambiarDialog(e);
+                break;
+            case "Ver Agenda":
+                AgendaAgenda ag = new AgendaAgenda(parent, true);
+                cambiarDialog(ag);
+                break;
+                    
+        }
         
-        AgendaEmail a = new AgendaEmail(parent,true);
-        a.setSize(630, 460);
-        a.setLocationRelativeTo(null);
-        a.setVisible(true);
+//        AgendaEmail a = new AgendaEmail(parent,true);
+//        cambiarDialog(a);
     }//GEN-LAST:event_okBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel labelInfo;
     private javax.swing.JButton okBtn;
+    private javax.swing.JComboBox<String> opcion;
     // End of variables declaration//GEN-END:variables
 }

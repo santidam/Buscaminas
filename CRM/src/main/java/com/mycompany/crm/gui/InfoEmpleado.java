@@ -36,14 +36,17 @@ public class InfoEmpleado extends javax.swing.JPanel {
         okBtn = new javax.swing.JButton();
         titulo = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 204, 255));
         setPreferredSize(new java.awt.Dimension(630, 460));
 
         jScrollPane1.setBorder(null);
 
+        info.setBackground(new java.awt.Color(204, 204, 255));
         info.setColumns(20);
-        info.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
+        info.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         info.setRows(5);
+        info.setPreferredSize(new java.awt.Dimension(240, 85));
+        info.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(info);
 
         labelTelefono.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
@@ -82,8 +85,8 @@ public class InfoEmpleado extends javax.swing.JPanel {
                         .addComponent(okBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(69, 69, 69)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(199, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,8 +99,8 @@ public class InfoEmpleado extends javax.swing.JPanel {
                     .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(okBtn))
                 .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

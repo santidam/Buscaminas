@@ -88,9 +88,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         bg.setBackground(new java.awt.Color(0, 51, 102));
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        contenido.setBackground(new java.awt.Color(255, 255, 255));
+        contenido.setBackground(new java.awt.Color(204, 204, 255));
 
-        textBienvenida.setFont(new java.awt.Font("Roboto Black", 0, 36)); // NOI18N
+        textBienvenida.setFont(new java.awt.Font("Roboto Thin", 3, 36)); // NOI18N
         textBienvenida.setText("Bienvenido a Whats CRM");
 
         javax.swing.GroupLayout contenidoLayout = new javax.swing.GroupLayout(contenido);
@@ -105,9 +105,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         contenidoLayout.setVerticalGroup(
             contenidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contenidoLayout.createSequentialGroup()
-                .addGap(119, 119, 119)
+                .addContainerGap(180, Short.MAX_VALUE)
                 .addComponent(textBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(225, 225, 225))
         );
 
         bg.add(contenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 630, 460));
@@ -311,37 +311,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuPrincipal().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton InfoCliente;

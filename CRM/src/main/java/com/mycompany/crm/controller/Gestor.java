@@ -94,9 +94,9 @@ public class Gestor {
         return s;
     }
 
-    public void infoEmpleado(String dni) throws ComandaException{
+    public String infoEmpleado(String dni) throws ComandaException{
         ArrayList<Object> empleados = empleadosFile.leer(false);
-
+        String s = "";
         if (empleados.isEmpty()) {
             System.out.println("ERROR no existe ningún empleado en la base de datos");
             throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
@@ -107,14 +107,15 @@ public class Gestor {
                 throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
             } else {
                 Comercial e = (Comercial) empleados.get(indiceEmpleado);
-                System.out.println("*******   INFO EMPLEADO   *******" +
+                s+="*******   INFO EMPLEADO   *******" +
                         "\nNombre: " + e.getNombre() +
                         "\nApellido: " + e.getApellidos() +
-                        "\nDNI: " + e.getDni());
+                        "\nDNI: " + e.getDni();
 
-                System.out.println("-----------------------------------");
+                
             }
         }
+        return s;
     }
 
     public void listClientes()throws ComandaException{

@@ -69,10 +69,10 @@ public class Validations {
         
     }
 
-    public void valEmpleadoInfo(String dni) throws ComandaException{
-            if (valDni(dni)) {
-            gestor.infoEmpleado(dni);
-        }
+    public String valEmpleadoInfo(String dni) throws ComandaException{
+        valDni(dni);
+            
+        return gestor.infoEmpleado(dni);
     }
 
     public void valClientesList(String[] args) throws ComandaException {

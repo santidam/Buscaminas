@@ -4,6 +4,9 @@
  */
 package com.mycompany.crm.gui;
 
+import Exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
+
 /**
  *
  * @author admin
@@ -26,34 +29,96 @@ public class InfoEmpleado extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textBienvenida = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        info = new javax.swing.JTextArea();
+        labelTelefono = new javax.swing.JLabel();
+        dni = new javax.swing.JTextField();
+        okBtn = new javax.swing.JButton();
+        titulo = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(630, 460));
 
-        textBienvenida.setFont(new java.awt.Font("Roboto Black", 0, 36)); // NOI18N
-        textBienvenida.setText("Info Empleado");
+        info.setColumns(20);
+        info.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        info.setRows(5);
+        jScrollPane1.setViewportView(info);
+
+        labelTelefono.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        labelTelefono.setText("Número de DNI");
+
+        dni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dniActionPerformed(evt);
+            }
+        });
+
+        okBtn.setText("Buscar");
+        okBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnActionPerformed(evt);
+            }
+        });
+
+        titulo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        titulo.setText("Info Empleado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(textBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(labelTelefono)
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dni, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                        .addGap(42, 42, 42)
+                        .addComponent(okBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(199, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(textBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(78, 78, 78)
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(okBtn))
+                .addGap(75, 75, 75)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void dniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dniActionPerformed
+
+    private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
+        try {
+            String infoCliente = Validations.getInstance().valEmpleadoInfo(dni.getText());
+            info.setText(infoCliente);
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_okBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel textBienvenida;
+    private javax.swing.JTextField dni;
+    private javax.swing.JTextArea info;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelTelefono;
+    private javax.swing.JButton okBtn;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }

@@ -56,6 +56,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         exitBtn = new javax.swing.JPanel();
         exitText = new javax.swing.JLabel();
         listaEmpleados1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -173,7 +174,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         bg.add(altaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 50, 147, 35));
 
-        exitBtn.setBackground(new java.awt.Color(0, 51, 102));
+        exitBtn.setBackground(new java.awt.Color(204, 204, 204));
 
         exitText.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
         exitText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -212,6 +213,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         bg.add(listaEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 307, 147, 32));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo2.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        bg.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 460));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,20 +274,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         yMouse = evt.getY();
     }//GEN-LAST:event_headerMousePressed
 
-    private void exitTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTextMouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_exitTextMouseClicked
-
-    private void exitTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTextMouseEntered
-        exitBtn.setBackground(Color.red);
-        exitText.setForeground(Color.white);
-    }//GEN-LAST:event_exitTextMouseEntered
-
-    private void exitTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTextMouseExited
-        exitBtn.setBackground(new Color(0,51,102));
-        exitText.setForeground(Color.black);
-    }//GEN-LAST:event_exitTextMouseExited
-
     private void listaEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaEmpleadosActionPerformed
         Agenda a = new Agenda();
         cambiarPanel(a);
@@ -302,6 +293,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ListaEmpleados e = new ListaEmpleados();
         cambiarPanel(e);
     }//GEN-LAST:event_listaEmpleados1ActionPerformed
+
+    private void exitTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTextMouseExited
+        //        exitBtn.setBackground(new Color(0,51,102));
+        exitText.setForeground(Color.black);
+    }//GEN-LAST:event_exitTextMouseExited
+
+    private void exitTextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTextMouseEntered
+        //        exitBtn.setBackground(Color.red);
+        exitText.setForeground(Color.red);
+    }//GEN-LAST:event_exitTextMouseEntered
+
+    private void exitTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTextMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_exitTextMouseClicked
 
     /**
      * @param args the command line arguments
@@ -349,6 +354,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel exitText;
     private javax.swing.JPanel header;
     private javax.swing.JButton infoEmpleado;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton listaClientes;
     private javax.swing.JButton listaEmpleados;
     private javax.swing.JButton listaEmpleados1;

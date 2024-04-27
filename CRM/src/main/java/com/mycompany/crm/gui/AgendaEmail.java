@@ -36,7 +36,9 @@ public class AgendaEmail extends java.awt.Dialog {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
+        setLocationByPlatform(true);
         setModal(true);
+        setPreferredSize(new java.awt.Dimension(630, 460));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {

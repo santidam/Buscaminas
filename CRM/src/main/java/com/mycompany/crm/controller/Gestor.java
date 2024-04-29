@@ -126,6 +126,7 @@ public class Gestor {
             for (Object cliente : clientes) {
                 Cliente c = (Cliente) cliente;
                 s+="Nombre: " + c.getNombre() + "\n" +
+                        "Contacto "+c.getContacto()+"\n"+
                         "Teléfono: " + c.getPhoneNumber() + "\n" +
                         "Email: " + c.getEmail()+"\n";
                 s+="-----------------------------------\n";

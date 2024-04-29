@@ -1,3 +1,0 @@
-admin;admin;admin;0
-12345678z;santi;san san;5
-09984524V;pepe;pepe pepe;5

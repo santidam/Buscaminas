@@ -2,18 +2,23 @@ package com.mycompany.crm.entity;
 
 import java.util.ArrayList;
 
-public class Cliente {
+public class Empresa {
 
+    private String direccion;
+    private String cp;
+    private String ciudad;
+    private String comunidad;
+    private String paginaWeb;
     private String nombre;
     private String email;
     private String phoneNumber;
     private String contacto;
-    private Comercial comercial;
+    private Comercial comercial; // Eliminar ahora empresas tienen varios empesas
 
     private ArrayList<Accion> acciones;
 
 
-    public Cliente(String nombre, String email, String phoneNumber, String contacto) {
+    public Empresa(String nombre, String email, String phoneNumber, String contacto) {
 
         this.nombre = nombre;
         this.email = email;

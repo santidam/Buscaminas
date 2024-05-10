@@ -1,10 +1,14 @@
 package com.mycompany.crm.entity;
 
+import java.util.Date;
+
 public class Comercial {
 
+    private String id;
     private String dni;
     private String nombre;
     private String apellidos;
+    private Date fechaIncorporacion;
     private int porcentajeComision;
 
 

@@ -1,7 +1,7 @@
 package com.mycompany.crm.controller;
 
 import Exceptions.ComandaException;
-import com.mycompany.crm.entity.Cliente;
+import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.persistencia.FileManager;
 
@@ -29,7 +29,7 @@ public class Gestor {
         ArrayList<Object> clientes = clientesFile.leer(true);
 
         if (buscarCliente(clientes, phone) == -1) {
-            Cliente cliente = new Cliente(name, email, phone, contacto);
+            Empresa cliente = new Empresa(name, email, phone, contacto);
             cliente.asignarComercial(this.comercial);
             clientesFile.escribir(cliente, true);
             System.out.println("El cliente ha sido registrado correctamente");
@@ -82,7 +82,7 @@ public class Gestor {
                 System.out.println("ERROR El cliente no se encuentra registrado en la base de datos");
                 throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
             }else{
-                Cliente c = (Cliente) clientes.get(posCliente);
+                Empresa c = (Empresa) clientes.get(posCliente);
                 s+="*******   INFO CLIENTE   *******"+
                         "\nNombre de Empresa: "+c.getNombre()+
                         "\nContacto "+ c.getContacto()+
@@ -124,7 +124,7 @@ public class Gestor {
         if(!clientes.isEmpty()) {
             s+="*******   CLIENTES   *******\n";
             for (Object cliente : clientes) {
-                Cliente c = (Cliente) cliente;
+                Empresa c = (Empresa) cliente;
                 s+="Nombre: " + c.getNombre() + "\n" +
                         "Contacto "+c.getContacto()+"\n"+
                         "Teléfono: " + c.getPhoneNumber() + "\n" +
@@ -163,7 +163,7 @@ public class Gestor {
         int i = 0;
         if(!clientes.isEmpty()){
             while(posCliente == -1 && i<clientes.size()){
-                Cliente cliente = (Cliente) clientes.get(i);
+                Empresa cliente = (Empresa) clientes.get(i);
                 if(cliente.getPhoneNumber().equalsIgnoreCase(phoneNumber)){
                     posCliente = i;
                 }

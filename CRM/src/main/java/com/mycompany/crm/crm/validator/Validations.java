@@ -6,8 +6,8 @@ package com.mycompany.crm.crm.validator;
 
 
 import com.mycompany.crm.crm.controller.Gestor;
+import com.mycompany.crm.crm.exceptions.ComandaException;
 import com.mycompany.crm.crm.utils.CastData;
-import Exceptions.ComandaException;
 
 /**
  *

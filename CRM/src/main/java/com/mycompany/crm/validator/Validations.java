@@ -8,6 +8,7 @@ package com.mycompany.crm.validator;
 import com.mycompany.crm.controller.Gestor;
 import com.mycompany.crm.utils.CastData;
 import Exceptions.ComandaException;
+import java.sql.SQLException;
 
 /**
  *
@@ -26,12 +27,12 @@ public class Validations {
         }
         return v;
     }
-    public void valLogin(String dni, String password) throws ComandaException{
+    public void valLogin(String dni, String password) throws ComandaException, SQLException{
         if (!password.equals("1234")) {
             System.out.println("ERROR COntraseña");
             throw new ComandaException(ComandaException.ERROR_CONTRASEÑA);
         }
-        gestor.login(dni);
+        gestor.login(dni, password);
 
     }
 

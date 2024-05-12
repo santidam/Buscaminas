@@ -22,9 +22,12 @@ public class Gestor {
         }
     }
 
-    public void altaEmpresa(String phone, String name, String contacto, String email) throws ComandaException {
-
-
+    public void altaEmpresa(String nombre, String agente, String phone, String email, String codigo, String direccion, int cp, String region, String web, String ciudad) throws ComandaException{
+        try{
+            crmDAO.insertarEmpresa(nombre, agente, phone, email, codigo, direccion, cp, region, web, ciudad);
+        }catch(SQLException e){
+            System.out.println("ERROR SQL");
+        }
     }
 
     public void altaEmpleado(String dni, String codigo, String name, String apellidos, int porcentajeComision, Date fechaIncorporacion, String contrasenya) throws ComandaException, SQLException {

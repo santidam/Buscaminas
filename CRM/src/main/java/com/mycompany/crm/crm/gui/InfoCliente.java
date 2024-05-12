@@ -114,8 +114,8 @@ public class InfoCliente extends javax.swing.JPanel {
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         try {
-            Validations.getInstance().valClienteInfo(telefonoTxt.getText());
-            String infoCliente = "";
+
+            String infoCliente = Validations.getInstance().valClienteInfo(telefonoTxt.getText());
             info.setText(infoCliente);
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);

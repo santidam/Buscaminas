@@ -26,22 +26,22 @@ public class CrmDAO {
         return propietarios;
     }*/
 
-    public void insertarEmpresa(Empresa empresa) throws SQLException, ComandaException{
-        if (existeComercial(empresa.getPhoneNumber())) {
+    public void insertarEmpresa(String nombre, String agente, String phone, String email, String codigo, String direccion, int cp, String region, String web, String ciudad) throws SQLException, ComandaException{
+        if (existeComercial(phone)) {
             throw new ComandaException(ComandaException.CLIENTE_EXISTE);
         }
         Connection c = conectar();
-        PreparedStatement ps = c.prepareStatement("insert into propietario (phone_number, nombre, email, representante, direccion, CP, ciudad, comunidad_autonoma, pagina_web, codigo) values (?,?,?,?,?,?,?,?,?,?);");
-        ps.setString(1, empresa.getPhoneNumber());
-        ps.setString(2, empresa.getNombre());
-        ps.setString(3, empresa.getEmail());
-        ps.setString(4, empresa.getRepresentante());
-        ps.setString(5, empresa.getDireccion());
-        ps.setInt(6, empresa.getCp());
-        ps.setString(7, empresa.getCiudad());
-        ps.setString(8, empresa.getComunidad_autonoma());
-        ps.setString(9, empresa.getPagina_web());
-        ps.setString(10, empresa.getCodigo());
+        PreparedStatement ps = c.prepareStatement("insert into empresa (phone_number, nombre, email, representante, direccion, CP, ciudad, comunidad_autonoma, pagina_web, codigo) values (?,?,?,?,?,?,?,?,?,?);");
+        ps.setString(1, phone);
+        ps.setString(2, nombre);
+        ps.setString(3, email);
+        ps.setString(4, agente);
+        ps.setString(5, direccion);
+        ps.setInt(6, cp);
+        ps.setString(7, ciudad);
+        ps.setString(8, region);
+        ps.setString(9, web);
+        ps.setString(10, codigo);
         ps.executeUpdate();
         ps.close();
         desconectar(c);
@@ -65,7 +65,7 @@ public class CrmDAO {
         desconectar(c);
     }
     public String mostrarEmpresa(String phoneNumber) throws SQLException, ComandaException{
-        if(!existeComercial(phoneNumber)){
+        if(!existeEmpresa(phoneNumber)){
             throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
         }
         Connection c = conectar();
@@ -74,7 +74,7 @@ public class CrmDAO {
         ResultSet rs = st.executeQuery(query);
         String infoComercial = "";
         if(rs.next()){
-            infoComercial = "TLFNO: \t" + rs.getString("dni") + "\n"+
+            infoComercial = "TLFNO: \t" + rs.getString("phone_number") + "\n"+
                     "CODIGO: \t" + rs.getString("codigo") + "\n"+
                     "NOMBRE: \t" + rs.getString("nombre") + "\n"+
                     "EMAIL: \t" + rs.getString("email") + "\n"+
@@ -154,7 +154,7 @@ public class CrmDAO {
             throw new ComandaException(ComandaException.NO_CLIENTES);
         }
         while(hayContenido){
-            infoEmpresa += "TLFNO: \t" + rs.getString("dni") + "\n"+
+            infoEmpresa += "TLFNO: \t" + rs.getString("phone_number") + "\n"+
                     "CODIGO: \t" + rs.getString("codigo") + "\n"+
                     "NOMBRE: \t" + rs.getString("nombre") + "\n"+
                     "EMAIL: \t" + rs.getString("email") + "\n"+

@@ -1,8 +1,11 @@
-package com.mycompany.crm.crm.entity;
+package com.mycompany.crm.crm.entity.acciones;
+
+import com.mycompany.crm.crm.entity.Comercial;
+import com.mycompany.crm.crm.entity.acciones.Accion;
 
 import java.util.Date;
 
-public class Email extends Accion{
+public class Email extends Accion {
 
     private String email;
     private boolean esPromocion;

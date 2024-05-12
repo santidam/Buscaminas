@@ -40,12 +40,12 @@ public class Validations {
 
     }
 
-    public void valAltaCliente(String phone, String nameEmpresa, String contacto, String email) throws ComandaException {
+    public void valAltaCliente(String nombre, String agente, String phone, String email, String codigo, String direccion, String cp, String region, String web, String ciudad) throws ComandaException {
         if (valPhone(phone)) {
-                if (valName(nameEmpresa, "nombre")) {
-                    if (valName(contacto, "apellido")) {
+                if (valName(nombre, "nombre")) {
+                    if (valName(agente, "apellido")) {
                         if (valEmail(email)) {
-                            gestor.altaEmpresa(phone, nameEmpresa, contacto, email);
+                            gestor.altaEmpresa(nombre, agente, phone, email, codigo, direccion, Integer.parseInt(cp), region, web, ciudad);
                         }
                     }
                 }
@@ -81,9 +81,9 @@ public class Validations {
         }
     }*/
 
-    public void valClienteInfo(String phone) throws ComandaException {
+    public String valClienteInfo(String phone) throws ComandaException {
         valPhone(phone);
-        gestor.infoCliente(phone);
+        return gestor.infoCliente(phone);
         
     }
 

@@ -1,4 +1,6 @@
-package com.mycompany.crm.crm.entity;
+package com.mycompany.crm.crm.entity.acciones;
+
+import com.mycompany.crm.crm.entity.Comercial;
 
 import java.util.Date;
 import java.util.HashSet;

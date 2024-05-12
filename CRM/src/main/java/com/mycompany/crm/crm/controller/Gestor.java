@@ -1,188 +1,77 @@
 package com.mycompany.crm.crm.controller;
 
 
-import com.mycompany.crm.crm.entity.Cliente;
 import com.mycompany.crm.crm.entity.Comercial;
 import com.mycompany.crm.crm.exceptions.ComandaException;
+import com.mycompany.crm.crm.persistencia.CrmDAO;
 
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Gestor {
 
     private Comercial comercial;
+    private CrmDAO crmDAO = new CrmDAO();
     
     public void login(String dni) throws ComandaException{
-
-        int indice = buscarEmpleado(empleados, dni);
-
+        int indice = 1;
         if (indice == -1) {
             System.out.println("ERROR. Usuario no existe");
             throw new ComandaException(ComandaException.ERROR_USER);
-        } else {
-            this.comercial = (Comercial) empleados.get(indice);
         }
     }
 
-    public void altaCliente(String phone, String name, String contacto, String email) throws ComandaException {
+    public void altaEmpresa(String phone, String name, String contacto, String email) throws ComandaException {
 
 
-
-        if (buscarCliente(clientes, phone) == -1) {
-            Cliente cliente = new Cliente(name, email, phone, contacto);
-            cliente.asignarComercial(this.comercial);
-
-            System.out.println("El cliente ha sido registrado correctamente");
-        } else {
-            System.out.println("ERROR. El cliente ya se encuentra en la base de datos");
-            throw new ComandaException(ComandaException.CLIENTE_EXISTE);
-        }
     }
 
-    public void altaEmpleado(String dni, String name, String apellidos) throws ComandaException {
-
-
-
-        if (buscarEmpleado(empleados, dni) == -1) {
-            Comercial empleado = new Comercial(dni, name, apellidos);
-
-            System.out.println("El empleado ha sido registrado correctamente");
-        } else {
-            System.out.println("ERROR. El empleado ya se encuentra en la base de datos");
-            throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
-        }
+    public void altaEmpleado(String dni, String codigo, String name, String apellidos, int porcentajeComision, Date fechaIncorporacion, String contrasenya) throws ComandaException, SQLException {
+        crmDAO.insertarComercial(dni, codigo, name, apellidos, porcentajeComision, fechaIncorporacion, contrasenya);
     }
     public void bajaEmpleado(String dni) throws ComandaException {
 
-        if (empleados.isEmpty()){
-            System.out.println("ERROR. No existe ningún empleado en la base de datos");
-            throw new ComandaException(ComandaException.NO_EMPLEADOS);
-        }else{
-            int indiceEmpleado = buscarEmpleado(empleados,dni);
-            if (indiceEmpleado==-1){
-                System.out.println("ERROR. El empleado no está registrado en la base de datos");
-                throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
-            }else{
-                empleados.remove(indiceEmpleado);
 
-                System.out.println("Empleado dado de baja con éxito.");
-            }
-        }
 
     }
     public String infoCliente(String phoneNumber) throws ComandaException {
-
-        String s = "";
-        if (clientes.isEmpty()){
-            System.out.println("ERROR no existe ningún cliente en la base de datos");
-            throw new ComandaException(ComandaException.NO_CLIENTES);
-        }else{
-            int posCliente = buscarCliente(clientes, phoneNumber);
-            if (posCliente == -1){
-                System.out.println("ERROR El cliente no se encuentra registrado en la base de datos");
-                throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
-            }else{
-                Cliente c = (Cliente) clientes.get(posCliente);
-                s+="*******   INFO CLIENTE   *******"+
-                        "\nNombre de Empresa: "+c.getNombre()+
-                        "\nContacto "+ c.getContacto()+
-                        "\nTeléfono: "+c.getPhoneNumber()+
-                        "\nEmail: "+c.getEmail();
-                
-            }
+        String info = "";
+        try{
+            info = crmDAO.mostrarEmpresa(phoneNumber);
+        }catch(SQLException e){
+            System.out.println(e.getErrorCode());
         }
-        return s;
+        return info;
+
     }
 
     public String infoEmpleado(String dni) throws ComandaException{
-
-        String s = "";
-        if (empleados.isEmpty()) {
-            System.out.println("ERROR no existe ningún empleado en la base de datos");
-            throw new ComandaException(ComandaException.NO_EMPLEADOS);
-        } else {
-            int indiceEmpleado = buscarEmpleado(empleados, dni);
-            if (indiceEmpleado == -1) {
-                System.out.println("ERROR El empleado no se encuentra registrado en la base de datos");
-                throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
-            } else {
-                Comercial e = (Comercial) empleados.get(indiceEmpleado);
-                s+="*******   INFO EMPLEADO   *******" +
-                        "\nNombre: " + e.getNombre() +
-                        "\nApellido: " + e.getApellidos() +
-                        "\nDNI: " + e.getDni();
-
-                
-            }
+        String info = "";
+        try{
+            info = crmDAO.mostrarComercial(dni);
+        }catch(SQLException e){
+            System.out.println(e.getErrorCode());
         }
-        return s;
+        return info;
     }
 
     public String listClientes()throws ComandaException{
-
-        String s = "";
-        if(!clientes.isEmpty()) {
-            s+="*******   CLIENTES   *******\n";
-            for (Object cliente : clientes) {
-                Cliente c = (Cliente) cliente;
-                s+="Nombre: " + c.getNombre() + "\n" +
-                        "Teléfono: " + c.getPhoneNumber() + "\n" +
-                        "Email: " + c.getEmail()+"\n";
-                s+="-----------------------------------\n";
-            }
-
-        }else{
-            System.out.println("No hay ningún cliente registrado");
-            throw new ComandaException(ComandaException.NO_CLIENTES);
+        String info = "";
+        try{
+            info = crmDAO.listarEmpresas();
+        }catch(SQLException e){
+            System.out.println(e.getErrorCode());
         }
-        return s;    
+        return info;
     }
     public String listEmpleados()throws ComandaException{
-        String s = "";
-        if(!empleados.isEmpty()) {
-            s+="*******   Empleados   *******\n";
-            for (Object empleado : empleados) {
-                Comercial e = (Comercial) empleado;
-                s+="Nombre: " + e.getNombre() +" "+e.getApellidos()+ "\n" +
-                        "DNI: " + e.getDni()+"\n";
-
-                s+="-----------------------------------\n";
-            }
-
-        }else {
-            System.out.println("No hay ningún empleado registrado");
-            throw new ComandaException(ComandaException.NO_EMPLEADOS);
+        String info = "";
+        try{
+            info = crmDAO.listarComerciales();
+        }catch(SQLException e){
+            System.out.println(e.getErrorCode());
         }
-        return s;
+        return info;
     }
-
-    public int buscarCliente(ArrayList<Object> clientes, String phoneNumber){
-        int posCliente = -1;
-        int i = 0;
-        if(!clientes.isEmpty()){
-            while(posCliente == -1 && i<clientes.size()){
-                Cliente cliente = (Cliente) clientes.get(i);
-                if(cliente.getPhoneNumber().equalsIgnoreCase(phoneNumber)){
-                    posCliente = i;
-                }
-                i++;
-            }
-        }
-        return posCliente;
-    }
-
-    public int buscarEmpleado(ArrayList<Object> empleados, String dni){
-        int posEmpleado = -1;
-        int i = 0;
-        if(!empleados.isEmpty()){
-            while(posEmpleado == -1 && i<empleados.size()){
-                Comercial empleado = (Comercial) empleados.get(i);
-                if(empleado.getDni().equalsIgnoreCase(dni)){
-                    posEmpleado = i;
-                }
-                i++;
-            }
-        }
-        return posEmpleado;
-    }
-
 }

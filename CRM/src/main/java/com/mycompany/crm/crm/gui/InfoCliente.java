@@ -4,7 +4,7 @@
  */
 package com.mycompany.crm.crm.gui;
 
-import Exceptions.ComandaException;
+import com.mycompany.crm.crm.exceptions.ComandaException;
 import com.mycompany.crm.crm.validator.Validations;
 
 /**
@@ -114,7 +114,8 @@ public class InfoCliente extends javax.swing.JPanel {
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         try {
-            String infoCliente = Validations.getInstance().valClienteInfo(telefonoTxt.getText());
+            Validations.getInstance().valClienteInfo(telefonoTxt.getText());
+            String infoCliente = "";
             info.setText(infoCliente);
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);

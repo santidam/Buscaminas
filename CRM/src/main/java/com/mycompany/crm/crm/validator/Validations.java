@@ -9,6 +9,11 @@ import com.mycompany.crm.crm.controller.Gestor;
 import com.mycompany.crm.crm.exceptions.ComandaException;
 import com.mycompany.crm.crm.utils.CastData;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
+import java.sql.SQLException;
+
 /**
  *
  * @author admin
@@ -28,7 +33,7 @@ public class Validations {
     }
     public void valLogin(String dni, String password) throws ComandaException{
         if (!password.equals("1234")) {
-            System.out.println("ERROR COntraseña");
+            System.out.println("ERROR Contraseña");
             throw new ComandaException(ComandaException.ERROR_CONTRASEÑA);
         }
         gestor.login(dni);
@@ -40,39 +45,52 @@ public class Validations {
                 if (valName(nameEmpresa, "nombre")) {
                     if (valName(contacto, "apellido")) {
                         if (valEmail(email)) {
-                            gestor.altaCliente(phone, nameEmpresa, contacto, email);
+                            gestor.altaEmpresa(phone, nameEmpresa, contacto, email);
                         }
                     }
                 }
             }
     }
 
-    public void valAltaEmpleado(String dni, String name, String apellidos) throws ComandaException {
+    public void valAltaEmpleado(String dni, String codigo, String name, String apellidos, String porcentajeComision, String fechaIncorporacion, String contrasenya) throws ComandaException{
         if (valDni(dni)) {
             if (valName(name, "nombre")) {
                 if (valName(apellidos, "apellido")) {
-                    gestor.altaEmpleado(dni,name,apellidos);
+                    try{
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                        try{
+                            Date sqlDate = new java.sql.Date(dateFormat.parse("2024/05/07").getTime());
+                            gestor.altaEmpleado(dni, codigo, name,apellidos, Integer.parseInt(porcentajeComision), sqlDate, contrasenya);
+
+                        }catch(ParseException e){
+                            System.out.println("No se puede modificar");
+                        }
+                    }catch(SQLException e){
+                        System.out.println("SQL ERROR");
+                    }
+
                 }
             }
         }
     }
 
-    public void valBajaEmpleado(String dni) throws ComandaException {
+    /*public void valBajaEmpleado(String dni) throws ComandaException {
         if (valDni(dni)) {
             gestor.bajaEmpleado(dni);
         }
-    }
+    }*/
 
-    public String valClienteInfo(String phone) throws ComandaException {
+    public void valClienteInfo(String phone) throws ComandaException {
         valPhone(phone);
-        return gestor.infoCliente(phone);
+        gestor.infoCliente(phone);
         
     }
 
     public String valEmpleadoInfo(String dni) throws ComandaException{
         valDni(dni);
-            
         return gestor.infoEmpleado(dni);
+
     }
 
     public String valClientesList() throws ComandaException {

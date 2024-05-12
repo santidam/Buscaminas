@@ -4,7 +4,8 @@
  */
 package com.mycompany.crm.crm.gui;
 
-import Exceptions.ComandaException;
+
+import com.mycompany.crm.crm.exceptions.ComandaException;
 import com.mycompany.crm.crm.validator.Validations;
 
 import java.awt.Color;

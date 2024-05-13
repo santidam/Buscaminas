@@ -149,6 +149,7 @@ CREATE TABLE `comercial` (
 
 LOCK TABLES `comercial` WRITE;
 /*!40000 ALTER TABLE `comercial` DISABLE KEYS */;
+INSERT INTO `comercial` VALUES ('12345678z','025','pikachu','pichu raichu',5,'2024-05-07','pokemon '),('45790286T','Codigo','jodrix','pokemon ff',8,'2024-05-07','1234');
 /*!40000 ALTER TABLE `comercial` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,6 +170,7 @@ CREATE TABLE `empresa` (
   `ciudad` varchar(45) NOT NULL,
   `comunidad_autonoma` varchar(45) NOT NULL,
   `pagina_web` varchar(45) DEFAULT NULL,
+  `codigo` varchar(45) NOT NULL,
   PRIMARY KEY (`phone_number`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -180,6 +182,7 @@ CREATE TABLE `empresa` (
 
 LOCK TABLES `empresa` WRITE;
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
+INSERT INTO `empresa` VALUES ('111222333','nintendo ESP ','hola@gmail.com','Santi Rodriguez','calle 123',9853,'Madrid','Madrid','www.nintendo.com','0984A'),('222333444','epelsa','epelsa@gmail.com','bolsero hola','calle falsa',8840,'salamanca','Extremadura','www.epelsa.com','982374V');
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -192,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-10 17:46:35
+-- Dump completed on 2024-05-13 17:01:18

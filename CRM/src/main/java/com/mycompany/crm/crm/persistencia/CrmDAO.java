@@ -26,70 +26,61 @@ public class CrmDAO {
         return propietarios;
     }*/
 
-    public void insertarEmpresa(String nombre, String agente, String phone, String email, String codigo, String direccion, int cp, String region, String web, String ciudad) throws SQLException, ComandaException{
-        if (existeComercial(phone)) {
+    public void insertarEmpresa(Empresa empresa) throws SQLException, ComandaException{
+        if (existeComercial(empresa.getPhoneNumber())) {
             throw new ComandaException(ComandaException.CLIENTE_EXISTE);
         }
         Connection c = conectar();
         PreparedStatement ps = c.prepareStatement("insert into empresa (phone_number, nombre, email, representante, direccion, CP, ciudad, comunidad_autonoma, pagina_web, codigo) values (?,?,?,?,?,?,?,?,?,?);");
-        ps.setString(1, phone);
-        ps.setString(2, nombre);
-        ps.setString(3, email);
-        ps.setString(4, agente);
-        ps.setString(5, direccion);
-        ps.setInt(6, cp);
-        ps.setString(7, ciudad);
-        ps.setString(8, region);
-        ps.setString(9, web);
-        ps.setString(10, codigo);
+        ps.setString(1, empresa.getPhoneNumber());
+        ps.setString(2, empresa.getNombre());
+        ps.setString(3, empresa.getEmail());
+        ps.setString(4, empresa.getRepresentante());
+        ps.setString(5, empresa.getDireccion());
+        ps.setInt(6, empresa.getCp());
+        ps.setString(7, empresa.getCiudad());
+        ps.setString(8, empresa.getComunidad_autonoma());
+        ps.setString(9,empresa.getPagina_web());
+        ps.setString(10, empresa.getCodigo());
         ps.executeUpdate();
         ps.close();
         desconectar(c);
     }
 
-    public void insertarComercial(String dni, String codigo, String nombre, String apellidos, int porcentajeComision, Date fechaIncorporacion, String contrasenya) throws SQLException, ComandaException{
-        if (existeComercial(dni)) {
+    public void insertarComercial(Comercial comercial) throws SQLException, ComandaException{
+        if (existeComercial(comercial.getDni())) {
             throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
         Connection c = conectar();
         PreparedStatement ps = c.prepareStatement("insert into comercial(dni, codigo, nombre, apellidos, porcentaje_comision, fecha_incorporacion, contrasenya ) values (?,?,?,?,?,?,?);");
-        ps.setString(1, dni);
-        ps.setString(2, codigo);
-        ps.setString(3, nombre);
-        ps.setString(4, apellidos);
-        ps.setInt(5, porcentajeComision);
-        ps.setDate(6, fechaIncorporacion);
-        ps.setString(7, contrasenya);
+        ps.setString(1, comercial.getDni());
+        ps.setString(2, comercial.getCodigo());
+        ps.setString(3, comercial.getNombre());
+        ps.setString(4, comercial.getApellidos());
+        ps.setInt(5, comercial.getPorcentajeComision());
+        ps.setDate(6, new Date(comercial.getFechaIncorporacion().getTime()));
+        ps.setString(7, comercial.getContrasenya());
         ps.executeUpdate();
         ps.close();
         desconectar(c);
     }
-    public String mostrarEmpresa(String phoneNumber) throws SQLException, ComandaException{
-        if(!existeEmpresa(phoneNumber)){
+    public Empresa mostrarEmpresa(String phone) throws SQLException, ComandaException{
+        if(!existeEmpresa(phone)){
             throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
         }
         Connection c = conectar();
+        Empresa emp = null;
         Statement st = c.createStatement();
-        String query = "SELECT * FROM empresa WHERE phone_number = '" + phoneNumber + "';";
+        String query = "SELECT * FROM empresa WHERE phone_number = '" + phone + "';";
         ResultSet rs = st.executeQuery(query);
-        String infoComercial = "";
         if(rs.next()){
-            infoComercial = "TLFNO: \t" + rs.getString("phone_number") + "\n"+
-                    "CODIGO: \t" + rs.getString("codigo") + "\n"+
-                    "NOMBRE: \t" + rs.getString("nombre") + "\n"+
-                    "EMAIL: \t" + rs.getString("email") + "\n"+
-                    "AGENTE: \t" + rs.getString("representante")+ "\n"+
-                    "DIRECCION  : \t" + rs.getString("direccion")+ "\n"+
-                    "CP: \t" + rs.getInt("CP")+ "\n"+
-                    "CIUDAD: \t" + rs.getString("ciudad")+ "\n"+
-                    "REGION: \t" + rs.getString("comunidad_autonoma") + "\n"+
-                    "WEB: \t" + rs.getString("pagina_web")+ "\n";
+            emp = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("cp"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("codigo"), rs.getString("pagina_web"));
         }
         rs.close();
         st.close();
         desconectar(c);
 
-        return infoComercial;
+        return emp;
     }
 
     public String mostrarComercial(String dni) throws SQLException, ComandaException{
@@ -143,35 +134,20 @@ public class CrmDAO {
         return infoComercial;
     }
 
-    public String listarEmpresas() throws SQLException, ComandaException{
+    public ArrayList<Empresa> allEmpresas() throws SQLException, ComandaException{
         Connection c = conectar();
+        ArrayList<Empresa> empresas = new ArrayList<>();
         Statement st = c.createStatement();
         String query = "SELECT * FROM empresa";
         ResultSet rs = st.executeQuery(query);
-        String infoEmpresa = "";
-        boolean hayContenido = rs.next();
-        if(!hayContenido){
-            throw new ComandaException(ComandaException.NO_CLIENTES);
-        }
-        while(hayContenido){
-            infoEmpresa += "TLFNO: \t" + rs.getString("phone_number") + "\n"+
-                    "CODIGO: \t" + rs.getString("codigo") + "\n"+
-                    "NOMBRE: \t" + rs.getString("nombre") + "\n"+
-                    "EMAIL: \t" + rs.getString("email") + "\n"+
-                    "AGENTE: \t" + rs.getString("representante")+ "\n"+
-                    "DIRECCION  : \t" + rs.getString("direccion")+ "\n"+
-                    "CP: \t" + rs.getInt("CP")+ "\n"+
-                    "CIUDAD: \t" + rs.getString("ciudad")+ "\n"+
-                    "REGION: \t" + rs.getString("comunidad_autonoma") + "\n"+
-                    "WEB: \t" + rs.getString("pagina_web")+ "\n"+
-                    "-----------------------------------------------------------\n";
-            hayContenido = rs.next();
+        while(rs.next()){
+
         }
         rs.close();
         st.close();
         desconectar(c);
 
-        return infoEmpresa;
+        return empresas;
     }
 
 

@@ -83,7 +83,7 @@ public class Validations {
 
     public String valClienteInfo(String phone) throws ComandaException {
         valPhone(phone);
-        return gestor.infoCliente(phone);
+        return gestor.infoCliente(phone).toString();
         
     }
 

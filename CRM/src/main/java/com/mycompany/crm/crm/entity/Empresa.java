@@ -69,4 +69,17 @@ public class Empresa {
         return pagina_web;
     }
 
+    @Override
+    public String toString() {
+        return "TLFNO: \t" + rs.getString("phone_number") + "\n"+
+                "CODIGO: \t" + rs.getString("codigo") + "\n"+
+                "NOMBRE: \t" + rs.getString("nombre") + "\n"+
+                "EMAIL: \t" + rs.getString("email") + "\n"+
+                "AGENTE: \t" + rs.getString("representante")+ "\n"+
+                "DIRECCION  : \t" + rs.getString("direccion")+ "\n"+
+                "CP: \t" + rs.getInt("CP")+ "\n"+
+                "CIUDAD: \t" + rs.getString("ciudad")+ "\n"+
+                "REGION: \t" + rs.getString("comunidad_autonoma") + "\n"+
+                "WEB: \t" + rs.getString("pagina_web")+ "\n";
+    }
 }

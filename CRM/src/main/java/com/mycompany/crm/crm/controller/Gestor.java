@@ -2,6 +2,7 @@ package com.mycompany.crm.crm.controller;
 
 
 import com.mycompany.crm.crm.entity.Comercial;
+import com.mycompany.crm.crm.entity.Empresa;
 import com.mycompany.crm.crm.exceptions.ComandaException;
 import com.mycompany.crm.crm.persistencia.CrmDAO;
 
@@ -22,37 +23,38 @@ public class Gestor {
         }
     }
 
-    public void altaEmpresa(String nombre, String agente, String phone, String email, String codigo, String direccion, int cp, String region, String web, String ciudad) throws ComandaException{
-        try{
-            crmDAO.insertarEmpresa(nombre, agente, phone, email, codigo, direccion, cp, region, web, ciudad);
-        }catch(SQLException e){
-            System.out.println("ERROR SQL");
-        }
+    public void altaEmpresa(String nombre, String agente, String phone, String email, String codigo, String direccion, int cp, String region, String web, String ciudad) throws ComandaException, SQLException{
+        Empresa empresa = new Empresa(nombre, agente, phone, email, codigo, cp, direccion, region, web, ciudad);
+        crmDAO.insertarEmpresa(empresa);
     }
 
     public void altaEmpleado(String dni, String codigo, String name, String apellidos, int porcentajeComision, Date fechaIncorporacion, String contrasenya) throws ComandaException, SQLException {
-        crmDAO.insertarComercial(dni, codigo, name, apellidos, porcentajeComision, fechaIncorporacion, contrasenya);
+        Comercial comercial = new Comercial(dni, codigo, name, apellidos, porcentajeComision, fechaIncorporacion, contrasenya);
+        crmDAO.insertarComercial(comercial);
     }
     public void bajaEmpleado(String dni) throws ComandaException {
 
 
 
     }
-    public String infoCliente(String phoneNumber) throws ComandaException {
-        String info = "";
+    public Empresa infoCliente(String phoneNumber) throws ComandaException {
+        Empresa empresa = null;
         try{
-            info = crmDAO.mostrarEmpresa(phoneNumber);
+            empresa = crmDAO.mostrarEmpresa(phoneNumber);
         }catch(SQLException e){
             System.out.println(e.getErrorCode());
         }
-        return info;
+        return empresa;
 
     }
 
     public String infoEmpleado(String dni) throws ComandaException{
+
         String info = "";
+        Empresa empresa = null;
         try{
-            info = crmDAO.mostrarComercial(dni);
+            empresa = crmDAO.mostrarComercial(dni);
+
         }catch(SQLException e){
             System.out.println(e.getErrorCode());
         }

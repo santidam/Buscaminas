@@ -6,6 +6,8 @@ package com.mycompany.crm.crm.validator;
 
 
 import com.mycompany.crm.crm.controller.Gestor;
+import com.mycompany.crm.crm.entity.Comercial;
+import com.mycompany.crm.crm.entity.Empresa;
 import com.mycompany.crm.crm.exceptions.ComandaException;
 import com.mycompany.crm.crm.utils.CastData;
 
@@ -13,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -45,7 +48,11 @@ public class Validations {
                 if (valName(nombre, "nombre")) {
                     if (valName(agente, "apellido")) {
                         if (valEmail(email)) {
-                            gestor.altaEmpresa(nombre, agente, phone, email, codigo, direccion, Integer.parseInt(cp), region, web, ciudad);
+                            try{
+                                gestor.altaEmpresa(nombre, agente, phone, email, codigo, direccion, Integer.parseInt(cp), region, web, ciudad);
+                            }catch(SQLException e){
+                                System.out.println(e.getMessage());
+                            }
                         }
                     }
                 }
@@ -83,22 +90,51 @@ public class Validations {
 
     public String valClienteInfo(String phone) throws ComandaException {
         valPhone(phone);
-        return gestor.infoCliente(phone).toString();
+        String info = "";
+        try{
+            info = gestor.infoCliente(phone).toString();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return info;
         
     }
 
     public String valEmpleadoInfo(String dni) throws ComandaException{
         valDni(dni);
-        return gestor.infoEmpleado(dni);
-
+        String info = "";
+        try{
+            info = gestor.infoEmpleado(dni).toString();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return info;
     }
 
     public String valClientesList() throws ComandaException {
-        return gestor.listClientes();
+        String info = "";
+        try{
+            ArrayList<Empresa> empresas = gestor.listClientes();
+            for(Empresa em: empresas){
+                info += em.toString();
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return info;
     }
 
     public String valEmpleadosList() throws ComandaException {
-        return gestor.listEmpleados();
+        String info = "";
+        try{
+            ArrayList<Comercial> comerciales = gestor.listEmpleados();
+            for(Comercial c: comerciales){
+                info += c.toString();
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return info;
     }
 
 //    public void valAsignarCliente(String[] args){

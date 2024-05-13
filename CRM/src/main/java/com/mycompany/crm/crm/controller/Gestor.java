@@ -37,46 +37,18 @@ public class Gestor {
 
 
     }
-    public Empresa infoCliente(String phoneNumber) throws ComandaException {
-        Empresa empresa = null;
-        try{
-            empresa = crmDAO.mostrarEmpresa(phoneNumber);
-        }catch(SQLException e){
-            System.out.println(e.getErrorCode());
-        }
-        return empresa;
-
+    public Empresa infoCliente(String phoneNumber) throws ComandaException, SQLException {
+        return crmDAO.mostrarEmpresa(phoneNumber);
     }
 
-    public String infoEmpleado(String dni) throws ComandaException{
-
-        String info = "";
-        Empresa empresa = null;
-        try{
-            empresa = crmDAO.mostrarComercial(dni);
-
-        }catch(SQLException e){
-            System.out.println(e.getErrorCode());
-        }
-        return info;
+    public Comercial infoEmpleado(String dni) throws ComandaException, SQLException{
+        return crmDAO.mostrarComercial(dni);
     }
 
-    public String listClientes()throws ComandaException{
-        String info = "";
-        try{
-            info = crmDAO.listarEmpresas();
-        }catch(SQLException e){
-            System.out.println(e.getErrorCode());
-        }
-        return info;
+    public ArrayList<Empresa> listClientes()throws ComandaException, SQLException{
+        return crmDAO.allEmpresas();
     }
-    public String listEmpleados()throws ComandaException{
-        String info = "";
-        try{
-            info = crmDAO.listarComerciales();
-        }catch(SQLException e){
-            System.out.println(e.getErrorCode());
-        }
-        return info;
+    public ArrayList<Comercial> listEmpleados()throws ComandaException, SQLException{
+        return crmDAO.allComerciales();
     }
 }

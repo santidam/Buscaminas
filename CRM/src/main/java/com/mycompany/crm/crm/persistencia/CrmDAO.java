@@ -83,65 +83,63 @@ public class CrmDAO {
         return emp;
     }
 
-    public String mostrarComercial(String dni) throws SQLException, ComandaException{
+    public Comercial mostrarComercial(String dni) throws SQLException, ComandaException{
         if(!existeComercial(dni)){
             throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
         }
         Connection c = conectar();
+        Comercial comercial = null;
         Statement st = c.createStatement();
         String query = "SELECT * FROM comercial WHERE dni = '" + dni + "';";
         ResultSet rs = st.executeQuery(query);
-        String infoComercial = "";
         if(rs.next()){
-            infoComercial = "DNI: \t" + rs.getString("dni") + "\n"+
-                    "CODIGO: \t" + rs.getString("codigo") + "\n"+
-                    "NOMBRE: \t" + rs.getString("nombre") + "\n"+
-                    "APELLIDOS: \t" + rs.getString("apellidos") + "\n"+
-                    "%COMISION: \t" + rs.getInt("porcentaje_comision")+"%" + "\n"+
-                    "INGRESO: \t" + rs.getDate("fecha_incorporacion") + "\n";
+            comercial = new Comercial(rs.getString("dni"), rs.getString("codigo"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("porcentaje_comision"), rs.getDate("fecha_incorporacion"), rs.getString("contrasenya"));
         }
         rs.close();
         st.close();
         desconectar(c);
 
-        return infoComercial;
+        return comercial;
     }
 
-    public String listarComerciales() throws SQLException, ComandaException{
+    public ArrayList<Comercial> allComerciales() throws SQLException, ComandaException{
         Connection c = conectar();
         Statement st = c.createStatement();
+        ArrayList<Comercial> comerciales = new ArrayList<>();
+        Comercial comercial = null;
         String query = "SELECT * FROM comercial";
         ResultSet rs = st.executeQuery(query);
-        String infoComercial = "";
         boolean hayContenido = rs.next();
         if(!hayContenido){
             throw new ComandaException(ComandaException.NO_EMPLEADOS);
         }
         while(hayContenido){
-            infoComercial += "DNI: \t" + rs.getString("dni") + "\n"+
-                    "CODIGO: \t" + rs.getString("codigo") + "\n"+
-                    "NOMBRE: \t" + rs.getString("nombre") + "\n"+
-                    "APELLIDOS: \t" + rs.getString("apellidos") + "\n"+
-                    "%COMISION: \t" + rs.getInt("porcentaje_comision")+"%" + "\n"+
-                    "INGRESO: \t" + rs.getDate("fecha_incorporacion") + "\n"+
-            "-----------------------------------------------------------\n";
+            comercial = new Comercial(rs.getString("dni"), rs.getString("codigo"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("porcentaje_comision"), rs.getDate("fecha_incorporacion"), rs.getString("contrasenya"));
+            comerciales.add(comercial);
             hayContenido = rs.next();
         }
         rs.close();
         st.close();
         desconectar(c);
 
-        return infoComercial;
+        return comerciales;
     }
 
     public ArrayList<Empresa> allEmpresas() throws SQLException, ComandaException{
         Connection c = conectar();
         ArrayList<Empresa> empresas = new ArrayList<>();
         Statement st = c.createStatement();
+        Empresa emp = null;
         String query = "SELECT * FROM empresa";
         ResultSet rs = st.executeQuery(query);
-        while(rs.next()){
-
+        boolean hayContenido = rs.next();
+        if(!hayContenido){
+            throw new ComandaException(ComandaException.NO_EMPLEADOS);
+        }
+        while(hayContenido){
+            emp = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("cp"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("codigo"), rs.getString("pagina_web"));
+            empresas.add(emp);
+            hayContenido = rs.next();
         }
         rs.close();
         st.close();

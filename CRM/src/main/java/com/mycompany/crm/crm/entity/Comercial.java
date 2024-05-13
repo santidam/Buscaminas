@@ -22,7 +22,6 @@ public class Comercial {
         this.apellidos = apellidos;
         this.porcentajeComision = porcentajeComision;
         this.fechaIncorporacion = fechaIncorporacion;
-        this.contrasenya = contrasenya;
     }
 
     public String getDni() {
@@ -55,6 +54,12 @@ public class Comercial {
 
     @Override
     public String toString() {
-        return dni + ";" + nombre + ";" + apellidos + ";" + porcentajeComision;
+        return "DNI: \t" + this.dni + "\n"+
+                "CODIGO: \t" + this.codigo + "\n"+
+                "NOMBRE: \t" + this.nombre + "\n"+
+                "APELLIDOS: \t" + this.apellidos + "\n"+
+                "%COMISION: \t" + this.porcentajeComision+"%" + "\n"+
+                "INGRESO: \t" + this.fechaIncorporacion + "\n"+
+                "------------------------------------------------\n";
     }
 }

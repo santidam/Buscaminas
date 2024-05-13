@@ -4,6 +4,7 @@ import Exceptions.ComandaException;
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.persistencia.FileManager;
+import dao.Dao;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
@@ -120,6 +121,27 @@ public class Gestor {
             throw new ComandaException(ComandaException.NO_CLIENTES);
         }
         return s;    
+    }
+    public ArrayList<Empresa> listClientes2()throws ComandaException{
+        Dao d = new Dao();
+        ArrayList<Empresa> clientes = d.listaClientes(); // Añadir metodo DAO
+        String s = "";
+        if(!clientes.isEmpty()) {
+            s+="*******   CLIENTES   *******\n";
+            for (Empresa c : clientes) {
+                
+                s+="Nombre: " + c.getNombre() + "\n" +
+                        "Contacto "+c.getContacto()+"\n"+
+                        "Teléfono: " + c.getPhoneNumber() + "\n" +
+                        "Email: " + c.getEmail()+"\n";
+                s+="-----------------------------------\n";
+            }
+
+        }else{
+            System.out.println("No hay ningún cliente registrado");
+            throw new ComandaException(ComandaException.NO_CLIENTES);
+        }
+        return clientes;    
     }
     public String listEmpleados()throws ComandaException{
         ArrayList<Comercial> empleados = null; //  Añadir Metodo DAO

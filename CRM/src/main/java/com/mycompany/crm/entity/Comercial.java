@@ -13,6 +13,7 @@ public class Comercial {
 
 
     public Comercial(){}
+    
     public Comercial(String dni, String nombre, String apellidos) {
         this.dni = dni;
         this.nombre = nombre;
@@ -40,4 +41,10 @@ public class Comercial {
     public String toString() {
         return dni + ";" + nombre + ";" + apellidos + ";" + porcentajeComision;
     }
+
+    public Object getPassword() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    
 }

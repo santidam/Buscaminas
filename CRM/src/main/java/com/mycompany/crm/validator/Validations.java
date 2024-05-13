@@ -8,7 +8,9 @@ package com.mycompany.crm.validator;
 import com.mycompany.crm.controller.Gestor;
 import com.mycompany.crm.utils.CastData;
 import Exceptions.ComandaException;
+import com.mycompany.crm.entity.Empresa;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -78,6 +80,9 @@ public class Validations {
 
     public String valClientesList() throws ComandaException {
         return gestor.listClientes();
+    }
+    public ArrayList<Empresa> valClientesList2() throws ComandaException {
+        return gestor.listClientes2();
     }
 
     public String valEmpleadosList() throws ComandaException {

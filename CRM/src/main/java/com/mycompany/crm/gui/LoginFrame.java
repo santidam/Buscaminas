@@ -10,10 +10,12 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Window;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import lectorExcel.ExcelLoader;
 
 /**
  *
@@ -307,7 +309,7 @@ public class LoginFrame extends javax.swing.JFrame {
           
               
             
-        } catch (ComandaException ex) {
+        } catch (ComandaException | SQLException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginBtnTxtMouseClicked
@@ -386,6 +388,8 @@ public class LoginFrame extends javax.swing.JFrame {
                 new LoginFrame().setVisible(true);
             }
         });
+        ExcelLoader l = new ExcelLoader();
+        l.loadTabla();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

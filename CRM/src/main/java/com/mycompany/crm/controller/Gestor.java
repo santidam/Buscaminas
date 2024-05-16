@@ -39,7 +39,7 @@ public class Gestor {
             throw new ComandaException(ComandaException.CLIENTE_EXISTE);
             
         } else {
-            Empresa cliente = new Empresa(name, email, phone, contacto);
+            Empresa cliente = new Empresa(1,name, email, phone, contacto);
             // Añadir metodo DAO para altaCliente
             System.out.println("El cliente ha sido registrado correctamente");
         }
@@ -54,7 +54,7 @@ public class Gestor {
             throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
             
         } else {
-            Comercial empleado = new Comercial(dni, name, apellidos);
+            Comercial empleado = new Comercial(1,dni, name, apellidos);
             // Añadir metodo añadir empleado DAO
             
             System.out.println("El empleado ha sido registrado correctamente");

@@ -282,15 +282,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void listaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaClientesActionPerformed
 //        ListaClientes l = new ListaClientes();
 //        cambiarPanel(l);
-        Options p = new Options();
-        p.setSize(663, 566);
-        p.setLocation(0, 0);
-
-
-        contenido.removeAll();
-        contenido.add(p,BorderLayout.CENTER);
-        contenido.revalidate();
-        contenido.repaint();
+        OptionsEmpresas p = new OptionsEmpresas();
+        cambiarPanel(p);
+//        p.setSize(663, 566);
+//        p.setLocation(0, 0);
+//
+//
+//        contenido.removeAll();
+//        contenido.add(p,BorderLayout.CENTER);
+//        contenido.revalidate();
+//        contenido.repaint();
     }//GEN-LAST:event_listaClientesActionPerformed
 
     private void infoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoEmpleadoActionPerformed

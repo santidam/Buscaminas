@@ -90,9 +90,9 @@ public class FileManager {
         String[] datos = linea.split(";");
         Object obj;
         if (esCliente) {
-            obj = new Empresa(datos[0], datos[1], datos[2], datos[3]);
+            obj = new Empresa(1,datos[0], datos[1], datos[2], datos[3]);
         } else {
-            obj = new Comercial(datos[0], datos[1], datos[2]);
+            obj = new Comercial(1,datos[0], datos[1], datos[2]);
         }
         return obj;
     }

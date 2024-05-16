@@ -54,7 +54,25 @@ public class Dao {
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                lista.add(new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante")));
+                lista.add(new Empresa(rs.getInt("id_empresa") ,rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante")));
+                
+                
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+    public ArrayList<Comercial> listaComerciales(){
+        ArrayList<Comercial> lista = new ArrayList<>();
+        String sql = "SELECT * FROM comercial";
+        try (Connection conn = openConection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                lista.add(new Comercial(rs.getInt("codigo") ,rs.getString("dni"),rs.getString("nombre"), rs.getString("apellidos")));
+                
                 
             }
             

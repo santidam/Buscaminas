@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Comercial {
 
-    private String id;
+    private int id;
     private String dni;
     private String nombre;
     private String apellidos;
@@ -14,7 +14,8 @@ public class Comercial {
 
     public Comercial(){}
     
-    public Comercial(String dni, String nombre, String apellidos) {
+    public Comercial(int id,String dni, String nombre, String apellidos) {
+        this.id = id;
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;

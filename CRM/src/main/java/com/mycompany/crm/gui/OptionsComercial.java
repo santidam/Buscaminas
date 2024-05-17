@@ -4,8 +4,9 @@
  */
 package com.mycompany.crm.gui;
 
-import Exceptions.ComandaException;
-import com.mycompany.crm.entity.Empresa;
+import com.mycompany.crm.crm.entity.Empresa;
+import com.mycompany.crm.entity.*;
+import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
 import java.util.ArrayList;
@@ -21,16 +22,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class OptionsComercial extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Agenda
-     */
+    DefaultTableModel dtm = new DefaultTableModel();
     public OptionsComercial() {
         initComponents();
-        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+//        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         try {
-            ArrayList<Empresa> lista = Validations.getInstance().valClientesList2();
+            ArrayList<Empresa> lista = Validations.getInstance().valClientesList();
             for (Empresa e: lista) {
-                model.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getContacto(),e.getPhoneNumber(), e.getEmail()});
+                dtm.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getRepresentante(),e.getPhoneNumber(), e.getEmail()});
                 
             }
         } catch (ComandaException ex) {
@@ -39,6 +38,9 @@ public class OptionsComercial extends javax.swing.JPanel {
         }
         
     }
+//    public void addData(){
+//        dtm.addRow(new Object[txt]);
+//    }
     public void cambiarDialog(Dialog a){
         a.setSize(650, 473);
         a.setLocationRelativeTo(null);
@@ -56,7 +58,6 @@ public class OptionsComercial extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jDatePickerUtil1 = new org.jdatepicker.util.JDatePickerUtil();
         eliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -289,7 +290,6 @@ public class OptionsComercial extends javax.swing.JPanel {
     private javax.swing.JButton eliminar;
     private javax.swing.JTextField email;
     private javax.swing.JTextField empresa;
-    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

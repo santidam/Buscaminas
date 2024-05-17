@@ -4,10 +4,10 @@
  */
 package com.mycompany.crm.gui;
 
-import Exceptions.ComandaException;
+
+import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
+
 import java.awt.Color;
 import java.awt.Window;
 import java.sql.SQLException;
@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import lectorExcel.ExcelLoader;
+//import lectorExcel.ExcelLoader;
 
 /**
  *
@@ -388,8 +388,8 @@ public class LoginFrame extends javax.swing.JFrame {
                 new LoginFrame().setVisible(true);
             }
         });
-        ExcelLoader l = new ExcelLoader();
-        l.loadTabla();
+//        ExcelLoader l = new ExcelLoader();
+//        l.loadTabla();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

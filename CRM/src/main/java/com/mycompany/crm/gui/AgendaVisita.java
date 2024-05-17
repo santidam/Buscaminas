@@ -41,7 +41,6 @@ public class AgendaVisita extends java.awt.Dialog {
 
         setLocationByPlatform(true);
         setModal(true);
-        setPreferredSize(new java.awt.Dimension(650, 473));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {

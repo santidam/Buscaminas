@@ -1,25 +1,34 @@
-package com.mycompany.crm.entity;
+package com.mycompany.crm.crm.entity;
 
 import java.util.Date;
 
 public class Comercial {
 
-    private int id;
     private String dni;
+    private int codigo;
     private String nombre;
     private String apellidos;
-    private Date fechaIncorporacion;
     private int porcentajeComision;
+    private Date fechaIncorporacion;
+    private String contrasenya;
 
 
     public Comercial(){}
-    
-    public Comercial(int id,String dni, String nombre, String apellidos) {
-        this.id = id;
+
+    public Comercial(String dni, int codigo, String nombre, String apellidos, int porcentajeComision, Date fechaIncorporacion, String contrasenya) {
+        this.dni = dni;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.porcentajeComision = porcentajeComision;
+        this.fechaIncorporacion = fechaIncorporacion;
+    }
+    public Comercial(String dni, String nombre, String apellidos, int porcentajeComision, Date fechaIncorporacion, String contrasenya) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
-        this.porcentajeComision = 5;
+        this.porcentajeComision = porcentajeComision;
+        this.fechaIncorporacion = fechaIncorporacion;
     }
 
     public String getDni() {
@@ -38,14 +47,26 @@ public class Comercial {
         return porcentajeComision;
     }
 
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public Date getFechaIncorporacion() {
+        return fechaIncorporacion;
+    }
+
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
     @Override
     public String toString() {
-        return dni + ";" + nombre + ";" + apellidos + ";" + porcentajeComision;
+        return "DNI: \t" + this.dni + "\n"+
+                "CODIGO: \t" + this.codigo + "\n"+
+                "NOMBRE: \t" + this.nombre + "\n"+
+                "APELLIDOS: \t" + this.apellidos + "\n"+
+                "%COMISION: \t" + this.porcentajeComision+"%" + "\n"+
+                "INGRESO: \t" + this.fechaIncorporacion + "\n"+
+                "------------------------------------------------\n";
     }
-
-    public Object getPassword() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
 }

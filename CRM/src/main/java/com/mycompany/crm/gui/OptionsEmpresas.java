@@ -4,8 +4,8 @@
  */
 package com.mycompany.crm.gui;
 
-import Exceptions.ComandaException;
-import com.mycompany.crm.entity.Empresa;
+import com.mycompany.crm.crm.entity.Empresa;
+import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
 import java.util.ArrayList;
@@ -21,23 +21,53 @@ import javax.swing.table.DefaultTableModel;
  */
 public class OptionsEmpresas extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Agenda
-     */
+    private DefaultTableModel model ;
+    
     public OptionsEmpresas() {
         initComponents();
-        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model = (DefaultTableModel) tabla.getModel();
+        loadData();
+        
+        
+    }
+    public void loadData(){
         try {
-            ArrayList<Empresa> lista = Validations.getInstance().valClientesList2();
+            ArrayList<Empresa> lista = Validations.getInstance().valClientesList();
             for (Empresa e: lista) {
-                model.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getContacto(),e.getPhoneNumber(), e.getEmail()});
+                model.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getRepresentante(),e.getPhoneNumber(), e.getEmail()});
                 
             }
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
+    }
+    public void addData(){
+        model.addRow(new Object[]{codigo.getText(),empresa.getText(),contacto.getText(),telefono.getText(),email.getText()});
+    }
+    public void eliminar(){
+        int fila = tabla.getSelectedRow();
+        if (fila!=-1) {
+            model.removeRow(fila);
+        }
+    }
+    public void update(){
+        int fila = tabla.getSelectedRow();
+        if (fila!=-1) {
+            model.setValueAt(codigo.getText(), fila, 0);
+            model.setValueAt(empresa.getText(), fila, 1);
+            model.setValueAt(contacto.getText(), fila, 2);
+            model.setValueAt(telefono.getText(), fila, 3);
+            model.setValueAt(email.getText(), fila, 4);
+        }
         
+        
+    }
+    public void clear(){
+        int filas = model.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            model.removeRow(0);
+        }
     }
     public void cambiarDialog(Dialog a){
         a.setSize(650, 473);
@@ -139,8 +169,18 @@ public class OptionsEmpresas extends javax.swing.JPanel {
         jLabel11.setText("WEB");
 
         agregar.setText("AGREGAR");
+        agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarActionPerformed(evt);
+            }
+        });
 
         modificar.setText("MODIFICAR");
+        modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarActionPerformed(evt);
+            }
+        });
 
         limpiar.setText("LIMPIAR");
         limpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -288,30 +328,8 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-        JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(OptionsEmpresas.this);
-        String s = " ";
-        switch (s){
-            case "Programar visita":
-                AgendaVisita v = new AgendaVisita(parent,true);
-                cambiarDialog(v);
-                break;
-            case "Registrar llamada":
-                AgendaLlamada l = new AgendaLlamada(parent,true);
-                cambiarDialog(l);
-                break;
-            case "Enviar correo":
-                AgendaEmail e = new AgendaEmail(parent, true);
-                cambiarDialog(e);
-                break;
-            case "Ver Agenda":
-                AgendaAgenda ag = new AgendaAgenda(parent, true);
-                cambiarDialog(ag);
-                break;
-                    
-        }
+        eliminar();
         
-//        AgendaEmail a = new AgendaEmail(parent,true);
-//        cambiarDialog(a);
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionActionPerformed
@@ -319,8 +337,16 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     }//GEN-LAST:event_direccionActionPerformed
 
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
-        // TODO add your handling code here:
+        clear();
     }//GEN-LAST:event_limpiarActionPerformed
+
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        addData();
+    }//GEN-LAST:event_agregarActionPerformed
+
+    private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+        update();
+    }//GEN-LAST:event_modificarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

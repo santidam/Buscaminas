@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <exec.mainClass>com.mycompany.crm.CRM</exec.mainClass>
+        <exec.mainClass>com.mycompany.crm.gui.LoginFrame</exec.mainClass>
     </properties>
     <build>
         <plugins>
@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.mycompany.crm.CRM</mainClass> <!-- Reemplaza con el nombre de tu clase principal -->
+                            <mainClass>com.mycompany.crm.gui.LoginFrame</mainClass> <!-- Reemplaza con el nombre de tu clase principal -->
                         </manifest>
                     </archive>
                 </configuration>

@@ -5,12 +5,20 @@
 package com.mycompany.crm.validator;
 
 
+
 import com.mycompany.crm.controller.Gestor;
+import com.mycompany.crm.crm.entity.Comercial;
+import com.mycompany.crm.crm.entity.Empresa;
+import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.utils.CastData;
-import Exceptions.ComandaException;
-import com.mycompany.crm.entity.Empresa;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,64 +37,103 @@ public class Validations {
         }
         return v;
     }
-    public void valLogin(String dni, String password) throws ComandaException, SQLException{
+    public boolean valLogin(String dni, String password) throws ComandaException, SQLException{
         if (!password.equals("1234")) {
-            System.out.println("ERROR COntraseña");
+            System.out.println("ERROR ContraseÃ±a");
             throw new ComandaException(ComandaException.ERROR_CONTRASEÑA);
         }
-        gestor.login(dni, password);
+        return gestor.login(dni,password);
 
     }
 
-    public void valAltaCliente(String phone, String nameEmpresa, String contacto, String email) throws ComandaException {
+    public void valAltaCliente(String nombre, String agente, String phone, String email, String codigo, String direccion, String cp, String region, String web, String ciudad) throws ComandaException {
         if (valPhone(phone)) {
-                if (valName(nameEmpresa, "nombre")) {
-                    if (valName(contacto, "apellido")) {
+                if (valName(nombre, "nombre")) {
+                    if (valName(agente, "apellido")) {
                         if (valEmail(email)) {
-                            gestor.altaCliente(phone, nameEmpresa, contacto, email);
+                            try{
+                                gestor.altaEmpresa(nombre, agente, phone, email, codigo, direccion, Integer.parseInt(cp), region, web, ciudad);
+                            }catch(SQLException e){
+                                System.out.println(e.getMessage());
+                            }
                         }
                     }
                 }
             }
     }
 
-    public void valAltaEmpleado(String dni, String name, String apellidos) throws ComandaException {
-        if (valDni(dni)) {
-            if (valName(name, "nombre")) {
-                if (valName(apellidos, "apellido")) {
-                    gestor.altaEmpleado(dni,name,apellidos);
-                }
-            }
+    public void valAltaEmpleado(String dni, String name, String apellidos, String porcentajeComision, String fechaIncorporacion, String contrasenya) throws ComandaException{
+        valDni(dni);
+        valName(name, "nombre");
+        valName(apellidos, "apellido");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        try{
+            Date sqlDate = new java.sql.Date(dateFormat.parse("2024/05/07").getTime());
+            gestor.altaEmpleado(dni, name,apellidos, Integer.parseInt(porcentajeComision), sqlDate, contrasenya);
+
+        }catch(ParseException e){
+            System.out.println("No se puede modificar"); // Añadir excepcion formato fecha incorrecto
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
     }
 
-    public void valBajaEmpleado(String dni) throws ComandaException {
+    /*public void valBajaEmpleado(String dni) throws ComandaException {
         if (valDni(dni)) {
             gestor.bajaEmpleado(dni);
         }
-    }
+    }*/
 
     public String valClienteInfo(String phone) throws ComandaException {
         valPhone(phone);
-        return gestor.infoCliente(phone);
+        String info = "";
+        try{
+            info = gestor.infoCliente(phone).toString();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return info;
         
     }
 
     public String valEmpleadoInfo(String dni) throws ComandaException{
         valDni(dni);
-            
-        return gestor.infoEmpleado(dni);
+        String info = "";
+        try{
+            info = gestor.infoEmpleado(dni).toString();
+        }catch(SQLException e){
+            System.out.println(e.getMessage()); //  TODO lanzar excepcion para recoger en boton
+            throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
+        }
+        return info;
     }
 
-    public String valClientesList() throws ComandaException {
-        return gestor.listClientes();
+    public ArrayList<Empresa> valClientesList() throws ComandaException {
+        ArrayList<Empresa> empresas = new ArrayList<>();
+        try{
+            empresas = gestor.listClientes();
+            
+        }catch(SQLException e){
+            System.out.println(e.getMessage()); // añadir lanzar excepcion comanda exception
+        }
+        return empresas;
     }
-    public ArrayList<Empresa> valClientesList2() throws ComandaException {
-        return gestor.listClientes2();
-    }
+//    public ArrayList<Empresa> valClientesList2() throws ComandaException {
+//        return gestor.listClientes2();
+//    }
 
     public String valEmpleadosList() throws ComandaException {
-        return gestor.listEmpleados();
+        String info = "";
+        try{
+            ArrayList<Comercial> comerciales = gestor.listEmpleados();
+            for(Comercial c: comerciales){
+                info += c.toString();
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return info;
     }
 
 //    public void valAsignarCliente(String[] args){
@@ -103,7 +150,7 @@ public class Validations {
         if (argsLength == lengthEsperada){
             Validacion = true;
         } else {
-            System.out.println("ERROR. El número de argumentos es incorrecto.");
+            System.out.println("ERROR. El nÃºmero de argumentos es incorrecto.");
             throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
         }
         return Validacion;
@@ -114,7 +161,7 @@ public class Validations {
         if(tel.length() == 9) {
             for (int i = 0; i < tel.length(); i++) {
                 if (!Character.isDigit(tel.charAt(i))) {
-                    System.out.println("El número de teléfono introducido no es válido.");
+                    System.out.println("El nÃºmero de telÃ©fono introducido no es vÃ¡lido.");
                     esCorrecto = false;
                     throw new ComandaException(ComandaException.ERROR_TEL);
                 }
@@ -144,16 +191,16 @@ public class Validations {
             throw new ComandaException(ComandaException.DOS_APELLIDOS);
         }
         if (tipo.equals("nombre") && partes.length > 2){
-            System.out.println("Error: debes introducir un máximo de dos nombres");
+            System.out.println("Error: debes introducir un mÃ¡ximo de dos nombres");
             throw new ComandaException(ComandaException.MAX_NOMBRES);
         }
 
         for (String part : partes) {
             if (part.length() < 2 || part.length() > 20) {
-                System.out.println("Error: cada parte del " + tipo + " debe tener al menos 2 caracteres y un máximo de 20.");
+                System.out.println("Error: cada parte del " + tipo + " debe tener al menos 2 caracteres y un mÃ¡ximo de 20.");
                 throw new ComandaException(ComandaException.ERROR_AP);
             } else if (!part.matches("[\\p{L}]+")) {
-                System.out.println("Error: solo puedes introducir caracteres alfabéticos en cada parte del " + tipo);
+                System.out.println("Error: solo puedes introducir caracteres alfabÃ©ticos en cada parte del " + tipo);
                 throw new ComandaException(ComandaException.DATO_INCORRECTO);
             }
         }
@@ -178,7 +225,7 @@ public class Validations {
             if (letter == validLetters.charAt(resto)){
                 isValid = true;
             } else{
-                System.out.println("El último carácter solo puede ser una letra y tiene que ser válida");
+                System.out.println("El Ãºltimo carÃ¡cter solo puede ser una letra y tiene que ser vÃ¡lida");
                 throw new ComandaException(ComandaException.ERROR_DNI);
             }
         }else{
@@ -204,41 +251,41 @@ public class Validations {
 
     public boolean valEmail(String email) throws ComandaException {
         if (email.isEmpty()) {
-            System.out.println("El correo electrónico no puede estar vacío.");
+            System.out.println("El correo electrÃ³nico no puede estar vacÃ­o.");
             throw new ComandaException(ComandaException.ERROR_CORREO);
         } else {
             if (email.startsWith("-") || email.endsWith("-") || email.startsWith(".") || email.endsWith(".") || email.contains("..")) {
-                System.out.println("El correo electrónico no puede comenzar o terminar con '-' o '.' ni contener '..'");
+                System.out.println("El correo electrÃ³nico no puede comenzar o terminar con '-' o '.' ni contener '..'");
                 throw new ComandaException(ComandaException.ERROR_CORREO);
             } else {
                 if (!email.contains("@") || email.indexOf("@") != email.lastIndexOf("@")) {
-                    System.out.println("El correo electrónico debe contener un solo '@'.");
+                    System.out.println("El correo electrÃ³nico debe contener un solo '@'.");
                     throw new ComandaException(ComandaException.ERROR_CORREO);
                 } else {
                     String[] emailSeparado = email.split("@");
                     if (emailSeparado.length < 2) {
-                        System.out.println("El correo electrónico debe tener caracteres antes y después de '@'.");
+                        System.out.println("El correo electrÃ³nico debe tener caracteres antes y despuÃ©s de '@'.");
                         throw new ComandaException(ComandaException.ERROR_CORREO);
                     } else {
                         String[] dominioEmail = emailSeparado[1].split("\\.");
                         if (dominioEmail.length < 2) {
-                            System.out.println("El dominio del correo electrónico debe contener '.'.");
+                            System.out.println("El dominio del correo electrÃ³nico debe contener '.'.");
                             throw new ComandaException(ComandaException.ERROR_CORREO);
                         } else {
                             if (dominioEmail[0].length() > 63 || dominioEmail[1].length() > 63) {
-                                System.out.println("Ninguna parte del dominio del correo electrónico puede exceder los 63 caracteres.");
+                                System.out.println("Ninguna parte del dominio del correo electrÃ³nico puede exceder los 63 caracteres.");
                                 throw new ComandaException(ComandaException.ERROR_CORREO);
                             } else {
-                                if (!email.matches("^[a-zA-Z0-9.ñÑ_-]+@[a-zA-Z0-9.ñÑ-]+$")) {
-                                    System.out.println("El correo electrónico solo puede contener caracteres alfanuméricos y . _ -");
+                                if (!email.matches("^[a-zA-Z0-9.Ã±Ã‘_-]+@[a-zA-Z0-9.Ã±Ã‘-]+$")) {
+                                    System.out.println("El correo electrÃ³nico solo puede contener caracteres alfanumÃ©ricos y . _ -");
                                     throw new ComandaException(ComandaException.ERROR_CORREO);
                                 } else {
                                     if (emailSeparado[0].isEmpty() || emailSeparado[0].length() > 64) {
-                                        System.out.println("La parte local del correo electrónico (antes de @) debe tener entre 1 y 64 caracteres.");
+                                        System.out.println("La parte local del correo electrÃ³nico (antes de @) debe tener entre 1 y 64 caracteres.");
                                         throw new ComandaException(ComandaException.ERROR_CORREO);
                                     } else {
                                         if (emailSeparado[1].isEmpty() || emailSeparado[1].length() > 64) {
-                                            System.out.println("La parte del dominio del correo electrónico (después de @) debe tener entre 1 y 64 caracteres.");
+                                            System.out.println("La parte del dominio del correo electrÃ³nico (despuÃ©s de @) debe tener entre 1 y 64 caracteres.");
                                             throw new ComandaException(ComandaException.ERROR_CORREO);
                                         } else {
                                             return true;

@@ -1,49 +1,35 @@
-package com.mycompany.crm.entity;
+package com.mycompany.crm.crm.entity;
 
 import java.util.ArrayList;
 
 public class Empresa {
-    
-    private int codigo;
-    private String direccion;
-    private String cp;
-    private String ciudad;
-    private String comunidad;
-    private String paginaWeb;
+
     private String nombre;
     private String email;
     private String phoneNumber;
-    private String contacto;
-    private Comercial comercial; // Eliminar ahora empresas tienen varios empesas
+    private String representante;
+    private String direccion;
+    private int cp;
+    private String ciudad;
+    private String comunidad_autonoma;
+    private String codigo;
+    private String pagina_web;
 
-    private ArrayList<Accion> acciones;
-
-
-    public Empresa(int codigo,String nombre, String email, String phoneNumber, String contacto) {
-        
-        this.codigo = codigo;
+    public Empresa(String nombre, String email, String phoneNumber, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String codigo, String pagina_web) {
         this.nombre = nombre;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.contacto = contacto;
-        this.comercial = new Comercial();
-    }
-
-    public void setCodigo(int codigo) {
+        this.representante = representante;
+        this.direccion = direccion;
+        this.cp = cp;
+        this.ciudad = ciudad;
+        this.comunidad_autonoma = comunidad_autonoma;
         this.codigo = codigo;
+        this.pagina_web = pagina_web;
     }
 
-    public int getCodigo() {
-        return codigo;
-    }
-    
-
-    public void asignarComercial(Comercial comercial){
-        this.comercial = comercial;
-    }
-
-    public void guardarAccion(Accion accion){
-        this.acciones.add(accion);
+    public Empresa(int aInt, String string, String string0, String string1, String string2) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public String getNombre() {
@@ -58,19 +44,47 @@ public class Empresa {
         return phoneNumber;
     }
 
-    public String getContacto() {
-        return contacto;
+
+    public String getRepresentante() {
+        return representante;
     }
-    
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public int getCp() {
+        return cp;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public String getComunidad_autonoma() {
+        return comunidad_autonoma;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public String getPagina_web() {
+        return pagina_web;
+    }
 
     @Override
     public String toString() {
-
-        return  nombre + ';' +
-                email + ';' +
-                phoneNumber+ ";"+
-                contacto;
-
-
+        return "TLFNO: \t" + this.phoneNumber + "\n"+
+                "CODIGO: \t" + this.codigo + "\n"+
+                "NOMBRE: \t" + this.nombre + "\n"+
+                "EMAIL: \t" + this.email + "\n"+
+                "AGENTE: \t" + this.representante+ "\n"+
+                "DIRECCION  : \t" + this.direccion+ "\n"+
+                "CP: \t" + this.cp+ "\n"+
+                "CIUDAD: \t" + this.ciudad+ "\n"+
+                "REGION: \t" + this.comunidad_autonoma + "\n"+
+                "WEB: \t" + this.pagina_web+ "\n"+
+                "----------------------------------------\n";
     }
 }

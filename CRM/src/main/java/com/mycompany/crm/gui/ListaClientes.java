@@ -4,7 +4,8 @@
  */
 package com.mycompany.crm.gui;
 
-import Exceptions.ComandaException;
+
+import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 
 /**
@@ -116,12 +117,12 @@ public class ListaClientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-        try {
-            String infoCliente = Validations.getInstance().valClientesList();
-            info.setText(infoCliente);
-        } catch (ComandaException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+//        try {
+//            String infoCliente = Validations.getInstance().valClientesList();
+//            info.setText(infoCliente);
+//        } catch (ComandaException ex) {
+//            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+//        }
     }//GEN-LAST:event_okBtnActionPerformed
 
 

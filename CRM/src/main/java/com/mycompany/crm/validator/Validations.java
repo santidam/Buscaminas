@@ -7,8 +7,8 @@ package com.mycompany.crm.validator;
 
 
 import com.mycompany.crm.controller.Gestor;
-import com.mycompany.crm.crm.entity.Comercial;
 import com.mycompany.crm.crm.entity.Empresa;
+import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.utils.CastData;
 
@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,10 +39,10 @@ public class Validations {
         return v;
     }
     public boolean valLogin(String dni, String password) throws ComandaException, SQLException{
-        if (!password.equals("1234")) {
-            System.out.println("ERROR ContraseÃ±a");
-            throw new ComandaException(ComandaException.ERROR_CONTRASEÑA);
-        }
+//        if (!password.equals("1234")) {
+//            System.out.println("ERROR ContraseÃ±a");
+//            throw new ComandaException(ComandaException.ERROR_CONTRASEÑA);
+//        }
         return gestor.login(dni,password);
 
     }
@@ -109,8 +110,8 @@ public class Validations {
         return info;
     }
 
-    public ArrayList<Empresa> valClientesList() throws ComandaException {
-        ArrayList<Empresa> empresas = new ArrayList<>();
+    public HashMap<String,Empresa> valClientesList() throws ComandaException {
+        HashMap<String,Empresa> empresas = new HashMap<>();
         try{
             empresas = gestor.listClientes();
             
@@ -123,17 +124,15 @@ public class Validations {
 //        return gestor.listClientes2();
 //    }
 
-    public String valEmpleadosList() throws ComandaException {
-        String info = "";
+    public HashMap<String,Comercial> valEmpleadosList() throws ComandaException {
+        HashMap<String,Comercial> comerciales = new HashMap<>();
         try{
-            ArrayList<Comercial> comerciales = gestor.listEmpleados();
-            for(Comercial c: comerciales){
-                info += c.toString();
-            }
+            comerciales = gestor.listEmpleados();
+            
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        return info;
+       return comerciales;
     }
 
 //    public void valAsignarCliente(String[] args){

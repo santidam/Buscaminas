@@ -5,7 +5,7 @@
 package com.mycompany.crm.gui;
 
 import com.mycompany.crm.crm.entity.Empresa;
-import com.mycompany.crm.entity.*;
+import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
@@ -21,31 +21,69 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author admin
  */
-public class OptionsComercial extends javax.swing.JPanel {
+public class OptionsComerciales extends javax.swing.JPanel {
 
-    DefaultTableModel dtm = new DefaultTableModel();
-    public OptionsComercial() {
+    private DefaultTableModel model ;
+    private HashMap<String,Comercial> lista;
+    
+    public OptionsComerciales() {
         initComponents();
-//        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model = (DefaultTableModel) tabla.getModel();
+        loadData();
+        
+        
+    }
+    public void loadData(){
         try {
-            HashMap<String,Empresa> lista = Validations.getInstance().valClientesList();
-            for (Empresa e: lista.values()) {
-                dtm.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getRepresentante(),e.getPhoneNumber(), e.getEmail()});
+            lista = Validations.getInstance().valEmpleadosList();
+            for (Comercial e: lista.values()) {
+                model.addRow(new Object[]{""+e.getCodigo(), e.getDni(),e.getNombre(), e.getApellidos(),e.getPorcentajeComision()});
                 
             }
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
+    }
+    public void addData(){
+        model.addRow(new Object[]{codigo.getText(),dni.getText(),nombre.getText(),comision.getText(),apellidos.getText()});
+    }
+    public void eliminar(){
+        int fila = tabla.getSelectedRow();
+        if (fila!=-1) {
+            model.removeRow(fila);
+        }
+    }
+    public void update(){
+        int fila = tabla.getSelectedRow();
+        if (fila!=-1) {
+            model.setValueAt(codigo.getText(), fila, 0);
+            model.setValueAt(dni.getText(), fila, 1);
+            model.setValueAt(nombre.getText(), fila, 2);
+            model.setValueAt(comision.getText(), fila, 3);
+            model.setValueAt(apellidos.getText(), fila, 4);
+        }
+        
         
     }
-//    public void addData(){
-//        dtm.addRow(new Object[txt]);
-//    }
+    public void clear(){
+        int filas = model.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            model.removeRow(0);
+        }
+    }
     public void cambiarDialog(Dialog a){
         a.setSize(650, 473);
         a.setLocationRelativeTo(null);
         a.setVisible(true);
+    }
+    public void clearText(){
+        codigo.setText("");
+        dni.setText("");
+        nombre.setText("");
+        apellidos.setText("");
+        comision.setText("");
+        incorporacion.setText("");
     }
 
     /**
@@ -59,6 +97,7 @@ public class OptionsComercial extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jDatePickerUtil1 = new org.jdatepicker.util.JDatePickerUtil();
         eliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -68,11 +107,11 @@ public class OptionsComercial extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         codigo = new javax.swing.JTextField();
-        empresa = new javax.swing.JTextField();
-        contacto = new javax.swing.JTextField();
-        telefono = new javax.swing.JTextField();
-        email = new javax.swing.JTextField();
-        direccion = new javax.swing.JTextField();
+        dni = new javax.swing.JTextField();
+        nombre = new javax.swing.JTextField();
+        comision = new javax.swing.JTextField();
+        apellidos = new javax.swing.JTextField();
+        incorporacion = new javax.swing.JTextField();
         agregar = new javax.swing.JButton();
         modificar = new javax.swing.JButton();
         limpiar = new javax.swing.JButton();
@@ -104,7 +143,7 @@ public class OptionsComercial extends javax.swing.JPanel {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Comercial");
+        jLabel1.setText("Empresas");
 
         jLabel2.setText("Código");
 
@@ -112,21 +151,34 @@ public class OptionsComercial extends javax.swing.JPanel {
 
         jLabel4.setText("Nombre");
 
-        jLabel5.setText("Email");
+        jLabel5.setText("Apellidos");
 
-        jLabel6.setText("Comision");
+        jLabel6.setText("Incorporación");
 
-        jLabel7.setText("Incorporación *");
+        jLabel7.setText("Comision");
 
-        direccion.addActionListener(new java.awt.event.ActionListener() {
+        codigo.setEditable(false);
+        codigo.setEnabled(false);
+
+        incorporacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                direccionActionPerformed(evt);
+                incorporacionActionPerformed(evt);
             }
         });
 
         agregar.setText("AGREGAR");
+        agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarActionPerformed(evt);
+            }
+        });
 
         modificar.setText("MODIFICAR");
+        modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarActionPerformed(evt);
+            }
+        });
 
         limpiar.setText("LIMPIAR");
         limpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -140,9 +192,22 @@ public class OptionsComercial extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Código", "Empresa", "Contacto", "Telefono", "Email"
+                "Código", "DNI", "Nombre", "Apellidos", "Comision"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabla);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -171,14 +236,14 @@ public class OptionsComercial extends javax.swing.JPanel {
                                 .addComponent(jLabel7)
                                 .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(telefono, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(contacto)))
+                                    .addComponent(comision, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(nombre)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(70, 70, 70)
+                                .addGap(42, 42, 42)
                                 .addComponent(codigo)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,9 +260,9 @@ public class OptionsComercial extends javax.swing.JPanel {
                         .addComponent(eliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addComponent(limpiar))
-                    .addComponent(direccion)
-                    .addComponent(email, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(empresa, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(incorporacion)
+                    .addComponent(apellidos, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(dni, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(63, 63, 63))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,27 +279,27 @@ public class OptionsComercial extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(45, 45, 45)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(empresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(contacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                    .addComponent(incorporacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(agregar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -248,49 +313,55 @@ public class OptionsComercial extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-        JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(OptionsComercial.this);
-        String s = " ";
-        switch (s){
-            case "Programar visita":
-                AgendaVisita v = new AgendaVisita(parent,true);
-                cambiarDialog(v);
-                break;
-            case "Registrar llamada":
-                AgendaLlamada l = new AgendaLlamada(parent,true);
-                cambiarDialog(l);
-                break;
-            case "Enviar correo":
-                AgendaEmail e = new AgendaEmail(parent, true);
-                cambiarDialog(e);
-                break;
-            case "Ver Agenda":
-                AgendaAgenda ag = new AgendaAgenda(parent, true);
-                cambiarDialog(ag);
-                break;
-                    
-        }
-        
-//        AgendaEmail a = new AgendaEmail(parent,true);
-//        cambiarDialog(a);
+        eliminar();
+        clearText();
     }//GEN-LAST:event_eliminarActionPerformed
 
-    private void direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionActionPerformed
+    private void incorporacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incorporacionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_direccionActionPerformed
+    }//GEN-LAST:event_incorporacionActionPerformed
 
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
-        // TODO add your handling code here:
+//        clear();
+        clearText();
     }//GEN-LAST:event_limpiarActionPerformed
+
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        addData();
+        clearText();
+    }//GEN-LAST:event_agregarActionPerformed
+
+    private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+        update();
+        clearText();
+    }//GEN-LAST:event_modificarActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        int linea = tabla.getSelectedRow();
+        if (linea!=-1) {
+            String codigo = (String)model.getValueAt(linea, 0);
+            Comercial e = lista.get(codigo);
+            this.codigo.setText(""+e.getCodigo());
+            this.dni.setText(e.getDni());
+            this.nombre.setText(e.getNombre());
+            this.apellidos.setText(e.getApellidos());
+            this.comision.setText(""+e.getPorcentajeComision());
+            this.incorporacion.setText(""+e.getFechaIncorporacion());
+            
+            
+        }
+    }//GEN-LAST:event_tablaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
+    private javax.swing.JTextField apellidos;
     private javax.swing.JTextField codigo;
-    private javax.swing.JTextField contacto;
-    private javax.swing.JTextField direccion;
+    private javax.swing.JTextField comision;
+    private javax.swing.JTextField dni;
     private javax.swing.JButton eliminar;
-    private javax.swing.JTextField email;
-    private javax.swing.JTextField empresa;
+    private javax.swing.JTextField incorporacion;
+    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -304,7 +375,7 @@ public class OptionsComercial extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JButton limpiar;
     private javax.swing.JButton modificar;
+    private javax.swing.JTextField nombre;
     private javax.swing.JTable tabla;
-    private javax.swing.JTextField telefono;
     // End of variables declaration//GEN-END:variables
 }

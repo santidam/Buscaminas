@@ -9,6 +9,7 @@ import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 public class OptionsEmpresas extends javax.swing.JPanel {
 
     private DefaultTableModel model ;
+    private HashMap<String,Empresa> lista;
     
     public OptionsEmpresas() {
         initComponents();
@@ -32,8 +34,8 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     }
     public void loadData(){
         try {
-            ArrayList<Empresa> lista = Validations.getInstance().valClientesList();
-            for (Empresa e: lista) {
+            lista = Validations.getInstance().valClientesList();
+            for (Empresa e: lista.values()) {
                 model.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getRepresentante(),e.getPhoneNumber(), e.getEmail()});
                 
             }
@@ -73,6 +75,18 @@ public class OptionsEmpresas extends javax.swing.JPanel {
         a.setSize(650, 473);
         a.setLocationRelativeTo(null);
         a.setVisible(true);
+    }
+    public void clearText(){
+        codigo.setText("");
+        empresa.setText("");
+        contacto.setText("");
+        email.setText("");
+        telefono.setText("");
+        direccion.setText("");
+        cp.setText("");
+        ciudad.setText("");
+        comunidad.setText("");
+        web.setText("");
     }
 
     /**
@@ -158,6 +172,9 @@ public class OptionsEmpresas extends javax.swing.JPanel {
 
         jLabel9.setText("Ciudad");
 
+        codigo.setEditable(false);
+        codigo.setEnabled(false);
+
         direccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 direccionActionPerformed(evt);
@@ -197,6 +214,11 @@ public class OptionsEmpresas extends javax.swing.JPanel {
                 "Código", "Empresa", "Contacto", "Telefono", "Email"
             }
         ));
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabla);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -329,7 +351,7 @@ public class OptionsEmpresas extends javax.swing.JPanel {
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         eliminar();
-        
+        clearText();
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionActionPerformed
@@ -337,16 +359,38 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     }//GEN-LAST:event_direccionActionPerformed
 
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
-        clear();
+//        clear();
+        clearText();
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
         addData();
+        clearText();
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         update();
+        clearText();
     }//GEN-LAST:event_modificarActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        int linea = tabla.getSelectedRow();
+        if (linea!=-1) {
+            String codigo = (String)model.getValueAt(linea, 0);
+            Empresa e = lista.get(codigo);
+            this.codigo.setText(e.getCodigo());
+            this.empresa.setText(e.getNombre());
+            this.contacto.setText(e.getRepresentante());
+            this.email.setText(e.getEmail());
+            this.telefono.setText(e.getPhoneNumber());
+            this.direccion.setText(e.getDireccion());
+            this.cp.setText(""+e.getCp());
+            this.ciudad.setText(e.getCiudad());
+            this.comunidad.setText(e.getComunidad_autonoma());
+            this.web.setText(e.getPagina_web());
+            
+        }
+    }//GEN-LAST:event_tablaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

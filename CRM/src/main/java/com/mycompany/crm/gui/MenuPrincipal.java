@@ -301,7 +301,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_infoEmpleadoActionPerformed
 
     private void listaEmpleados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaEmpleados1ActionPerformed
-        ListaEmpleados e = new ListaEmpleados();
+        OptionsComerciales e = new OptionsComerciales();
         cambiarPanel(e);
     }//GEN-LAST:event_listaEmpleados1ActionPerformed
 

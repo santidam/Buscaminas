@@ -1,11 +1,12 @@
 package com.mycompany.crm.persistencia;
 
-import com.mycompany.crm.crm.entity.Comercial;
 import com.mycompany.crm.crm.entity.Empresa;
+import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CrmDAO {
 
@@ -101,10 +102,10 @@ public class CrmDAO {
         return comercial;
     }
 
-    public ArrayList<Comercial> allComerciales() throws SQLException, ComandaException{
+    public HashMap<String,Comercial> allComerciales() throws SQLException, ComandaException{
         Connection c = conectar();
         Statement st = c.createStatement();
-        ArrayList<Comercial> comerciales = new ArrayList<>();
+        HashMap<String,Comercial> comerciales = new HashMap<>();
         Comercial comercial = null;
         String query = "SELECT * FROM comercial";
         ResultSet rs = st.executeQuery(query);
@@ -114,7 +115,7 @@ public class CrmDAO {
         }
         while(hayContenido){
             comercial = new Comercial(rs.getString("dni"), rs.getInt("codigo"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("porcentaje_comision"), rs.getDate("fecha_incorporacion"), rs.getString("contrasenya"));
-            comerciales.add(comercial);
+            comerciales.put(rs.getString("codigo"),comercial);
             hayContenido = rs.next();
         }
         rs.close();
@@ -124,9 +125,9 @@ public class CrmDAO {
         return comerciales;
     }
 
-    public ArrayList<Empresa> allEmpresas() throws SQLException, ComandaException{
+    public HashMap<String,Empresa> allEmpresas() throws SQLException, ComandaException{
         Connection c = conectar();
-        ArrayList<Empresa> empresas = new ArrayList<>();
+        HashMap<String,Empresa> empresas = new HashMap<>();
         Statement st = c.createStatement();
         Empresa emp = null;
         String query = "SELECT * FROM empresa";
@@ -137,7 +138,7 @@ public class CrmDAO {
         }
         while(hayContenido){
             emp = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("cp"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("codigo"), rs.getString("pagina_web"));
-            empresas.add(emp);
+            empresas.put(rs.getString("codigo"),emp);
             hayContenido = rs.next();
         }
         rs.close();

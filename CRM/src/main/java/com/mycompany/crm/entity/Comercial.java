@@ -1,4 +1,4 @@
-package com.mycompany.crm.crm.entity;
+package com.mycompany.crm.entity;
 
 import java.util.Date;
 
@@ -22,13 +22,15 @@ public class Comercial {
         this.apellidos = apellidos;
         this.porcentajeComision = porcentajeComision;
         this.fechaIncorporacion = fechaIncorporacion;
+        this.contrasenya = contrasenya;
     }
-    public Comercial(String dni, String nombre, String apellidos, int porcentajeComision, Date fechaIncorporacion, String contrasenya) {
+    public Comercial(String dni, String nombre, String apellidos, int porcentajeComision, Date fechaIncorporacion) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.porcentajeComision = porcentajeComision;
         this.fechaIncorporacion = fechaIncorporacion;
+        this.contrasenya = "1234";
     }
 
     public String getDni() {

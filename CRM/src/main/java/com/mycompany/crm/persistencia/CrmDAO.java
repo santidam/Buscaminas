@@ -1,6 +1,6 @@
 package com.mycompany.crm.persistencia;
 
-import com.mycompany.crm.crm.entity.Empresa;
+import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 
@@ -27,8 +27,55 @@ public class CrmDAO {
         return propietarios;
     }*/
 
+
+public HashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
+    HashMap<String, Empresa> empresas = new HashMap<>();
+    Connection c = conectar();
+    String sql = "SELECT * FROM empresa WHERE " +
+        "phone_number LIKE ? AND " +
+        "nombre LIKE ? AND " +
+        "email LIKE ? AND " +
+        "representante LIKE ? AND " +
+        "direccion LIKE ? AND " +
+        "CP LIKE ? AND " +
+        "ciudad LIKE ? AND " +
+        "comunidad_autonoma LIKE ? AND " +
+        "pagina_web LIKE ?";
+
+    PreparedStatement ps = c.prepareStatement(sql);
+   
+    ps.setString(1, "%" + phoneNumber + "%");
+    ps.setString(2, "%" + nombre + "%");
+    ps.setString(3, "%" + email + "%");
+    ps.setString(4, "%" + representante + "%");
+    ps.setString(5, "%" + direccion + "%");
+    ps.setString(6, "%" + cp + "%");
+    ps.setString(7, "%" + ciudad + "%");
+    ps.setString(8, "%" + comunidadAutonoma + "%");
+    ps.setString(9, "%" + paginaWeb + "%");
+   
+
+    ResultSet rs = ps.executeQuery();
+    boolean hayContenido = rs.next();
+    if(!hayContenido){
+        throw new ComandaException(ComandaException.NO_CLIENTES);
+    }
+    while(hayContenido){
+        Empresa emp = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("cp"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("codigo"), rs.getString("pagina_web"));
+        empresas.put(rs.getString("codigo"),emp);
+        hayContenido = rs.next();
+    }
+    rs.close();
+    ps.close();
+    desconectar(c);
+
+    return empresas;
+
+}
+
+
     public void insertarEmpresa(Empresa empresa) throws SQLException, ComandaException{
-        if (existeComercial(empresa.getPhoneNumber())) {
+        if (existeEmpresa(empresa.getPhoneNumber())) {
             throw new ComandaException(ComandaException.CLIENTE_EXISTE);
         }
         Connection c = conectar();
@@ -82,6 +129,17 @@ public class CrmDAO {
 
         return emp;
     }
+    public void deleteEmpresa(String phoneNumber) throws SQLException, ComandaException{
+        if (!existeEmpresa(phoneNumber)) {
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
+        Connection c = conectar();
+        String query = "Delete from empresa where phone_number = '"+phoneNumber+"'";
+        Statement st = c.createStatement();
+        st.executeUpdate(query);
+        st.close();
+        c.close();
+    }
 
     public Comercial mostrarComercial(String dni) throws SQLException, ComandaException{
         if(!existeComercial(dni)){
@@ -134,7 +192,7 @@ public class CrmDAO {
         ResultSet rs = st.executeQuery(query);
         boolean hayContenido = rs.next();
         if(!hayContenido){
-            throw new ComandaException(ComandaException.NO_EMPLEADOS);
+            throw new ComandaException(ComandaException.NO_CLIENTES);
         }
         while(hayContenido){
             emp = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("cp"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("codigo"), rs.getString("pagina_web"));
@@ -181,8 +239,8 @@ public class CrmDAO {
 
     private Connection conectar() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/crm";
-        String user = "root";
-        String pass = "";
+        String user = "crm";
+        String pass = "1234";
         Connection c = DriverManager.getConnection(url, user, pass);
         return c;
     }

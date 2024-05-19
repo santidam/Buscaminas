@@ -4,10 +4,11 @@
  */
 package com.mycompany.crm.gui;
 
-import com.mycompany.crm.crm.entity.Empresa;
+import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -28,20 +29,26 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     public OptionsEmpresas() {
         initComponents();
         model = (DefaultTableModel) tabla.getModel();
-        loadData();
+        loadData(loadListaEmpresas());
         
         
     }
-    public void loadData(){
+    public HashMap<String,Empresa> loadListaEmpresas(){
+        HashMap<String,Empresa> listaEmpresas = new HashMap<>();
         try {
-            lista = Validations.getInstance().valClientesList();
-            for (Empresa e: lista.values()) {
-                model.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getRepresentante(),e.getPhoneNumber(), e.getEmail()});
-                
-            }
+            listaEmpresas = Validations.getInstance().valClientesList();
+           
+            
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
+        }
+        lista = listaEmpresas;
+        return listaEmpresas;
+    }
+    public void loadData(HashMap<String,Empresa> listas){
+        for (Empresa e: listas.values()) {
+                model.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getRepresentante(),e.getPhoneNumber(), e.getEmail()});
         }
     }
     public void addData(){
@@ -129,6 +136,7 @@ public class OptionsEmpresas extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        agregar1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -213,7 +221,15 @@ public class OptionsEmpresas extends javax.swing.JPanel {
             new String [] {
                 "Código", "Empresa", "Contacto", "Telefono", "Email"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaMouseClicked(evt);
@@ -233,6 +249,14 @@ public class OptionsEmpresas extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        agregar1.setText("BUSCAR");
+        agregar1.setActionCommand("BUSCAR");
+        agregar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -266,20 +290,29 @@ public class OptionsEmpresas extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10))
-                        .addGap(188, 188, 188)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel10))
+                                .addGap(188, 188, 188)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(agregar)
+                                .addGap(27, 27, 27)
+                                .addComponent(agregar1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(modificar))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(5, 5, 5)))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
                         .addComponent(eliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(limpiar))
@@ -290,15 +323,8 @@ public class OptionsEmpresas extends javax.swing.JPanel {
                     .addComponent(empresa, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(63, 63, 63))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(agregar)
-                        .addGap(75, 75, 75)
-                        .addComponent(modificar)))
+                .addGap(21, 21, 21)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -337,12 +363,12 @@ public class OptionsEmpresas extends javax.swing.JPanel {
                     .addComponent(jLabel11)
                     .addComponent(web, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modificar)
+                    .addComponent(eliminar)
+                    .addComponent(limpiar)
                     .addComponent(agregar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(modificar)
-                        .addComponent(eliminar)
-                        .addComponent(limpiar)))
+                    .addComponent(agregar1))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
@@ -350,8 +376,18 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-        eliminar();
-        clearText();
+        try {
+            Validations.getInstance().valBajaEmpresa(telefono.getText());
+            clear();
+            loadData(loadListaEmpresas());
+            clearText();
+            javax.swing.JOptionPane.showMessageDialog(this, "Cliente dado de baja correctamente","Baja Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (ComandaException | SQLException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        } 
+        
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void direccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_direccionActionPerformed
@@ -364,8 +400,19 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        addData();
-        clearText();
+        try {
+            Validations.getInstance().valAltaCliente(empresa.getText(), email.getText(),telefono.getText(),contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText());
+            clear();
+            loadData(loadListaEmpresas());
+            clearText();
+            javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+        
+        
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
@@ -378,23 +425,41 @@ public class OptionsEmpresas extends javax.swing.JPanel {
         if (linea!=-1) {
             String codigo = (String)model.getValueAt(linea, 0);
             Empresa e = lista.get(codigo);
-            this.codigo.setText(e.getCodigo());
-            this.empresa.setText(e.getNombre());
-            this.contacto.setText(e.getRepresentante());
-            this.email.setText(e.getEmail());
-            this.telefono.setText(e.getPhoneNumber());
-            this.direccion.setText(e.getDireccion());
-            this.cp.setText(""+e.getCp());
-            this.ciudad.setText(e.getCiudad());
-            this.comunidad.setText(e.getComunidad_autonoma());
-            this.web.setText(e.getPagina_web());
+            if (e!=null) {
+                this.codigo.setText(e.getCodigo());
+                this.empresa.setText(e.getNombre());
+                this.contacto.setText(e.getRepresentante());
+                this.email.setText(e.getEmail());
+                this.telefono.setText(e.getPhoneNumber());
+                this.direccion.setText(e.getDireccion());
+                this.cp.setText(""+e.getCp());
+                this.ciudad.setText(e.getCiudad());
+                this.comunidad.setText(e.getComunidad_autonoma());
+                this.web.setText(e.getPagina_web());
+            }
+            
             
         }
     }//GEN-LAST:event_tablaMouseClicked
 
+    private void agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar1ActionPerformed
+      try {
+            HashMap<String,Empresa> newlist =  Validations.getInstance().valBusquedaEmpresa(telefono.getText(),empresa.getText(), email.getText(),contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText());
+            clear();
+            loadData(newlist);
+            clearText();
+            javax.swing.JOptionPane.showMessageDialog(this, "Buscando clientes","Clientes",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (ComandaException | SQLException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }  
+    }//GEN-LAST:event_agregar1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
+    private javax.swing.JButton agregar1;
     private javax.swing.JTextField ciudad;
     private javax.swing.JTextField codigo;
     private javax.swing.JTextField comunidad;

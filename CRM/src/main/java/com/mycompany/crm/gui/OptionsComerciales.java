@@ -4,7 +4,6 @@
  */
 package com.mycompany.crm.gui;
 
-import com.mycompany.crm.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
@@ -13,8 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,20 +26,25 @@ public class OptionsComerciales extends javax.swing.JPanel {
     public OptionsComerciales() {
         initComponents();
         model = (DefaultTableModel) tabla.getModel();
-        loadData();
+        loadData(loadListaComerciales());
         
         
     }
-    public void loadData(){
+    public HashMap<String,Comercial> loadListaComerciales(){
+        HashMap<String, Comercial> listaComerciales = new HashMap();
         try {
-            lista = Validations.getInstance().valEmpleadosList();
-            for (Comercial e: lista.values()) {
-                model.addRow(new Object[]{""+e.getCodigo(), e.getDni(),e.getNombre(), e.getApellidos(),e.getPorcentajeComision()});
-                
-            }
+            listaComerciales = Validations.getInstance().valEmpleadosList();
+            
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
+        }
+        lista = listaComerciales;
+        return listaComerciales;
+    }
+    public void loadData(HashMap<String,Comercial> listas){
+        for (Comercial e: listas.values()) {
+                model.addRow(new Object[]{""+e.getCodigo(), e.getDni(),e.getNombre(), e.getApellidos(),e.getPorcentajeComision()});
         }
     }
     public void addData(){
@@ -143,7 +145,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Empresas");
+        jLabel1.setText("Comerciales");
 
         jLabel2.setText("Código");
 
@@ -327,7 +329,8 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        addData();
+        clear();
+        loadData(loadListaComerciales());
         clearText();
     }//GEN-LAST:event_agregarActionPerformed
 
@@ -341,12 +344,15 @@ public class OptionsComerciales extends javax.swing.JPanel {
         if (linea!=-1) {
             String codigo = (String)model.getValueAt(linea, 0);
             Comercial e = lista.get(codigo);
-            this.codigo.setText(""+e.getCodigo());
-            this.dni.setText(e.getDni());
-            this.nombre.setText(e.getNombre());
-            this.apellidos.setText(e.getApellidos());
-            this.comision.setText(""+e.getPorcentajeComision());
-            this.incorporacion.setText(""+e.getFechaIncorporacion());
+            if (e!=null) {
+                this.codigo.setText(""+e.getCodigo());
+                this.dni.setText(e.getDni());
+                this.nombre.setText(e.getNombre());
+                this.apellidos.setText(e.getApellidos());
+                this.comision.setText(""+e.getPorcentajeComision());
+                this.incorporacion.setText(""+e.getFechaIncorporacion());
+            }
+            
             
             
         }

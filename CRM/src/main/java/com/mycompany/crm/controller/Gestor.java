@@ -1,8 +1,8 @@
 package com.mycompany.crm.controller;
 
 
-import com.mycompany.crm.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
+import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.persistencia.CrmDAO;
 
@@ -23,15 +23,15 @@ public class Gestor {
             throw new ComandaException(ComandaException.ERROR_USER);
         }else{
              if (!u1.getContrasenya().equals(passwd)) {
-            throw new ComandaException(ComandaException.ERROR_CONTRASEÑA); // Error de contrase�a
+            throw new ComandaException(ComandaException.ERROR_CONTRASEÑA); 
         }
         this.comercial = u1;
         return true;
         }
     }
 
-    public void altaEmpresa(String nombre, String agente, String phone, String email, String codigo, String direccion, int cp, String region, String web, String ciudad) throws ComandaException, SQLException{
-        Empresa empresa = new Empresa(nombre, agente, phone, email, codigo, cp, direccion, region, web, ciudad);
+    public void altaEmpresa(String nombre, String email, String phoneNumber, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String pagina_web) throws ComandaException, SQLException{
+        Empresa empresa = new Empresa(nombre, email, phoneNumber, representante, direccion, cp, ciudad, comunidad_autonoma, pagina_web);
         crmDAO.insertarEmpresa(empresa);
     }
 
@@ -40,9 +40,13 @@ public class Gestor {
         crmDAO.insertarComercial(comercial);
     }
     public void bajaEmpleado(String dni) throws ComandaException {
-
-
-
+       //Hacer metodo
+    }
+    public void bajaEmpresa(String numero) throws ComandaException, SQLException {
+        crmDAO.deleteEmpresa(numero);
+    }
+    public HashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
+        return crmDAO.buscarEmpresas(phoneNumber, nombre, email, representante, direccion, cp, ciudad, comunidadAutonoma, paginaWeb);
     }
     public Empresa infoCliente(String phoneNumber) throws ComandaException, SQLException {
         return crmDAO.mostrarEmpresa(phoneNumber);

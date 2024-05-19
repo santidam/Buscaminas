@@ -241,14 +241,14 @@ public class AltaCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_nombreEmpresaTxtActionPerformed
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-        try {
-            Validations.getInstance().valAltaCliente(nombreEmpresaTxt.getText(), contactoTxt.getText(), telefonoTxt.getText(), correoTxt.getText(),  codigoTxt.getText(), direccionTxt.getText(), cpTxt.getText(), regionTxt.getText(), webTxt.getText(), ciudadTxt.getText());
-            javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+//        try {
+//            Validations.getInstance().valAltaCliente(nombreEmpresaTxt.getText(), contactoTxt.getText(), telefonoTxt.getText(), correoTxt.getText(),  codigoTxt.getText(), direccionTxt.getText(), cpTxt.getText(), regionTxt.getText(), webTxt.getText(), ciudadTxt.getText());
+//            javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+//
+//        } catch (ComandaException ex) {
+//            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
-        } catch (ComandaException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-
-        }
+//        }
     }//GEN-LAST:event_okBtnActionPerformed
 
 

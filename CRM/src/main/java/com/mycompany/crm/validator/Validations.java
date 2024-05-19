@@ -7,7 +7,7 @@ package com.mycompany.crm.validator;
 
 
 import com.mycompany.crm.controller.Gestor;
-import com.mycompany.crm.crm.entity.Empresa;
+import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.utils.CastData;
@@ -47,13 +47,13 @@ public class Validations {
 
     }
 
-    public void valAltaCliente(String nombre, String agente, String phone, String email, String codigo, String direccion, String cp, String region, String web, String ciudad) throws ComandaException {
-        if (valPhone(phone)) {
+    public void valAltaCliente(String nombre, String email, String phoneNumber, String representante, String direccion, String cp, String ciudad, String comunidad_autonoma, String pagina_web) throws ComandaException {
+        if (valPhone(phoneNumber)) {
                 if (valName(nombre, "nombre")) {
-                    if (valName(agente, "apellido")) {
+                    if (valName(representante, "apellido")) {
                         if (valEmail(email)) {
                             try{
-                                gestor.altaEmpresa(nombre, agente, phone, email, codigo, direccion, Integer.parseInt(cp), region, web, ciudad);
+                                gestor.altaEmpresa(nombre, email, phoneNumber, representante, direccion, CastData.toInt(cp), ciudad, comunidad_autonoma, pagina_web);
                             }catch(SQLException e){
                                 System.out.println(e.getMessage());
                             }
@@ -80,11 +80,20 @@ public class Validations {
         }
     }
 
-    /*public void valBajaEmpleado(String dni) throws ComandaException {
-        if (valDni(dni)) {
-            gestor.bajaEmpleado(dni);
-        }
-    }*/
+    public void valBajaEmpleado(String dni) throws ComandaException {
+        
+        gestor.bajaEmpleado(dni);
+        
+    }
+    public void valBajaEmpresa(String numero) throws ComandaException, SQLException {
+        
+        gestor.bajaEmpresa(numero);
+        
+    }
+    public HashMap<String, Empresa> valBusquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
+       
+        return gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
+    }
 
     public String valClienteInfo(String phone) throws ComandaException {
         valPhone(phone);
@@ -120,9 +129,7 @@ public class Validations {
         }
         return empresas;
     }
-//    public ArrayList<Empresa> valClientesList2() throws ComandaException {
-//        return gestor.listClientes2();
-//    }
+
 
     public HashMap<String,Comercial> valEmpleadosList() throws ComandaException {
         HashMap<String,Comercial> comerciales = new HashMap<>();

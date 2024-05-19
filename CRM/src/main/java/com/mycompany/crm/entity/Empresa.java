@@ -1,4 +1,4 @@
-package com.mycompany.crm.crm.entity;
+package com.mycompany.crm.entity;
 
 import java.util.ArrayList;
 
@@ -27,10 +27,22 @@ public class Empresa {
         this.codigo = codigo;
         this.pagina_web = pagina_web;
     }
-
-    public Empresa(int aInt, String string, String string0, String string1, String string2) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Empresa(String nombre, String email, String phoneNumber, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String pagina_web) {
+        this.nombre = nombre;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.representante = representante;
+        this.direccion = direccion;
+        this.cp = cp;
+        this.ciudad = ciudad;
+        this.comunidad_autonoma = comunidad_autonoma;
+        this.codigo = null;
+        this.pagina_web = pagina_web;
     }
+
+//    public Empresa(int aInt, String string, String string0, String string1, String string2) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
 
     public String getNombre() {
         return nombre;

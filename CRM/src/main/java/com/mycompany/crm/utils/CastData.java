@@ -1,5 +1,11 @@
 package com.mycompany.crm.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class CastData {
 
     public static int toInt(String num){
@@ -21,4 +27,14 @@ public class CastData {
         }
         return numDecimal;
     }
+//    public static Date toDate(String date){
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//        
+//        try {
+//            java.sql.Date sqlDate = new java.sql.Date(dateFormat.parse(date).getTime());
+//        } catch (ParseException ex) {
+//            Logger.getLogger(CastData.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return sqlDate;
+//    }
 }

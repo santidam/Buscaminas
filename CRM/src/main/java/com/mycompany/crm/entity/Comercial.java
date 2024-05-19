@@ -32,6 +32,7 @@ public class Comercial {
         this.fechaIncorporacion = fechaIncorporacion;
         this.contrasenya = "1234";
     }
+    
 
     public String getDni() {
         return dni;

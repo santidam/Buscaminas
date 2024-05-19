@@ -28,50 +28,75 @@ public class CrmDAO {
     }*/
 
 
-public HashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
-    HashMap<String, Empresa> empresas = new HashMap<>();
-    Connection c = conectar();
-    String sql = "SELECT * FROM empresa WHERE " +
-        "phone_number LIKE ? AND " +
-        "nombre LIKE ? AND " +
-        "email LIKE ? AND " +
-        "representante LIKE ? AND " +
-        "direccion LIKE ? AND " +
-        "CP LIKE ? AND " +
-        "ciudad LIKE ? AND " +
-        "comunidad_autonoma LIKE ? AND " +
-        "pagina_web LIKE ?";
+    public HashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
+        HashMap<String, Empresa> empresas = new HashMap<>();
+        Connection c = conectar();
+        String sql = "SELECT * FROM empresa WHERE " +
+            "phone_number LIKE ? AND " +
+            "nombre LIKE ? AND " +
+            "email LIKE ? AND " +
+            "representante LIKE ? AND " +
+            "direccion LIKE ? AND " +
+            "CP LIKE ? AND " +
+            "ciudad LIKE ? AND " +
+            "comunidad_autonoma LIKE ? AND " +
+            "pagina_web LIKE ?";
 
-    PreparedStatement ps = c.prepareStatement(sql);
-   
-    ps.setString(1, "%" + phoneNumber + "%");
-    ps.setString(2, "%" + nombre + "%");
-    ps.setString(3, "%" + email + "%");
-    ps.setString(4, "%" + representante + "%");
-    ps.setString(5, "%" + direccion + "%");
-    ps.setString(6, "%" + cp + "%");
-    ps.setString(7, "%" + ciudad + "%");
-    ps.setString(8, "%" + comunidadAutonoma + "%");
-    ps.setString(9, "%" + paginaWeb + "%");
-   
+        PreparedStatement ps = c.prepareStatement(sql);
 
-    ResultSet rs = ps.executeQuery();
-    boolean hayContenido = rs.next();
-    if(!hayContenido){
-        throw new ComandaException(ComandaException.NO_CLIENTES);
+        ps.setString(1, "%" + phoneNumber + "%");
+        ps.setString(2, "%" + nombre + "%");
+        ps.setString(3, "%" + email + "%");
+        ps.setString(4, "%" + representante + "%");
+        ps.setString(5, "%" + direccion + "%");
+        ps.setString(6, "%" + cp + "%");
+        ps.setString(7, "%" + ciudad + "%");
+        ps.setString(8, "%" + comunidadAutonoma + "%");
+        ps.setString(9, "%" + paginaWeb + "%");
+
+
+        ResultSet rs = ps.executeQuery();
+        boolean hayContenido = rs.next();
+        if(!hayContenido){
+            throw new ComandaException(ComandaException.NO_CLIENTES);
+        }
+        while(hayContenido){
+            Empresa emp = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("cp"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("codigo"), rs.getString("pagina_web"));
+            empresas.put(rs.getString("codigo"),emp);
+            hayContenido = rs.next();
+        }
+        rs.close();
+        ps.close();
+        desconectar(c);
+
+        return empresas;
+
     }
-    while(hayContenido){
-        Empresa emp = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("cp"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("codigo"), rs.getString("pagina_web"));
-        empresas.put(rs.getString("codigo"),emp);
-        hayContenido = rs.next();
+    public HashMap<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporación) throws SQLException, ComandaException {
+        HashMap<String, Comercial> comerciales = new HashMap<>();
+        Connection c = conectar();
+        String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ?";
+        PreparedStatement ps = c.prepareStatement(sql);
+        ps.setString(1, "%" + dni + "%");
+        ps.setString(2, "%" + nombre + "%");
+        ps.setString(3, "%" + apellidos + "%");
+        ps.setString(4, "%" + comision + "%");
+        ps.setString(5, "%" + incorporación + "%");
+
+        ResultSet rs = ps.executeQuery();
+        boolean tieneResultados = false;
+        while (rs.next()) {
+            tieneResultados = true;
+            comerciales.put(rs.getString("codigo"), new Comercial(rs.getString("dni"), rs.getInt("codigo"), rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("porcentaje_comision"), rs.getDate("fecha_incorporacion"), rs.getString("contrasenya")));
+        }
+
+        if (!tieneResultados) {
+            throw new ComandaException(ComandaException.NO_EMPLEADOS);
+        }
+
+        return comerciales;    
     }
-    rs.close();
-    ps.close();
-    desconectar(c);
 
-    return empresas;
-
-}
 
 
     public void insertarEmpresa(Empresa empresa) throws SQLException, ComandaException{
@@ -248,4 +273,6 @@ public HashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre
     private void desconectar(Connection c) throws SQLException {
         c.close();
     }
+
+    
 }

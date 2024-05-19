@@ -63,14 +63,14 @@ public class Validations {
             }
     }
 
-    public void valAltaEmpleado(String dni, String name, String apellidos, String porcentajeComision, String fechaIncorporacion, String contrasenya) throws ComandaException{
+    public void valAltaEmpleado(String dni, String name, String apellidos, String porcentajeComision, String fechaIncorporacion) throws ComandaException{
         valDni(dni);
         valName(name, "nombre");
         valName(apellidos, "apellido");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         try{
-            Date sqlDate = new java.sql.Date(dateFormat.parse("2024/05/07").getTime());
-            gestor.altaEmpleado(dni, name,apellidos, Integer.parseInt(porcentajeComision), sqlDate, contrasenya);
+            Date sqlDate = new java.sql.Date(dateFormat.parse(fechaIncorporacion).getTime());
+            gestor.altaEmpleado(dni, name,apellidos, Integer.parseInt(porcentajeComision), sqlDate);
 
         }catch(ParseException e){
             System.out.println("No se puede modificar"); // Añadir excepcion formato fecha incorrecto
@@ -93,6 +93,10 @@ public class Validations {
     public HashMap<String, Empresa> valBusquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
        
         return gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
+    }
+    public HashMap<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporación) throws SQLException, ComandaException{
+       
+        return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporación);
     }
 
     public String valClienteInfo(String phone) throws ComandaException {

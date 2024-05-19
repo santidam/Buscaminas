@@ -8,6 +8,7 @@ import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -120,6 +121,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        agregar1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -225,6 +227,13 @@ public class OptionsComerciales extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        agregar1.setText("BUSCAR");
+        agregar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -258,11 +267,12 @@ public class OptionsComerciales extends javax.swing.JPanel {
                         .addGap(5, 5, 5)))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
                         .addComponent(eliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(limpiar))
-                    .addComponent(incorporacion)
+                    .addComponent(incorporacion, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
                     .addComponent(apellidos, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(dni, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(63, 63, 63))
@@ -272,9 +282,11 @@ public class OptionsComerciales extends javax.swing.JPanel {
                         .addGap(21, 21, 21)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                        .addGap(51, 51, 51)
                         .addComponent(agregar)
-                        .addGap(75, 75, 75)
+                        .addGap(31, 31, 31)
+                        .addComponent(agregar1)
+                        .addGap(18, 18, 18)
                         .addComponent(modificar)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
@@ -302,12 +314,12 @@ public class OptionsComerciales extends javax.swing.JPanel {
                     .addComponent(jLabel6)
                     .addComponent(incorporacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(agregar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(modificar)
-                        .addComponent(eliminar)
-                        .addComponent(limpiar)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modificar)
+                    .addComponent(eliminar)
+                    .addComponent(limpiar)
+                    .addComponent(agregar1)
+                    .addComponent(agregar))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
@@ -315,8 +327,17 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-        eliminar();
-        clearText();
+        try {
+            Validations.getInstance().valBajaEmpleado(dni.getText());
+            clear();
+            loadData(loadListaComerciales());
+            clearText();
+            javax.swing.JOptionPane.showMessageDialog(this, "Cliente dado de baja correctamente","Baja Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (ComandaException  ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        } 
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void incorporacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incorporacionActionPerformed
@@ -329,9 +350,17 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        clear();
-        loadData(loadListaComerciales());
-        clearText();
+        try {
+            Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(),apellidos.getText(),comision.getText(), incorporacion.getText());
+            clear();
+            loadData(loadListaComerciales());
+            clearText();
+            javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
@@ -358,9 +387,24 @@ public class OptionsComerciales extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tablaMouseClicked
 
+    private void agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar1ActionPerformed
+        try {
+            HashMap<String,Comercial> newlist =  Validations.getInstance().valBusquedaEmpleado(dni.getText(),nombre.getText(), apellidos.getText(),comision.getText(), incorporacion.getText());
+            clear();
+            loadData(newlist);
+            clearText();
+            javax.swing.JOptionPane.showMessageDialog(this, "Buscando comerciales","Comerciales",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (ComandaException | SQLException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_agregar1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
+    private javax.swing.JButton agregar1;
     private javax.swing.JTextField apellidos;
     private javax.swing.JTextField codigo;
     private javax.swing.JTextField comision;

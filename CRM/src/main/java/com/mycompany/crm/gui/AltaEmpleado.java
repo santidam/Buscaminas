@@ -205,7 +205,7 @@ public class AltaEmpleado extends javax.swing.JPanel {
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         try {
-            Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(), apellido.getText(), comision.getText(), fecha.getText(), contrasenya.getText());
+            Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(), apellido.getText(), comision.getText(), fecha.getText());
             javax.swing.JOptionPane.showMessageDialog(this, "Empleado registrado correctamente","Alta Empleado",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
         } catch (ComandaException ex) {

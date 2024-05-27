@@ -94,9 +94,9 @@ public class Validations {
        
         return gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
     }
-    public HashMap<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporación) throws SQLException, ComandaException{
+    public HashMap<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException{
        
-        return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporación);
+        return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
     }
 
     public String valClienteInfo(String phone) throws ComandaException {
@@ -146,21 +146,21 @@ public class Validations {
        return comerciales;
     }
 
-//    public void valAsignarCliente(String[] args){
-//        if (valLength(args.length, 3)){
-//            if (valPhone(args[1])){
-//                if (valDni(args[2])){
-//                    gestor.asignarCliente(args[1],args[2]);
-//                }
-//            }
-//        }
-//    }
+   public void valRegistrarLlamada(String numero, String descripcion, String fecha, String acuerdo) throws ComandaException{
+        boolean phoneValid = valPhone(numero);
+        try{
+            gestor.registrarLlamada(descripcion, fecha, acuerdo, numero);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public boolean valLength(int argsLength,int lengthEsperada) throws ComandaException {
         boolean Validacion = false;
         if (argsLength == lengthEsperada){
             Validacion = true;
         } else {
-            System.out.println("ERROR. El nÃºmero de argumentos es incorrecto.");
+            System.out.println("ERROR. El número de argumentos es incorrecto.");
             throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
         }
         return Validacion;

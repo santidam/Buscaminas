@@ -2,7 +2,9 @@ package com.mycompany.crm.persistencia;
 
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
+import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.exceptions.ComandaException;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -166,6 +168,36 @@ public class CrmDAO {
         c.close();
     }
 
+    public void deleteEmpleado(String dni) throws SQLException, ComandaException{
+        if (!existeComercial(dni)) {
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
+        Connection c = conectar();
+        String query = "Delete from comercial where dni = ?";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setString(1, dni);
+        ps.close();
+        c.close();
+    }
+
+    public void registrarLlamada(Telefono tel) throws SQLException, ComandaException{
+        if(!existeEmpresa(tel.getNumTelef())){
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
+        Connection c = conectar();
+        String query = "call registrar_accion_llamada(?,?,?,?,?,?)";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setString(1, "teléfono");
+        ps.setDate(2, new Date(tel.getFecha().getTime()));
+        ps.setString(3, tel.getDescripcion());
+        ps.setString(4, tel.getComercial().getDni());
+        ps.setString(5, tel.getNumTelef());
+        ps.setString(6, tel.getAcuerdos());
+        ps.executeQuery();
+        ps.close();
+        desconectar(c);
+    }
+
     public Comercial mostrarComercial(String dni) throws SQLException, ComandaException{
         if(!existeComercial(dni)){
             throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
@@ -264,8 +296,8 @@ public class CrmDAO {
 
     private Connection conectar() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/crm";
-        String user = "crm";
-        String pass = "1234";
+        String user = "root";
+        String pass = ".Aa654321.";
         Connection c = DriverManager.getConnection(url, user, pass);
         return c;
     }

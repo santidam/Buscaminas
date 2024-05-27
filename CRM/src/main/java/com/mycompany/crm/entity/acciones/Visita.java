@@ -13,7 +13,7 @@ public class Visita extends Hablado{
 
     private String direccion;
 
-    public Visita(Date fecha, Comercial comercial, String descripcion, HashSet<String> acuerdos, String direccion) {
+    public Visita(Date fecha, Comercial comercial, String descripcion, String acuerdos, String direccion) {
         super(fecha, comercial, descripcion, acuerdos);
         this.direccion = direccion;
     }

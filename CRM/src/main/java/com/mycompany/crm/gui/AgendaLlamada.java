@@ -4,6 +4,9 @@
  */
 package com.mycompany.crm.gui;
 
+import com.mycompany.crm.exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
+
 /**
  *
  * @author admin
@@ -119,6 +122,13 @@ public class AgendaLlamada extends java.awt.Dialog {
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         // TODO add your handling code here:
+        try {
+            Validations.getInstance().valRegistrarLlamada(numero.getText(), descripcion.getText(), date.getName(), acuerdo.getText());
+            javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
     }//GEN-LAST:event_okBtnActionPerformed
 
     /**
@@ -129,8 +139,14 @@ public class AgendaLlamada extends java.awt.Dialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField acuerdo;
+
+
     private javax.swing.JSpinner date;
+
+
     private javax.swing.JTextField descripcion;
+
+
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -138,6 +154,7 @@ public class AgendaLlamada extends java.awt.Dialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField numero;
+
     private javax.swing.JButton okBtn;
     private javax.swing.JRadioButton promo;
     // End of variables declaration//GEN-END:variables

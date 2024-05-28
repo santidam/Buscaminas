@@ -30,6 +30,7 @@ public class AgendaVisita extends java.awt.Dialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        date = new javax.swing.JSpinner();
         acuerdos = new javax.swing.JTextField();
         descripcion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -41,8 +42,6 @@ public class AgendaVisita extends java.awt.Dialog {
         direccion = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         numero = new javax.swing.JTextField();
-        fecha = new com.toedter.calendar.JDateChooser();
-
 
         setLocationByPlatform(true);
         setModal(true);
@@ -57,7 +56,10 @@ public class AgendaVisita extends java.awt.Dialog {
         jPanel1.setMinimumSize(new java.awt.Dimension(650, 473));
         jPanel1.setPreferredSize(new java.awt.Dimension(650, 473));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(numero, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 186, -1));
+
+        date.setModel(new javax.swing.SpinnerDateModel());
+        jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 190, -1));
+        jPanel1.add(acuerdos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 186, -1));
         jPanel1.add(descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 186, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
@@ -88,7 +90,6 @@ public class AgendaVisita extends java.awt.Dialog {
         jLabel5.setText("Direccion");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, -1));
         jPanel1.add(direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 186, -1));
-        jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 190, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         jLabel6.setText("Numero Cliente");
@@ -98,18 +99,18 @@ public class AgendaVisita extends java.awt.Dialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,7 +127,7 @@ public class AgendaVisita extends java.awt.Dialog {
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         // TODO add your handling code here:
         try {
-            Validations.getInstance().valRegistrarVisita(numero.getText(), descripcion.getText(), fecha.getName(), direccion.getText(), acuerdos.getText());
+            Validations.getInstance().valRegistrarVisita(numero.getText(), descripcion.getText(), date.getName(), direccion.getText(), acuerdos.getText());
             javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
         } catch (ComandaException ex) {
@@ -141,16 +142,12 @@ public class AgendaVisita extends java.awt.Dialog {
     /**
      * @param args the command line arguments
      */
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField acuerdos;
     private javax.swing.JTextField descripcion;
     private javax.swing.JTextField direccion;
-
     private javax.swing.JButton okBtn;
-
-    private com.toedter.calendar.JDateChooser fecha;
-
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -158,7 +155,7 @@ public class AgendaVisita extends java.awt.Dialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-
+    private javax.swing.JSpinner date;
     private javax.swing.JTextField numero;
     // End of variables declaration//GEN-END:variables
 }

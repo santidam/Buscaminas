@@ -11,10 +11,14 @@ import java.util.HashSet;
 
 public class Hablado extends Accion {
 
-    private HashSet<String> acuerdos;
+    private String acuerdos;
 
-    public Hablado(Date fecha, Comercial comercial, String descripcion, HashSet<String> acuerdos) {
+    public Hablado(Date fecha, Comercial comercial, String descripcion, String acuerdos) {
         super(fecha, comercial, descripcion);
         this.acuerdos = acuerdos;
+    }
+
+    public String getAcuerdos() {
+        return acuerdos;
     }
 }

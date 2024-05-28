@@ -4,6 +4,11 @@
  */
 package com.mycompany.crm.gui;
 
+import com.mycompany.crm.exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
+
+import java.sql.Date;
+
 /**
  *
  * @author admin
@@ -27,7 +32,6 @@ public class AgendaLlamada extends java.awt.Dialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        date = new javax.swing.JSpinner();
         numero = new javax.swing.JTextField();
         descripcion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -35,9 +39,9 @@ public class AgendaLlamada extends java.awt.Dialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         okBtn = new javax.swing.JButton();
-        promo = new javax.swing.JRadioButton();
         acuerdo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        fecha = new com.toedter.calendar.JDateChooser();
 
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(650, 473));
@@ -51,9 +55,6 @@ public class AgendaLlamada extends java.awt.Dialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        date.setModel(new javax.swing.SpinnerDateModel());
-        jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 190, -1));
         jPanel1.add(numero, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 186, -1));
         jPanel1.add(descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 186, -1));
 
@@ -80,14 +81,12 @@ public class AgendaLlamada extends java.awt.Dialog {
             }
         });
         jPanel1.add(okBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, -1, -1));
-
-        promo.setText("Promocion");
-        jPanel1.add(promo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, -1, -1));
         jPanel1.add(acuerdo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 186, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         jLabel5.setText("Acuerdo");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 237, -1, 20));
+        jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 190, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -119,6 +118,13 @@ public class AgendaLlamada extends java.awt.Dialog {
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         // TODO add your handling code here:
+        try {
+            Validations.getInstance().valRegistrarLlamada(numero.getText(), descripcion.getText(), new Date(fecha.getDate().getTime()), acuerdo.getText());
+            javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
     }//GEN-LAST:event_okBtnActionPerformed
 
     /**
@@ -129,8 +135,8 @@ public class AgendaLlamada extends java.awt.Dialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField acuerdo;
-    private javax.swing.JSpinner date;
     private javax.swing.JTextField descripcion;
+    private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -139,6 +145,5 @@ public class AgendaLlamada extends java.awt.Dialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField numero;
     private javax.swing.JButton okBtn;
-    private javax.swing.JRadioButton promo;
     // End of variables declaration//GEN-END:variables
 }

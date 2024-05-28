@@ -385,10 +385,11 @@ public class OptionsEmpresas extends javax.swing.JPanel {
             clearText();
             javax.swing.JOptionPane.showMessageDialog(this, "Cliente dado de baja correctamente","Baja Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (ComandaException | SQLException ex) {
+        } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-
-        } 
+        } catch(SQLException ex){
+            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: Una empresa con acciones en el historial no puede ser eliminada","ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
         
     }//GEN-LAST:event_eliminarActionPerformed
 

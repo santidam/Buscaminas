@@ -299,7 +299,7 @@ public class LoginFrame extends javax.swing.JFrame {
            
             Validations.getInstance().valLogin(userText.getText(),String.valueOf(passText.getPassword()));  
             
-            javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\nUsuario: "+ userText.getText()+"\nContraseña: "+String.valueOf(passText.getPassword()),"LOGIN",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\nUsuario: "+ userText.getText(),"LOGIN",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             MenuPrincipal m = new MenuPrincipal();
             m.setSize(810, 461);
             m.setLocationRelativeTo(null);

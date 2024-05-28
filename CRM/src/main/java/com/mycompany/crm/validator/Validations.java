@@ -16,7 +16,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -53,10 +52,12 @@ public class Validations {
                 if (valName(nombre, "nombre")) {
                     if (valName(representante, "apellido")) {
                         if (valEmail(email)) {
-                            try{
-                                gestor.altaEmpresa(nombre, email, phoneNumber, representante, direccion, CastData.toInt(cp), ciudad, comunidad_autonoma, pagina_web);
-                            }catch(SQLException e){
-                                System.out.println(e.getMessage());
+                            if (valCP(cp)) {
+                                try{
+                                    gestor.altaEmpresa(nombre, email, phoneNumber, representante, direccion, CastData.toInt(cp), ciudad, comunidad_autonoma, pagina_web);
+                                }catch(SQLException e){
+                                    System.out.println(e.getMessage());
+                                }
                             }
                         }
                     }
@@ -80,8 +81,15 @@ public class Validations {
             throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
     }
-
-    public void valBajaEmpleado(String dni) throws ComandaException {
+    public void valAccionEmail(String email, String desc, boolean esPromocion, Date fecha) throws ComandaException {
+        valEmail(email);
+        try {
+            gestor.registrarEmail(email, desc, fecha, esPromocion);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    public void valBajaEmpleado(String dni) throws ComandaException, SQLException {
         
         gestor.bajaEmpleado(dni);
         
@@ -95,9 +103,9 @@ public class Validations {
        
         return gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
     }
-    public HashMap<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporación) throws SQLException, ComandaException{
+    public HashMap<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException{
        
-        return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporación);
+        return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
     }
 
     public String valClienteInfo(String phone) throws ComandaException {
@@ -147,21 +155,31 @@ public class Validations {
        return comerciales;
     }
 
-//    public void valAsignarCliente(String[] args){
-//        if (valLength(args.length, 3)){
-//            if (valPhone(args[1])){
-//                if (valDni(args[2])){
-//                    gestor.asignarCliente(args[1],args[2]);
-//                }
-//            }
-//        }
-//    }
+
+   public void valRegistrarLlamada(String numero, String descripcion, Date fecha, String acuerdo) throws ComandaException{
+        boolean phoneValid = valPhone(numero);
+        try{
+            gestor.registrarLlamada(descripcion, fecha, acuerdo, numero);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void valRegistrarVisita(String numero, String descripcion, Date fecha, String direccion, String acuerdo) throws ComandaException{
+        boolean phoneValid = valPhone(numero);
+        try{
+            gestor.registrarVisita(descripcion, fecha, acuerdo, numero, direccion);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public boolean valLength(int argsLength,int lengthEsperada) throws ComandaException {
         boolean Validacion = false;
         if (argsLength == lengthEsperada){
             Validacion = true;
         } else {
-            System.out.println("ERROR. El nÃºmero de argumentos es incorrecto.");
+            System.out.println("ERROR. El número de argumentos es incorrecto.");
             throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
         }
         return Validacion;
@@ -309,5 +327,22 @@ public class Validations {
                 }
             }
         }
+    }
+    public boolean valCP(String cp) throws ComandaException {
+         boolean esCorrecto = true;
+        if(cp.length() == 5) {
+            for (int i = 0; i < cp.length(); i++) {
+                if (!Character.isDigit(cp.charAt(i))) {
+                    System.out.println("El codgio postal introducido no es valido");
+                    esCorrecto = false;
+                    throw new ComandaException(ComandaException.ERROR_CP);
+                }
+            }
+       }else{
+            System.out.println("El codgio postal introducido no es valido");
+            esCorrecto = false;
+            throw new ComandaException(ComandaException.ERROR_CP);
+        }
+        return esCorrecto;
     }
 }

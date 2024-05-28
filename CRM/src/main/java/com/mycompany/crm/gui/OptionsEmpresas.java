@@ -11,6 +11,8 @@ import java.awt.Dialog;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -24,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 public class OptionsEmpresas extends javax.swing.JPanel {
 
     private DefaultTableModel model ;
-    private HashMap<String,Empresa> lista;
+    private Map<String,Empresa> lista;
     
     public OptionsEmpresas() {
         initComponents();
@@ -33,8 +35,8 @@ public class OptionsEmpresas extends javax.swing.JPanel {
         
         
     }
-    public HashMap<String,Empresa> loadListaEmpresas(){
-        HashMap<String,Empresa> listaEmpresas = new HashMap<>();
+    public Map<String,Empresa> loadListaEmpresas(){
+        Map<String,Empresa> listaEmpresas = new LinkedHashMap<>();
         try {
             listaEmpresas = Validations.getInstance().valClientesList();
            
@@ -46,7 +48,7 @@ public class OptionsEmpresas extends javax.swing.JPanel {
         lista = listaEmpresas;
         return listaEmpresas;
     }
-    public void loadData(HashMap<String,Empresa> listas){
+    public void loadData(Map<String,Empresa> listas){
         for (Empresa e: listas.values()) {
                 model.addRow(new Object[]{e.getCodigo(),e.getNombre(), e.getRepresentante(),e.getPhoneNumber(), e.getEmail()});
         }

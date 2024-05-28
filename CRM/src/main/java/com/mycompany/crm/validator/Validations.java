@@ -18,6 +18,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -123,8 +124,8 @@ public class Validations {
         return info;
     }
 
-    public HashMap<String,Empresa> valClientesList() throws ComandaException {
-        HashMap<String,Empresa> empresas = new HashMap<>();
+    public Map<String,Empresa> valClientesList() throws ComandaException {
+        Map<String,Empresa> empresas = new HashMap<>();
         try{
             empresas = gestor.listClientes();
             

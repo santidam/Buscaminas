@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Gestor {
 
@@ -59,7 +60,7 @@ public class Gestor {
         return crmDAO.mostrarComercial(dni);
     }
 
-    public HashMap<String,Empresa> listClientes()throws ComandaException, SQLException{
+    public Map<String,Empresa> listClientes()throws ComandaException, SQLException{
         return crmDAO.allEmpresas();
     }
     public HashMap<String,Comercial> listEmpleados()throws ComandaException, SQLException{

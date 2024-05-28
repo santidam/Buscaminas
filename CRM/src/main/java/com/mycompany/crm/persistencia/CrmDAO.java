@@ -7,6 +7,8 @@ import com.mycompany.crm.exceptions.ComandaException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CrmDAO {
 
@@ -208,9 +210,9 @@ public class CrmDAO {
         return comerciales;
     }
 
-    public HashMap<String,Empresa> allEmpresas() throws SQLException, ComandaException{
+    public Map<String,Empresa> allEmpresas() throws SQLException, ComandaException{
         Connection c = conectar();
-        HashMap<String,Empresa> empresas = new HashMap<>();
+        Map<String,Empresa> empresas = new LinkedHashMap<>();
         Statement st = c.createStatement();
         Empresa emp = null;
         String query = "SELECT * FROM empresa";

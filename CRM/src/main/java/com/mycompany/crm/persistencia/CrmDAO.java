@@ -2,10 +2,10 @@ package com.mycompany.crm.persistencia;
 
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
+import com.mycompany.crm.entity.acciones.Email;
 import com.mycompany.crm.exceptions.ComandaException;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CrmDAO {
@@ -132,6 +132,15 @@ public class CrmDAO {
         ps.setInt(4, comercial.getPorcentajeComision());
         ps.setDate(5, new Date(comercial.getFechaIncorporacion().getTime()));
         ps.setString(6, comercial.getContrasenya());
+        ps.executeUpdate();
+        ps.close();
+        desconectar(c);
+    }
+    public void insertarAccionEmail(Email email) throws SQLException {
+        Connection c = conectar();
+        PreparedStatement ps = c.prepareStatement("insert into accion_email values (null, ?, ?);");
+        ps.setString(1,email.getEmail());
+        ps.setBoolean(2, email.isEsPromocion());
         ps.executeUpdate();
         ps.close();
         desconectar(c);
@@ -264,8 +273,8 @@ public class CrmDAO {
 
     private Connection conectar() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/crm";
-        String user = "crm";
-        String pass = "1234";
+        String user = "root";
+        String pass = "";
         Connection c = DriverManager.getConnection(url, user, pass);
         return c;
     }

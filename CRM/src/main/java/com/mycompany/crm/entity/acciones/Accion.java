@@ -20,6 +20,11 @@ public class Accion {
         this.descripcion = descripcion;
     }
 
+    public Accion(Date fecha, String descripcion) {
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+    }
+
 
     @Override
     public String toString() {

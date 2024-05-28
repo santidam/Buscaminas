@@ -27,7 +27,6 @@ public class AgendaVisita extends java.awt.Dialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jSpinner1 = new javax.swing.JSpinner();
         numero = new javax.swing.JTextField();
         descripcion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -38,6 +37,7 @@ public class AgendaVisita extends java.awt.Dialog {
         jRadioButton1 = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
         direccion = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setLocationByPlatform(true);
         setModal(true);
@@ -52,9 +52,6 @@ public class AgendaVisita extends java.awt.Dialog {
         jPanel1.setMinimumSize(new java.awt.Dimension(650, 473));
         jPanel1.setPreferredSize(new java.awt.Dimension(650, 473));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel());
-        jPanel1.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 190, -1));
         jPanel1.add(numero, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 186, -1));
         jPanel1.add(descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 186, -1));
 
@@ -94,6 +91,7 @@ public class AgendaVisita extends java.awt.Dialog {
         jLabel5.setText("Direccion");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, -1));
         jPanel1.add(direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 186, -1));
+        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 190, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -139,6 +137,7 @@ public class AgendaVisita extends java.awt.Dialog {
     private javax.swing.JTextField descripcion;
     private javax.swing.JTextField direccion;
     private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -146,7 +145,6 @@ public class AgendaVisita extends java.awt.Dialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField numero;
     // End of variables declaration//GEN-END:variables
 }

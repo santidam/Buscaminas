@@ -30,7 +30,7 @@ public class AgendaVisita extends java.awt.Dialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        date = new javax.swing.JSpinner();
+        date = new com.toedter.calendar.JDateChooser();
         acuerdos = new javax.swing.JTextField();
         descripcion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -57,7 +57,6 @@ public class AgendaVisita extends java.awt.Dialog {
         jPanel1.setPreferredSize(new java.awt.Dimension(650, 473));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        date.setModel(new javax.swing.SpinnerDateModel());
         jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 190, -1));
         jPanel1.add(acuerdos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 186, -1));
         jPanel1.add(descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 186, -1));
@@ -155,7 +154,7 @@ public class AgendaVisita extends java.awt.Dialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner date;
+    private com.toedter.calendar.JDateChooser date;
     private javax.swing.JTextField numero;
     // End of variables declaration//GEN-END:variables
 }

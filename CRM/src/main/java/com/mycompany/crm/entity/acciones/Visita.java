@@ -18,6 +18,10 @@ public class Visita extends Hablado{
         this.direccion = direccion;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
     @Override
     public String toString() {
         return "Direccion: " + direccion + super.toString();

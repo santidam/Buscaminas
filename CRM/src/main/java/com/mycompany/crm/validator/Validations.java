@@ -155,6 +155,15 @@ public class Validations {
         }
     }
 
+    public void valRegistrarVisita(String numero, String descripcion, String fecha, String direccion, String acuerdo) throws ComandaException{
+        boolean phoneValid = valPhone(numero);
+        try{
+            gestor.registrarVisita(descripcion, fecha, acuerdo, numero, direccion);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public boolean valLength(int argsLength,int lengthEsperada) throws ComandaException {
         boolean Validacion = false;
         if (argsLength == lengthEsperada){

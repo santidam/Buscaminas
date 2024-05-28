@@ -4,6 +4,7 @@ package com.mycompany.crm.controller;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.acciones.Telefono;
+import com.mycompany.crm.entity.acciones.Visita;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.persistencia.CrmDAO;
 
@@ -72,8 +73,10 @@ public class Gestor {
     public void registrarLlamada(String descripcion, String fecha, String acuerdo, String numTelf) throws ComandaException, SQLException{
         Telefono telf = new Telefono(new Date(124, 5, 10), comercial, descripcion, acuerdo, numTelf);
         crmDAO.registrarLlamada(telf);
-
     }
 
-    
+    public void registrarVisita(String descripcion, String fecha, String acuerdo, String phone, String direccion) throws ComandaException, SQLException{
+        Visita visita = new Visita(new Date(124, 5, 10), comercial, descripcion, acuerdo, direccion);
+        crmDAO.registrarVisita(visita, phone);
+    }
 }

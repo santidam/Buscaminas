@@ -3,6 +3,7 @@ package com.mycompany.crm.persistencia;
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.acciones.Telefono;
+import com.mycompany.crm.entity.acciones.Visita;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 
@@ -193,6 +194,25 @@ public class CrmDAO {
         ps.setString(4, tel.getComercial().getDni());
         ps.setString(5, tel.getNumTelef());
         ps.setString(6, tel.getAcuerdos());
+        ps.executeQuery();
+        ps.close();
+        desconectar(c);
+    }
+
+    public void registrarVisita(Visita visita, String phone) throws SQLException, ComandaException{
+        if(!existeEmpresa(phone)){
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
+        Connection c = conectar();
+        String query = "call registrar_accion_visita(?,?,?,?,?,?,?)";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setString(1, "visita");
+        ps.setDate(2, new Date(visita.getFecha().getTime()));
+        ps.setString(3, visita.getDescripcion());
+        ps.setString(4, visita.getComercial().getDni());
+        ps.setString(5, phone);
+        ps.setString(6, visita.getAcuerdos());
+        ps.setString(7, visita.getDireccion());
         ps.executeQuery();
         ps.close();
         desconectar(c);

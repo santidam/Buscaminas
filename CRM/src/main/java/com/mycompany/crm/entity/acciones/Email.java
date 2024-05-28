@@ -19,6 +19,14 @@ public class Email extends Accion {
         this.esPromocion = esPromocion;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public boolean isEsPromocion() {
+        return esPromocion;
+    }
+
     @Override
     public String toString() {
         return "Email: " + email + super.toString();

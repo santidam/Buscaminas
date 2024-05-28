@@ -4,6 +4,11 @@
  */
 package com.mycompany.crm.gui;
 
+import com.mycompany.crm.exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
+import java.sql.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author admin
@@ -27,15 +32,15 @@ public class AgendaEmail extends java.awt.Dialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
+        desc = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        guardar = new javax.swing.JButton();
+        esPromocion = new javax.swing.JRadioButton();
+        fecha = new com.toedter.calendar.JDateChooser();
 
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(650, 473));
@@ -52,10 +57,13 @@ public class AgendaEmail extends java.awt.Dialog {
         jPanel1.setPreferredSize(new java.awt.Dimension(650, 473));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel());
-        jPanel1.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 190, -1));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 186, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 186, -1));
+        email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailActionPerformed(evt);
+            }
+        });
+        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 186, -1));
+        jPanel1.add(desc, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 186, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         jLabel4.setText("Descripción");
@@ -73,16 +81,22 @@ public class AgendaEmail extends java.awt.Dialog {
         jLabel1.setText("Registrar E-mail");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        guardar.setText("Guardar");
+        guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                guardarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, -1));
+        jPanel1.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, -1, -1));
 
-        jRadioButton1.setText("Promocion");
-        jPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
+        esPromocion.setText("Promocion");
+        esPromocion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                esPromocionActionPerformed(evt);
+            }
+        });
+        jPanel1.add(esPromocion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, -1, -1));
+        jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 190, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -112,9 +126,27 @@ public class AgendaEmail extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
+        try {
+            boolean promocion = esPromocion.isSelected(); 
+            if (fecha.getDate() == null) {
+                throw new ComandaException(ComandaException.ERROR_FECHA);
+            }
+            Validations.getInstance().valAccionEmail(email.getText(), desc.getText(), promocion,new Date(fecha.getDate().getTime()));
+            JOptionPane.showMessageDialog(this, "Email registrado correctamente", "Accion Email", JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_guardarActionPerformed
+
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_emailActionPerformed
+
+    private void esPromocionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esPromocionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_esPromocionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,15 +154,15 @@ public class AgendaEmail extends java.awt.Dialog {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField desc;
+    private javax.swing.JTextField email;
+    private javax.swing.JRadioButton esPromocion;
+    private com.toedter.calendar.JDateChooser fecha;
+    private javax.swing.JButton guardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

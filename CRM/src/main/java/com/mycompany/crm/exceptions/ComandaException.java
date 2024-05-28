@@ -24,6 +24,8 @@ public class ComandaException  extends Exception{
    public static final int DOS_APELLIDOS = 15;
    public static final int MAX_NOMBRES = 16;
    public static final int ERROR_CONTRASEÑA = 17;
+   public static final int ERROR_CP = 18;
+   public static final int ERROR_FECHA = 19;
    
    private final List<String> mensajes = Arrays.asList (
            "ERROR: EL FORMATO DEL DNI DEBE SER '12345678X'",
@@ -43,7 +45,9 @@ public class ComandaException  extends Exception{
            "ERROR: NO HAS INTRODUCIDO NINGUN DATO",
            "ERROR: DEBES INTRODUCIR DOS APELLIDOS",
            "ERROR: DEBES INTRODUCIR UN MÁXIMO DE DOS NOMBRES",
-           "ERROR: CONTRASEÑA INCORRECTA"
+           "ERROR: CONTRASEÑA INCORRECTA",
+           "ERROR: CODIGO POSTAL INVALIDO",
+           "ERROR: DEBE INDICAR UNA FECHA"
    );
 
     private final int code;

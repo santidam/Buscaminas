@@ -9,10 +9,7 @@ import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -337,7 +334,10 @@ public class OptionsComerciales extends javax.swing.JPanel {
         } catch (ComandaException  ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
-        } 
+        } catch(SQLException ex){
+            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: Una comercial con acciones en el historial no puede ser eliminada","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void incorporacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incorporacionActionPerformed

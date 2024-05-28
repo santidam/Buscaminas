@@ -21,6 +21,19 @@ public class Accion {
     }
 
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public Comercial getComercial() {
+        return comercial;
+    }
+
+
     @Override
     public String toString() {
         return "Fecha: " + fecha + "Descripcion: "+ descripcion;

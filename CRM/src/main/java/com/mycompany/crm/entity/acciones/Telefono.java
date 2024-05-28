@@ -13,9 +13,13 @@ public class Telefono extends Hablado{
 
     private String numTelef;
 
-    public Telefono(Date fecha, Comercial comercial, String descripcion, HashSet<String> acuerdos, String numTelef) {
+    public Telefono(Date fecha, Comercial comercial, String descripcion, String acuerdos, String numTelef) {
         super(fecha,comercial, descripcion, acuerdos);
         this.numTelef = numTelef;
+    }
+
+    public String getNumTelef() {
+        return numTelef;
     }
 
     @Override

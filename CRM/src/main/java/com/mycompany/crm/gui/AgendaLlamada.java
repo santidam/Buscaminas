@@ -38,7 +38,6 @@ public class AgendaLlamada extends java.awt.Dialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         okBtn = new javax.swing.JButton();
-        promo = new javax.swing.JRadioButton();
         acuerdo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
 
@@ -83,9 +82,6 @@ public class AgendaLlamada extends java.awt.Dialog {
             }
         });
         jPanel1.add(okBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, -1, -1));
-
-        promo.setText("Promocion");
-        jPanel1.add(promo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, -1, -1));
         jPanel1.add(acuerdo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 186, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
@@ -139,14 +135,8 @@ public class AgendaLlamada extends java.awt.Dialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField acuerdo;
-
-
     private javax.swing.JSpinner date;
-
-
     private javax.swing.JTextField descripcion;
-
-
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -154,8 +144,6 @@ public class AgendaLlamada extends java.awt.Dialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField numero;
-
     private javax.swing.JButton okBtn;
-    private javax.swing.JRadioButton promo;
     // End of variables declaration//GEN-END:variables
 }

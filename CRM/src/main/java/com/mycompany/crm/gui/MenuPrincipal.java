@@ -53,6 +53,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         exitBtn = new javax.swing.JPanel();
         exitText = new javax.swing.JLabel();
         listaEmpleados1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -124,7 +125,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 listaEmpleadosActionPerformed(evt);
             }
         });
-        bg.add(listaEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 147, 32));
+        bg.add(listaEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 147, 32));
 
         listaClientes.setText("Lista Clientes");
         listaClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -173,7 +174,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 listaEmpleados1ActionPerformed(evt);
             }
         });
-        bg.add(listaEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 147, 32));
+        bg.add(listaEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 147, 32));
+
+        jButton1.setText("Estadisticas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 150, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo2.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -258,6 +267,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitTextMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Estadisticas e = new Estadisticas();
+        cambiarPanel(e);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -269,6 +283,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel exitBtn;
     private javax.swing.JLabel exitText;
     private javax.swing.JPanel header;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton listaClientes;
     private javax.swing.JButton listaEmpleados;

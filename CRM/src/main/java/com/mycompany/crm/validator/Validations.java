@@ -81,7 +81,7 @@ public class Validations {
     public void valAccionEmail(String email, String desc, boolean esPromocion, Date fecha) throws ComandaException {
         valEmail(email);
         try {
-            gestor.email(email, desc, fecha, esPromocion);
+            gestor.registrarEmail(email, desc, fecha, esPromocion);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -153,7 +153,7 @@ public class Validations {
     }
 
 
-   public void valRegistrarLlamada(String numero, String descripcion, String fecha, String acuerdo) throws ComandaException{
+   public void valRegistrarLlamada(String numero, String descripcion, Date fecha, String acuerdo) throws ComandaException{
         boolean phoneValid = valPhone(numero);
         try{
             gestor.registrarLlamada(descripcion, fecha, acuerdo, numero);
@@ -162,7 +162,7 @@ public class Validations {
         }
     }
 
-    public void valRegistrarVisita(String numero, String descripcion, String fecha, String direccion, String acuerdo) throws ComandaException{
+    public void valRegistrarVisita(String numero, String descripcion, Date fecha, String direccion, String acuerdo) throws ComandaException{
         boolean phoneValid = valPhone(numero);
         try{
             gestor.registrarVisita(descripcion, fecha, acuerdo, numero, direccion);

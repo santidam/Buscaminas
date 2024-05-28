@@ -7,6 +7,8 @@ package com.mycompany.crm.gui;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 
+import java.sql.Date;
+
 /**
  *
  * @author admin
@@ -117,7 +119,7 @@ public class AgendaLlamada extends java.awt.Dialog {
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         // TODO add your handling code here:
         try {
-            Validations.getInstance().valRegistrarLlamada(numero.getText(), descripcion.getText(), fecha.getName(), acuerdo.getText());
+            Validations.getInstance().valRegistrarLlamada(numero.getText(), descripcion.getText(), new Date(fecha.getDate().getTime()), acuerdo.getText());
             javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
     } catch (ComandaException ex) {

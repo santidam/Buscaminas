@@ -6,7 +6,6 @@ import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.entity.acciones.Visita;
 import com.mycompany.crm.entity.acciones.Email;
 import com.mycompany.crm.exceptions.ComandaException;
-import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -139,12 +138,26 @@ public class CrmDAO {
         ps.close();
         desconectar(c);
     }
-    public void insertarAccionEmail(Email email) throws SQLException {
+    public void insertarAccionEmail(Email email) throws SQLException, ComandaException {
+        Empresa empresa = getEmpresaByEmail(email.getEmail());
+        if(empresa == null){
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
         Connection c = conectar();
-
+        String query = "call registrar_accion_email (?,?,?,?,?,?,?)";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setString(1, "email");
+        ps.setDate(2, new Date(email.getFecha().getTime()));
+        ps.setString(3, email.getDescripcion());
+        ps.setString(4, email.getComercial().getDni());
+        ps.setString(5, empresa.getPhoneNumber());
+        ps.setString(6, email.getEmail());
+        ps.setBoolean(6, email.isEsPromocion());
+        ps.executeQuery();
+        ps.close();
         desconectar(c);
     }
-    public Empresa mostrarEmpresa(String phone) throws SQLException, ComandaException{
+    public Empresa getEmpresaByPhone(String phone) throws SQLException, ComandaException{
         if(!existeEmpresa(phone)){
             throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
         }
@@ -223,7 +236,7 @@ public class CrmDAO {
         desconectar(c);
     }
 
-    public Comercial mostrarComercial(String dni) throws SQLException, ComandaException{
+    public Comercial getComercialByDni(String dni) throws SQLException, ComandaException{
         if(!existeComercial(dni)){
             throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
         }
@@ -286,6 +299,22 @@ public class CrmDAO {
         desconectar(c);
 
         return empresas;
+    }
+
+    public Empresa getEmpresaByEmail(String email) throws SQLException{
+        Connection c = conectar();
+        String query = "select * from Empresa where email = ?";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery(query);
+        Empresa empresa = null;
+        if (rs.next()) {
+            empresa = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phoneNumber"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("CP"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("pagina_web"));
+        }
+        rs.close();
+        ps.close();
+        desconectar(c);
+        return empresa;
     }
 
 

@@ -23,7 +23,7 @@ public class Gestor {
     private CrmDAO crmDAO = new CrmDAO();
     
     public boolean login(String dni, String passwd) throws ComandaException, SQLException{
-        Comercial u1 = crmDAO.mostrarComercial(dni); // Metodo user
+        Comercial u1 = crmDAO.getComercialByDni(dni); // Metodo user
         if (u1==null) {
             System.out.println("ERROR. Usuario no existe");
             throw new ComandaException(ComandaException.ERROR_USER);
@@ -45,7 +45,7 @@ public class Gestor {
         Comercial comercial = new Comercial(dni, name, apellidos, porcentajeComision, fechaIncorporacion);
         crmDAO.insertarComercial(comercial);
     }
-    public void email(String correo, String desc, Date fecha, boolean esPromocion) throws SQLException {
+    public void registrarEmail(String correo, String desc, Date fecha, boolean esPromocion) throws SQLException, ComandaException{
         Email email = new Email(fecha, this.comercial, desc, correo, esPromocion);
         crmDAO.insertarAccionEmail(email);
     }
@@ -63,11 +63,11 @@ public class Gestor {
         return crmDAO.buscarEmpleados(dni, nombre, apellidos, comision, incorporacion);
     }
     public Empresa infoCliente(String phoneNumber) throws ComandaException, SQLException {
-        return crmDAO.mostrarEmpresa(phoneNumber);
+        return crmDAO.getEmpresaByPhone(phoneNumber);
     }
 
     public Comercial infoEmpleado(String dni) throws ComandaException, SQLException{
-        return crmDAO.mostrarComercial(dni);
+        return crmDAO.getComercialByDni(dni);
     }
 
     public HashMap<String,Empresa> listClientes()throws ComandaException, SQLException{
@@ -77,13 +77,13 @@ public class Gestor {
         return crmDAO.allComerciales();
     }
 
-    public void registrarLlamada(String descripcion, String fecha, String acuerdo, String numTelf) throws ComandaException, SQLException{
-        Telefono telf = new Telefono(new Date(124, 5, 10), comercial, descripcion, acuerdo, numTelf);
+    public void registrarLlamada(String descripcion, Date fecha, String acuerdo, String numTelf) throws ComandaException, SQLException{
+        Telefono telf = new Telefono(fecha, comercial, descripcion, acuerdo, numTelf);
         crmDAO.registrarLlamada(telf);
     }
 
-    public void registrarVisita(String descripcion, String fecha, String acuerdo, String phone, String direccion) throws ComandaException, SQLException{
-        Visita visita = new Visita(new Date(124, 5, 10), comercial, descripcion, acuerdo, direccion);
+    public void registrarVisita(String descripcion, Date fecha, String acuerdo, String phone, String direccion) throws ComandaException, SQLException{
+        Visita visita = new Visita(fecha, comercial, descripcion, acuerdo, direccion);
         crmDAO.registrarVisita(visita, phone);
     }
 }

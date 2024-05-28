@@ -447,7 +447,7 @@ public class OptionsEmpresas extends javax.swing.JPanel {
 
     private void agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar1ActionPerformed
       try {
-            HashMap<String,Empresa> newlist =  Validations.getInstance().valBusquedaEmpresa(telefono.getText(),empresa.getText(), email.getText(),contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText());
+            Map<String,Empresa> newlist =  Validations.getInstance().valBusquedaEmpresa(telefono.getText(),empresa.getText(), email.getText(),contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText());
             clear();
             loadData(newlist);
             clearText();

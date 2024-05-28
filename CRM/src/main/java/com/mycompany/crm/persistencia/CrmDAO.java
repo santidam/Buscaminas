@@ -15,8 +15,8 @@ import java.util.Map;
 public class CrmDAO {
 
     //BUSCAR
-    public HashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
-        HashMap<String, Empresa> empresas = new HashMap<>();
+    public Map<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
+        Map<String, Empresa> empresas = new LinkedHashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM empresa WHERE " +
             "phone_number LIKE ? AND " +
@@ -59,8 +59,8 @@ public class CrmDAO {
         return empresas;
 
     }
-    public HashMap<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
-        HashMap<String, Comercial> comerciales = new HashMap<>();
+    public Map<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
+        Map<String, Comercial> comerciales = new LinkedHashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ?";
         PreparedStatement ps = c.prepareStatement(sql);
@@ -221,10 +221,10 @@ public class CrmDAO {
         return comercial;
     }
 
-    public HashMap<String,Comercial> allComerciales() throws SQLException, ComandaException{
+    public Map<String,Comercial> allComerciales() throws SQLException, ComandaException{
         Connection c = conectar();
         Statement st = c.createStatement();
-        HashMap<String,Comercial> comerciales = new HashMap<>();
+        Map<String,Comercial> comerciales = new LinkedHashMap<>();
         Comercial comercial = null;
         String query = "SELECT * FROM comercial";
         ResultSet rs = st.executeQuery(query);

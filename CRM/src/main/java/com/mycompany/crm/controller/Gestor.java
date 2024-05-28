@@ -57,10 +57,10 @@ public class Gestor {
     public void bajaEmpresa(String numero) throws ComandaException, SQLException {
         crmDAO.deleteEmpresa(numero);
     }
-    public HashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
+    public Map<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
         return crmDAO.buscarEmpresas(phoneNumber, nombre, email, representante, direccion, cp, ciudad, comunidadAutonoma, paginaWeb);
     }
-    public HashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
+    public Map<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
         return crmDAO.buscarEmpleados(dni, nombre, apellidos, comision, incorporacion);
     }
     public Empresa infoCliente(String phoneNumber) throws ComandaException, SQLException {
@@ -74,7 +74,7 @@ public class Gestor {
     public Map<String,Empresa> listClientes()throws ComandaException, SQLException{
         return crmDAO.allEmpresas();
     }
-    public HashMap<String,Comercial> listEmpleados()throws ComandaException, SQLException{
+    public Map<String,Comercial> listEmpleados()throws ComandaException, SQLException{
         return crmDAO.allComerciales();
     }
 

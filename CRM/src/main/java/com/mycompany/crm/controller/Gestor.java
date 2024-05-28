@@ -47,7 +47,7 @@ public class Gestor {
     }
     public void registrarEmail(String correo, String desc, Date fecha, boolean esPromocion) throws SQLException, ComandaException{
         Email email = new Email(fecha, this.comercial, desc, correo, esPromocion);
-        crmDAO.insertarAccionEmail(email);
+        crmDAO.registrarEmail(email);
     }
     public void bajaEmpleado(String dni) throws ComandaException {
        //Hacer metodo

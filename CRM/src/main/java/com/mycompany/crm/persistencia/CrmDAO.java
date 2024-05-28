@@ -12,24 +12,7 @@ import java.util.HashMap;
 
 public class CrmDAO {
 
-   /* public ArrayList<Propietario> allPropietarios() throws SQLException {
-        Connection c = conectar();
-        ArrayList<Propietario> propietarios = new ArrayList<>();
-        String query = "select * from propietario;";
-        Statement st = c.createStatement();
-        ResultSet rs = st.executeQuery(query);
-        while (rs.next()) {
-            String nombre = rs.getString("nombre");
-            String poblacion = rs.getString("poblacion");
-            propietarios.add(new Propietario(nombre, poblacion));
-        }
-        rs.close();
-        st.close();
-        desconectar(c);
-        return propietarios;
-    }*/
-
-
+    //BUSCAR
     public HashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
         HashMap<String, Empresa> empresas = new HashMap<>();
         Connection c = conectar();
@@ -74,7 +57,7 @@ public class CrmDAO {
         return empresas;
 
     }
-    public HashMap<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporación) throws SQLException, ComandaException {
+    public HashMap<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
         HashMap<String, Comercial> comerciales = new HashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ?";
@@ -83,7 +66,7 @@ public class CrmDAO {
         ps.setString(2, "%" + nombre + "%");
         ps.setString(3, "%" + apellidos + "%");
         ps.setString(4, "%" + comision + "%");
-        ps.setString(5, "%" + incorporación + "%");
+        ps.setString(5, "%" + incorporacion + "%");
 
         ResultSet rs = ps.executeQuery();
         boolean tieneResultados = false;
@@ -100,7 +83,7 @@ public class CrmDAO {
     }
 
 
-
+    //INSERTAR/REGISTRAR
     public void insertarEmpresa(Empresa empresa) throws SQLException, ComandaException{
         if (existeEmpresa(empresa.getPhoneNumber())) {
             throw new ComandaException(ComandaException.CLIENTE_EXISTE);
@@ -138,13 +121,13 @@ public class CrmDAO {
         ps.close();
         desconectar(c);
     }
-    public void insertarAccionEmail(Email email) throws SQLException, ComandaException {
+    public void registrarEmail(Email email) throws SQLException, ComandaException {
         Empresa empresa = getEmpresaByEmail(email.getEmail());
         if(empresa == null){
             throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
         }
         Connection c = conectar();
-        String query = "call registrar_accion_email (?,?,?,?,?,?,?)";
+        String query = "call registrar_accion_email(?,?,?,?,?,?,?)";
         PreparedStatement ps = c.prepareStatement(query);
         ps.setString(1, "email");
         ps.setDate(2, new Date(email.getFecha().getTime()));
@@ -152,51 +135,10 @@ public class CrmDAO {
         ps.setString(4, email.getComercial().getDni());
         ps.setString(5, empresa.getPhoneNumber());
         ps.setString(6, email.getEmail());
-        ps.setBoolean(6, email.isEsPromocion());
+        ps.setBoolean(7, email.isEsPromocion());
         ps.executeQuery();
         ps.close();
         desconectar(c);
-    }
-    public Empresa getEmpresaByPhone(String phone) throws SQLException, ComandaException{
-        if(!existeEmpresa(phone)){
-            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
-        }
-        Connection c = conectar();
-        Empresa emp = null;
-        Statement st = c.createStatement();
-        String query = "SELECT * FROM empresa WHERE phone_number = '" + phone + "';";
-        ResultSet rs = st.executeQuery(query);
-        if(rs.next()){
-            emp = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("cp"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("codigo"), rs.getString("pagina_web"));
-        }
-        rs.close();
-        st.close();
-        desconectar(c);
-
-        return emp;
-    }
-    public void deleteEmpresa(String phoneNumber) throws SQLException, ComandaException{
-        if (!existeEmpresa(phoneNumber)) {
-            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
-        }
-        Connection c = conectar();
-        String query = "Delete from empresa where phone_number = '"+phoneNumber+"'";
-        Statement st = c.createStatement();
-        st.executeUpdate(query);
-        st.close();
-        c.close();
-    }
-
-    public void deleteEmpleado(String dni) throws SQLException, ComandaException{
-        if (!existeComercial(dni)) {
-            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
-        }
-        Connection c = conectar();
-        String query = "Delete from comercial where dni = ?";
-        PreparedStatement ps = c.prepareStatement(query);
-        ps.setString(1, dni);
-        ps.close();
-        c.close();
     }
 
     public void registrarLlamada(Telefono tel) throws SQLException, ComandaException{
@@ -234,6 +176,28 @@ public class CrmDAO {
         ps.executeQuery();
         ps.close();
         desconectar(c);
+    }
+
+    //UPDATE
+
+    //GETTERS
+    public Empresa getEmpresaByPhone(String phone) throws SQLException, ComandaException{
+        if(!existeEmpresa(phone)){
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
+        Connection c = conectar();
+        Empresa emp = null;
+        Statement st = c.createStatement();
+        String query = "SELECT * FROM empresa WHERE phone_number = '" + phone + "';";
+        ResultSet rs = st.executeQuery(query);
+        if(rs.next()){
+            emp = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("cp"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("codigo"), rs.getString("pagina_web"));
+        }
+        rs.close();
+        st.close();
+        desconectar(c);
+
+        return emp;
     }
 
     public Comercial getComercialByDni(String dni) throws SQLException, ComandaException{
@@ -303,13 +267,13 @@ public class CrmDAO {
 
     public Empresa getEmpresaByEmail(String email) throws SQLException{
         Connection c = conectar();
-        String query = "select * from Empresa where email = ?";
+        String query = "select * from empresa where email = ?";
         PreparedStatement ps = c.prepareStatement(query);
         ps.setString(1, email);
-        ResultSet rs = ps.executeQuery(query);
+        ResultSet rs = ps.executeQuery();
         Empresa empresa = null;
         if (rs.next()) {
-            empresa = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phoneNumber"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("CP"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("pagina_web"));
+            empresa = new Empresa(rs.getString("nombre"), rs.getString("email"), rs.getString("phone_number"), rs.getString("representante"), rs.getString("direccion"), rs.getInt("CP"), rs.getString("ciudad"), rs.getString("comunidad_autonoma"), rs.getString("pagina_web"));
         }
         rs.close();
         ps.close();
@@ -317,6 +281,33 @@ public class CrmDAO {
         return empresa;
     }
 
+    //DELETE
+
+    public void deleteEmpresa(String phoneNumber) throws SQLException, ComandaException{
+        if (!existeEmpresa(phoneNumber)) {
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
+        Connection c = conectar();
+        String query = "Delete from empresa where phone_number = '"+phoneNumber+"'";
+        Statement st = c.createStatement();
+        st.executeUpdate(query);
+        st.close();
+        c.close();
+    }
+
+    public void deleteEmpleado(String dni) throws SQLException, ComandaException{
+        if (!existeComercial(dni)) {
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
+        Connection c = conectar();
+        String query = "Delete from comercial where dni = ?";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setString(1, dni);
+        ps.close();
+        c.close();
+    }
+
+    //EXISTE
 
     private boolean existeEmpresa(String phoneNumber) throws SQLException {
         Connection c = conectar();
@@ -347,6 +338,8 @@ public class CrmDAO {
         desconectar(c);
         return existe;
     }
+
+    //CONNECTION
 
     private Connection conectar() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/crm";

@@ -49,9 +49,9 @@ public class Gestor {
         Email email = new Email(fecha, this.comercial, desc, correo, esPromocion);
         crmDAO.registrarEmail(email);
     }
-    public void bajaEmpleado(String dni) throws ComandaException {
+    public void bajaEmpleado(String dni) throws ComandaException, SQLException {
        //Hacer metodo
-
+        crmDAO.deleteEmpleado(dni);
     }
     public void bajaEmpresa(String numero) throws ComandaException, SQLException {
         crmDAO.deleteEmpresa(numero);

@@ -86,7 +86,7 @@ public class Validations {
             System.out.println(ex.getMessage());
         }
     }
-    public void valBajaEmpleado(String dni) throws ComandaException {
+    public void valBajaEmpleado(String dni) throws ComandaException, SQLException {
         
         gestor.bajaEmpleado(dni);
         

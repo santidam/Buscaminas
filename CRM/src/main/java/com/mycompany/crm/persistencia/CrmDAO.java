@@ -297,12 +297,13 @@ public class CrmDAO {
 
     public void deleteEmpleado(String dni) throws SQLException, ComandaException{
         if (!existeComercial(dni)) {
-            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+            throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
         }
         Connection c = conectar();
         String query = "Delete from comercial where dni = ?";
         PreparedStatement ps = c.prepareStatement(query);
         ps.setString(1, dni);
+        ps.executeQuery();
         ps.close();
         c.close();
     }
@@ -344,7 +345,7 @@ public class CrmDAO {
     private Connection conectar() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/crm";
         String user = "root";
-        String pass = ".Aa654321.";
+        String pass = "";
         Connection c = DriverManager.getConnection(url, user, pass);
         return c;
     }

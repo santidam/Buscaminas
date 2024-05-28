@@ -16,10 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -52,10 +49,12 @@ public class Validations {
                 if (valName(nombre, "nombre")) {
                     if (valName(representante, "apellido")) {
                         if (valEmail(email)) {
-                            try{
-                                gestor.altaEmpresa(nombre, email, phoneNumber, representante, direccion, CastData.toInt(cp), ciudad, comunidad_autonoma, pagina_web);
-                            }catch(SQLException e){
-                                System.out.println(e.getMessage());
+                            if (valCP(cp)) {
+                                try{
+                                    gestor.altaEmpresa(nombre, email, phoneNumber, representante, direccion, CastData.toInt(cp), ciudad, comunidad_autonoma, pagina_web);
+                                }catch(SQLException e){
+                                    System.out.println(e.getMessage());
+                                }
                             }
                         }
                     }
@@ -79,7 +78,14 @@ public class Validations {
             throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
     }
-
+    public void valAccionEmail(String email, String desc, boolean esPromocion, Date fecha) throws ComandaException {
+        valEmail(email);
+        try {
+            gestor.email(email, desc, fecha, esPromocion);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     public void valBajaEmpleado(String dni) throws ComandaException {
         
         gestor.bajaEmpleado(dni);
@@ -145,6 +151,7 @@ public class Validations {
         }
        return comerciales;
     }
+
 
    public void valRegistrarLlamada(String numero, String descripcion, String fecha, String acuerdo) throws ComandaException{
         boolean phoneValid = valPhone(numero);
@@ -317,5 +324,22 @@ public class Validations {
                 }
             }
         }
+    }
+    public boolean valCP(String cp) throws ComandaException {
+         boolean esCorrecto = true;
+        if(cp.length() == 5) {
+            for (int i = 0; i < cp.length(); i++) {
+                if (!Character.isDigit(cp.charAt(i))) {
+                    System.out.println("El codgio postal introducido no es valido");
+                    esCorrecto = false;
+                    throw new ComandaException(ComandaException.ERROR_CP);
+                }
+            }
+       }else{
+            System.out.println("El codgio postal introducido no es valido");
+            esCorrecto = false;
+            throw new ComandaException(ComandaException.ERROR_CP);
+        }
+        return esCorrecto;
     }
 }

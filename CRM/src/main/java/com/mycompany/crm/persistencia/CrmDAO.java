@@ -4,11 +4,11 @@ import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.entity.acciones.Visita;
+import com.mycompany.crm.entity.acciones.Email;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CrmDAO {
@@ -137,6 +137,11 @@ public class CrmDAO {
         ps.setString(6, comercial.getContrasenya());
         ps.executeUpdate();
         ps.close();
+        desconectar(c);
+    }
+    public void insertarAccionEmail(Email email) throws SQLException {
+        Connection c = conectar();
+
         desconectar(c);
     }
     public Empresa mostrarEmpresa(String phone) throws SQLException, ComandaException{

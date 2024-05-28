@@ -3,15 +3,18 @@ package com.mycompany.crm.controller;
 
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.Empresa;
+
 import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.entity.acciones.Visita;
+
+import com.mycompany.crm.entity.acciones.Email;
+
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.persistencia.CrmDAO;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 public class Gestor {
@@ -41,6 +44,10 @@ public class Gestor {
     public void altaEmpleado(String dni, String name, String apellidos, int porcentajeComision, Date fechaIncorporacion) throws ComandaException, SQLException {
         Comercial comercial = new Comercial(dni, name, apellidos, porcentajeComision, fechaIncorporacion);
         crmDAO.insertarComercial(comercial);
+    }
+    public void email(String correo, String desc, Date fecha, boolean esPromocion) throws SQLException {
+        Email email = new Email(fecha, this.comercial, desc, correo, esPromocion);
+        crmDAO.insertarAccionEmail(email);
     }
     public void bajaEmpleado(String dni) throws ComandaException {
        //Hacer metodo

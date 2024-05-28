@@ -20,6 +20,7 @@ public class Accion {
         this.descripcion = descripcion;
     }
 
+
     public Date getFecha() {
         return fecha;
     }
@@ -31,6 +32,7 @@ public class Accion {
     public Comercial getComercial() {
         return comercial;
     }
+
 
     @Override
     public String toString() {

@@ -10,6 +10,8 @@ import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class OptionsComerciales extends javax.swing.JPanel {
 
     private DefaultTableModel model ;
-    private HashMap<String,Comercial> lista;
+    private Map<String,Comercial> lista;
     
     public OptionsComerciales() {
         initComponents();
@@ -28,8 +30,8 @@ public class OptionsComerciales extends javax.swing.JPanel {
         
         
     }
-    public HashMap<String,Comercial> loadListaComerciales(){
-        HashMap<String, Comercial> listaComerciales = new HashMap();
+    public Map<String,Comercial> loadListaComerciales(){
+        Map<String, Comercial> listaComerciales = new LinkedHashMap();
         try {
             listaComerciales = Validations.getInstance().valEmpleadosList();
             
@@ -40,7 +42,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
         lista = listaComerciales;
         return listaComerciales;
     }
-    public void loadData(HashMap<String,Comercial> listas){
+    public void loadData(Map<String,Comercial> listas){
         for (Comercial e: listas.values()) {
                 model.addRow(new Object[]{""+e.getCodigo(), e.getDni(),e.getNombre(), e.getApellidos(),e.getPorcentajeComision()});
         }
@@ -389,7 +391,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
 
     private void agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar1ActionPerformed
         try {
-            HashMap<String,Comercial> newlist =  Validations.getInstance().valBusquedaEmpleado(dni.getText(),nombre.getText(), apellidos.getText(),comision.getText(), incorporacion.getText());
+            Map<String,Comercial> newlist =  Validations.getInstance().valBusquedaEmpleado(dni.getText(),nombre.getText(), apellidos.getText(),comision.getText(), incorporacion.getText());
             clear();
             loadData(newlist);
             clearText();

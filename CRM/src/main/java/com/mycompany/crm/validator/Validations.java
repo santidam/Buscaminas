@@ -17,6 +17,10 @@ import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -96,11 +100,11 @@ public class Validations {
         gestor.bajaEmpresa(numero);
         
     }
-    public HashMap<String, Empresa> valBusquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
+    public Map<String, Empresa> valBusquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
        
         return gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
     }
-    public HashMap<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException{
+    public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException{
        
         return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
     }
@@ -129,8 +133,8 @@ public class Validations {
         return info;
     }
 
-    public HashMap<String,Empresa> valClientesList() throws ComandaException {
-        HashMap<String,Empresa> empresas = new HashMap<>();
+    public Map<String,Empresa> valClientesList() throws ComandaException {
+        Map<String,Empresa> empresas = new LinkedHashMap<>();
         try{
             empresas = gestor.listClientes();
             
@@ -141,8 +145,8 @@ public class Validations {
     }
 
 
-    public HashMap<String,Comercial> valEmpleadosList() throws ComandaException {
-        HashMap<String,Comercial> comerciales = new HashMap<>();
+    public Map<String,Comercial> valEmpleadosList() throws ComandaException {
+        Map<String,Comercial> comerciales = new LinkedHashMap<>();
         try{
             comerciales = gestor.listEmpleados();
             

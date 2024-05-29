@@ -49,14 +49,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         textBienvenida = new javax.swing.JLabel();
         cerrarSesionBtn = new javax.swing.JButton();
         listaEmpleados = new javax.swing.JButton();
-        infoEmpleado = new javax.swing.JButton();
-        altaEmpleado = new javax.swing.JButton();
         listaClientes = new javax.swing.JButton();
-        InfoCliente = new javax.swing.JButton();
-        altaCliente = new javax.swing.JButton();
         exitBtn = new javax.swing.JPanel();
         exitText = new javax.swing.JLabel();
         listaEmpleados1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -128,25 +125,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 listaEmpleadosActionPerformed(evt);
             }
         });
-        bg.add(listaEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 147, 32));
-
-        infoEmpleado.setText("Info Empleado");
-        infoEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        infoEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                infoEmpleadoActionPerformed(evt);
-            }
-        });
-        bg.add(infoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 257, 147, 32));
-
-        altaEmpleado.setText("Alta Empleado");
-        altaEmpleado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        altaEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                altaEmpleadoActionPerformed(evt);
-            }
-        });
-        bg.add(altaEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 207, 147, 32));
+        bg.add(listaEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 147, 32));
 
         listaClientes.setText("Lista Clientes");
         listaClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -155,25 +134,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 listaClientesActionPerformed(evt);
             }
         });
-        bg.add(listaClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 155, 147, 34));
-
-        InfoCliente.setText("Info Cliente");
-        InfoCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        InfoCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InfoClienteActionPerformed(evt);
-            }
-        });
-        bg.add(InfoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 103, 147, 34));
-
-        altaCliente.setText("Alta CLiente");
-        altaCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        altaCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                altaClienteActionPerformed(evt);
-            }
-        });
-        bg.add(altaCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 50, 147, 35));
+        bg.add(listaClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 147, 34));
 
         exitBtn.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -213,7 +174,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 listaEmpleados1ActionPerformed(evt);
             }
         });
-        bg.add(listaEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 307, 147, 32));
+        bg.add(listaEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 147, 32));
+
+        jButton1.setText("Estadisticas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 150, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo2.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -248,22 +217,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cerrarSesionBtnActionPerformed
 
-    private void altaEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaEmpleadoActionPerformed
-        AltaEmpleado a = new AltaEmpleado();
-        cambiarPanel(a);
-    }//GEN-LAST:event_altaEmpleadoActionPerformed
-
-    private void InfoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InfoClienteActionPerformed
-        InfoCliente m = new InfoCliente();
-        cambiarPanel(m);
-    }//GEN-LAST:event_InfoClienteActionPerformed
-
-    private void altaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaClienteActionPerformed
-        AltaCliente m = new AltaCliente();
-        cambiarPanel(m);
-
-    }//GEN-LAST:event_altaClienteActionPerformed
-
     private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
@@ -295,11 +248,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 //        contenido.repaint();
     }//GEN-LAST:event_listaClientesActionPerformed
 
-    private void infoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoEmpleadoActionPerformed
-        InfoEmpleado e = new InfoEmpleado();
-        cambiarPanel(e);
-    }//GEN-LAST:event_infoEmpleadoActionPerformed
-
     private void listaEmpleados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaEmpleados1ActionPerformed
         OptionsComerciales e = new OptionsComerciales();
         cambiarPanel(e);
@@ -319,21 +267,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitTextMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Estadisticas e = new Estadisticas();
+        cambiarPanel(e);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton InfoCliente;
-    private javax.swing.JButton altaCliente;
-    private javax.swing.JButton altaEmpleado;
     private javax.swing.JPanel bg;
     private javax.swing.JButton cerrarSesionBtn;
     private javax.swing.JPanel contenido;
     private javax.swing.JPanel exitBtn;
     private javax.swing.JLabel exitText;
     private javax.swing.JPanel header;
-    private javax.swing.JButton infoEmpleado;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton listaClientes;
     private javax.swing.JButton listaEmpleados;

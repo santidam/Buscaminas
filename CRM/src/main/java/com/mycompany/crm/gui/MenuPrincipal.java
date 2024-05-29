@@ -177,12 +177,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         bg.add(listaEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 147, 32));
 
         jButton1.setText("Estadisticas");
-        /*jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
-        });*/
-        bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 150, 30));
+        });
+        bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 140, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo2.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -267,10 +267,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitTextMouseClicked
 
-    /*private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Estadisticas e = new Estadisticas();
         cambiarPanel(e);
-    }//GEN-LAST:event_jButton1ActionPerformed*/
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+                                   
 
     /**
      * @param args the command line arguments

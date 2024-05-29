@@ -168,7 +168,7 @@ public class Validations {
 
 
    public void valRegistrarLlamada(String numero, String descripcion, Date fecha, String acuerdo) throws ComandaException{
-        valPhone(numero);
+//        valPhone(numero);
         try{
             gestor.registrarLlamada(descripcion, fecha, acuerdo, numero);
         }catch(SQLException e){
@@ -177,7 +177,7 @@ public class Validations {
     }
 
     public void valRegistrarVisita(String numero, String descripcion, Date fecha, String direccion, String acuerdo) throws ComandaException{
-        valPhone(numero);
+//        valPhone(numero);
         try{
             gestor.registrarVisita(descripcion, fecha, acuerdo, numero, direccion);
         }catch(SQLException e){
@@ -197,8 +197,8 @@ public class Validations {
         }
     }
 
-    public ArrayList<RankingTO> ranking()throws ComandaException{
-        ArrayList<RankingTO> empleados = new ArrayList<>();
+    public Map<String,RankingTO> ranking()throws ComandaException{
+        Map<String,RankingTO> empleados = new LinkedHashMap<>();
         try{
              empleados = gestor.ranking();
         }catch(SQLException e){
@@ -248,14 +248,14 @@ public class Validations {
         }
         String[] partes = name.split("\\s+");
         
-        if (tipo.equals("apellido") && partes.length != 2){
-            System.out.println("Error: debes introducir dos apellidos");
-            throw new ComandaException(ComandaException.DOS_APELLIDOS);
-        }
-        if (tipo.equals("nombre") && partes.length > 2){
-            System.out.println("Error: debes introducir un mÃ¡ximo de dos nombres");
-            throw new ComandaException(ComandaException.MAX_NOMBRES);
-        }
+//        if (tipo.equals("apellido") && partes.length != 2){
+//            System.out.println("Error: debes introducir dos apellidos");
+//            throw new ComandaException(ComandaException.DOS_APELLIDOS);
+//        }
+//        if (tipo.equals("nombre") && partes.length > 2){
+//            System.out.println("Error: debes introducir un mÃ¡ximo de dos nombres");
+//            throw new ComandaException(ComandaException.MAX_NOMBRES);
+//        }
 
         for (String part : partes) {
             if (part.length() < 2 || part.length() > 20) {
@@ -378,4 +378,6 @@ public class Validations {
         }
         return esCorrecto;
     }
+
+    
 }

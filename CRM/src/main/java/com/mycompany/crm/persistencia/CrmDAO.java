@@ -151,7 +151,7 @@ public class CrmDAO {
         Connection c = conectar();
         String query = "call registrar_accion_llamada(?,?,?,?,?,?)";
         PreparedStatement ps = c.prepareStatement(query);
-        ps.setString(1, "teléfono");
+        ps.setString(1, "telefono");
         ps.setDate(2, new Date(tel.getFecha().getTime()));
         ps.setString(3, tel.getDescripcion());
         ps.setString(4, tel.getComercial().getDni());
@@ -206,13 +206,23 @@ public class CrmDAO {
     }
 
     //RANKING
-    public ArrayList<RankingTO> getRanking() throws SQLException, ComandaException{
+    public Map<String,RankingTO> getRanking() throws SQLException, ComandaException{
         Connection c = conectar();
-        ArrayList<RankingTO> empleados = new ArrayList<>();
-        String query = "SELECT c.nombre, a.comercial, COUNT(*) as acciones_totales FROM accion as a \n" +
-                "JOIN comercial as c ON a.comercial = c.dni\n" +
-                "GROUP BY comercial\n" +
-                "ORDER BY acciones_totales DESC";
+        Map<String,RankingTO> empleados = new LinkedHashMap<>();
+//        String query = "SELECT c.nombre, a.comercial, COUNT(*) as acciones_totales FROM accion as a \n" +
+//                "JOIN comercial as c ON a.comercial = c.dni\n" +
+//                "GROUP BY comercial\n" +
+//                "ORDER BY acciones_totales DESC";
+        String query = "SELECT c.nombre, a.comercial, " +
+                       "COUNT(*) AS acciones_totales, " +
+                       "COUNT(CASE WHEN a.tipo = 'visita' THEN 1 ELSE NULL END) AS visitas, " +
+                       "COUNT(CASE WHEN a.tipo = 'email' THEN 1 ELSE NULL END) AS emails, " +
+                       "COUNT(CASE WHEN a.tipo = 'telefono' THEN 1 ELSE NULL END) AS llamadas " +
+                       "FROM accion AS a " +
+                       "JOIN comercial AS c ON a.comercial = c.dni " +
+                       "GROUP BY a.comercial, c.nombre " +
+                       "ORDER BY acciones_totales DESC";
+
         Statement st = c.createStatement();
         ResultSet rs = st.executeQuery(query);
         boolean hayContenido = rs.next();
@@ -220,9 +230,12 @@ public class CrmDAO {
             throw new ComandaException(ComandaException.NO_CLIENTES);
         }
         while(hayContenido){
-            Comercial comercial = new Comercial(rs.getString("nombre"), rs.getString("comercial"));
+            Comercial comercial = new Comercial(rs.getString("comercial"),rs.getString("nombre"));
             RankingTO r = new RankingTO(comercial, rs.getInt("acciones_totales"));
-            empleados.add(r);
+            r.setAccionEmail(rs.getInt("emails"));
+            r.setAccionLlamada(rs.getInt("llamadas"));
+            r.setAccionVisita(rs.getInt("visitas"));
+            empleados.put(rs.getString("comercial"),r);
             hayContenido = rs.next();
         }
         st.close();
@@ -330,7 +343,11 @@ public class CrmDAO {
         while(hayContenido){
             String tipo = rs.getString("tipo");
             Comercial comercial = getComercialByDni(rs.getString("comercial"));
+            Empresa e = getEmpresaByPhone(rs.getString("empresa"));
             accion = getAccion(rs.getInt("accion_id"), tipo, comercial);
+            accion.setEmpresa(e);
+            accion.setCodigo(rs.getInt("accion_id"));
+            accion.setTipo(tipo);
             acciones.put(rs.getString("accion_id"),accion);
             hayContenido = rs.next();
         }
@@ -456,7 +473,7 @@ public class CrmDAO {
     //CONNECTION
 
     private Connection conectar() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/crm";
+        String url = "jdbc:mysql://localhost:3306/crm2";
         String user = "root";
         String pass = "";
         Connection c = DriverManager.getConnection(url, user, pass);

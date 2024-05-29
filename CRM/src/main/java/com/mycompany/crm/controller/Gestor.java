@@ -5,6 +5,7 @@ import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.Empresa;
 
 import com.mycompany.crm.entity.RankingTO;
+import com.mycompany.crm.entity.acciones.Accion;
 import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.entity.acciones.Visita;
 
@@ -16,9 +17,8 @@ import com.mycompany.crm.persistencia.CrmDAO;
 import java.sql.Date;
 import java.sql.SQLException;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Gestor {
 
@@ -96,8 +96,12 @@ public class Gestor {
     public LinkedHashMap<String,Comercial> listEmpleados()throws ComandaException, SQLException{
         return crmDAO.allComerciales();
     }
+    public LinkedHashMap<String, Accion> listaAcciones()throws ComandaException, SQLException{
+        return crmDAO.allAcciones();
+    }
 
-    public LinkedHashMap<String, RankingTO> ranking()throws ComandaException, SQLException{
+
+    public ArrayList<RankingTO> ranking()throws ComandaException, SQLException{
         return crmDAO.getRanking();
     }
 

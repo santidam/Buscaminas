@@ -24,6 +24,6 @@ public class Visita extends Hablado{
 
     @Override
     public String toString() {
-        return "Direccion: " + direccion + super.toString();
+        return super.toString() + "\t\tDireccion: " + direccion;
     }
 }

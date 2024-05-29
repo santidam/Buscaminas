@@ -10,27 +10,18 @@ package com.mycompany.crm.entity;
  */
 public class RankingTO {
     
-    String nombre;
-    String dni;
+    Comercial comercial;
     int accionesTotales;
 
-    public RankingTO(String nombre, String dni, int accionesTotales) {
-        this.nombre = nombre;
-        this.dni = dni;
+    public RankingTO(Comercial comercial, int accionesTotales) {
+        this.comercial = comercial;
         this.accionesTotales = accionesTotales;
     }
     public int getAccionesTotales(){
         return this.accionesTotales;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Comercial getComercial() {
+        return comercial;
     }
-
-    public String getDni() {
-        return dni;
-    }
-
-
-    
 }

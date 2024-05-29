@@ -36,6 +36,6 @@ public class Accion {
 
     @Override
     public String toString() {
-        return "Fecha: " + fecha + "Descripcion: "+ descripcion;
+        return "Fecha: " + fecha + "\tDescripcion: "+ descripcion;
     }
 }

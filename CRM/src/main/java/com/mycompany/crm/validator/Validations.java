@@ -10,6 +10,7 @@ import com.mycompany.crm.controller.Gestor;
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.RankingTO;
+import com.mycompany.crm.entity.acciones.Accion;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.utils.CastData;
 
@@ -17,11 +18,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -133,8 +132,8 @@ public class Validations {
         return info;
     }
 
-    public Map<String,Empresa> valClientesList() throws ComandaException {
-        Map<String,Empresa> empresas = new LinkedHashMap<>();
+    public LinkedHashMap<String,Empresa> valClientesList() throws ComandaException {
+        LinkedHashMap<String,Empresa> empresas = new LinkedHashMap<>();
         try{
             empresas = gestor.listClientes();
             
@@ -145,8 +144,8 @@ public class Validations {
     }
 
 
-    public Map<String,Comercial> valEmpleadosList() throws ComandaException {
-        Map<String,Comercial> comerciales = new LinkedHashMap<>();
+    public LinkedHashMap<String,Comercial> valEmpleadosList() throws ComandaException {
+        LinkedHashMap<String,Comercial> comerciales = new LinkedHashMap<>();
         try{
             comerciales = gestor.listEmpleados();
             
@@ -154,6 +153,17 @@ public class Validations {
             System.out.println(e.getMessage());
         }
        return comerciales;
+    }
+
+    public LinkedHashMap<String, Accion> valAccionesList() throws ComandaException {
+        LinkedHashMap<String,Accion> acciones = new LinkedHashMap<>();
+        try{
+            acciones = gestor.listaAcciones();
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return acciones;
     }
 
 
@@ -187,8 +197,8 @@ public class Validations {
         }
     }
 
-    public LinkedHashMap<String, RankingTO> ranking()throws ComandaException{
-        LinkedHashMap<String, RankingTO> empleados = new LinkedHashMap<>();
+    public ArrayList<RankingTO> ranking()throws ComandaException{
+        ArrayList<RankingTO> empleados = new ArrayList<>();
         try{
              empleados = gestor.ranking();
         }catch(SQLException e){

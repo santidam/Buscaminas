@@ -3,15 +3,15 @@ package com.mycompany.crm.persistencia;
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.RankingTO;
+import com.mycompany.crm.entity.acciones.Accion;
 import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.entity.acciones.Visita;
 import com.mycompany.crm.entity.acciones.Email;
 import com.mycompany.crm.exceptions.ComandaException;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 public class CrmDAO {
 
@@ -206,9 +206,9 @@ public class CrmDAO {
     }
 
     //RANKING
-    public LinkedHashMap<String,RankingTO> getRanking() throws SQLException, ComandaException{
+    public ArrayList<RankingTO> getRanking() throws SQLException, ComandaException{
         Connection c = conectar();
-        LinkedHashMap<String, RankingTO> empleados = new LinkedHashMap<>();
+        ArrayList<RankingTO> empleados = new ArrayList<>();
         String query = "SELECT c.nombre, a.comercial, COUNT(*) as acciones_totales FROM accion as a \n" +
                 "JOIN comercial as c ON a.comercial = c.dni\n" +
                 "GROUP BY comercial\n" +
@@ -220,8 +220,9 @@ public class CrmDAO {
             throw new ComandaException(ComandaException.NO_CLIENTES);
         }
         while(hayContenido){
-            RankingTO r = new RankingTO(rs.getString("nombre"), rs.getString("comercial"), rs.getInt("acciones_totales"));
-            empleados.put(rs.getString("codigo"),r);
+            Comercial comercial = new Comercial(rs.getString("nombre"), rs.getString("comercial"));
+            RankingTO r = new RankingTO(comercial, rs.getInt("acciones_totales"));
+            empleados.add(r);
             hayContenido = rs.next();
         }
         st.close();
@@ -313,6 +314,52 @@ public class CrmDAO {
         desconectar(c);
 
         return empresas;
+    }
+
+    public LinkedHashMap<String, Accion> allAcciones() throws SQLException, ComandaException{
+        Connection c = conectar();
+        LinkedHashMap<String,Accion> acciones = new LinkedHashMap<>();
+        Statement st = c.createStatement();
+        Accion accion = null;
+        String query = "SELECT * FROM accion as a\n";
+        ResultSet rs = st.executeQuery(query);
+        boolean hayContenido = rs.next();
+        if(!hayContenido){
+            throw new ComandaException(ComandaException.NO_CLIENTES);
+        }
+        while(hayContenido){
+            String tipo = rs.getString("tipo");
+            Comercial comercial = getComercialByDni(rs.getString("comercial"));
+            accion = getAccion(rs.getInt("accion_id"), tipo, comercial);
+            acciones.put(rs.getString("accion_id"),accion);
+            hayContenido = rs.next();
+        }
+        rs.close();
+        st.close();
+        desconectar(c);
+
+        return acciones;
+    }
+
+    private Accion getAccion(int accionId, String tipo, Comercial comercial) throws SQLException{
+        Connection c = conectar();
+        Accion accion = null;
+        String query = "SELECT * FROM accion as a\n"+
+        "JOIN accion_"+tipo+" as h ON a.accion_id = h.accionId\n"+
+                "WHERE a.accion_id = ?";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setInt(1, accionId);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            if (tipo.equalsIgnoreCase("visita")){
+                accion = new Visita((rs.getDate("fecha")), comercial, rs.getString("descripcion"), rs.getString("acuerdos"), rs.getString("direccion"));
+            }else if(tipo.equalsIgnoreCase("email")){
+                accion = new Email((rs.getDate("fecha")), comercial, rs.getString("descripcion"), rs.getString("email"), rs.getBoolean("es_promocion"));
+            }else{
+                accion = new Telefono((rs.getDate("fecha")), comercial, rs.getString("descripcion"), rs.getString("acuerdos"), rs.getString("numero_telefono"));
+            }
+        }
+        return accion;
     }
 
     public Empresa getEmpresaByEmail(String email) throws SQLException{

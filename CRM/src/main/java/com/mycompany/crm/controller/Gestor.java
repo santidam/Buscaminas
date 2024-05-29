@@ -4,6 +4,8 @@ package com.mycompany.crm.controller;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.Empresa;
 
+import com.mycompany.crm.entity.RankingTO;
+import com.mycompany.crm.entity.acciones.Accion;
 import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.entity.acciones.Visita;
 
@@ -15,8 +17,8 @@ import com.mycompany.crm.persistencia.CrmDAO;
 import java.sql.Date;
 import java.sql.SQLException;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class Gestor {
 
@@ -37,6 +39,7 @@ public class Gestor {
         }
     }
 
+    //REGISTRAR
     public void altaEmpresa(String nombre, String email, String phoneNumber, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String pagina_web) throws ComandaException, SQLException{
         Empresa empresa = new Empresa(nombre, email, phoneNumber, representante, direccion, cp, ciudad, comunidad_autonoma, pagina_web);
         crmDAO.insertarEmpresa(empresa);
@@ -50,33 +53,6 @@ public class Gestor {
         Email email = new Email(fecha, this.comercial, desc, correo, esPromocion);
         crmDAO.registrarEmail(email);
     }
-    public void bajaEmpleado(String dni) throws ComandaException, SQLException {
-       //Hacer metodo
-        crmDAO.deleteEmpleado(dni);
-    }
-    public void bajaEmpresa(String numero) throws ComandaException, SQLException {
-        crmDAO.deleteEmpresa(numero);
-    }
-    public Map<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
-        return crmDAO.buscarEmpresas(phoneNumber, nombre, email, representante, direccion, cp, ciudad, comunidadAutonoma, paginaWeb);
-    }
-    public Map<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
-        return crmDAO.buscarEmpleados(dni, nombre, apellidos, comision, incorporacion);
-    }
-    public Empresa infoCliente(String phoneNumber) throws ComandaException, SQLException {
-        return crmDAO.getEmpresaByPhone(phoneNumber);
-    }
-
-    public Comercial infoEmpleado(String dni) throws ComandaException, SQLException{
-        return crmDAO.getComercialByDni(dni);
-    }
-
-    public Map<String,Empresa> listClientes()throws ComandaException, SQLException{
-        return crmDAO.allEmpresas();
-    }
-    public Map<String,Comercial> listEmpleados()throws ComandaException, SQLException{
-        return crmDAO.allComerciales();
-    }
 
     public void registrarLlamada(String descripcion, Date fecha, String acuerdo, String numTelf) throws ComandaException, SQLException{
         Telefono telf = new Telefono(fecha, comercial, descripcion, acuerdo, numTelf);
@@ -87,4 +63,53 @@ public class Gestor {
         Visita visita = new Visita(fecha, comercial, descripcion, acuerdo, direccion);
         crmDAO.registrarVisita(visita, phone);
     }
+
+    //BAJA
+    public void bajaEmpleado(String dni) throws ComandaException, SQLException {
+       //Hacer metodo
+        crmDAO.deleteEmpleado(dni);
+    }
+    public void bajaEmpresa(String numero) throws ComandaException, SQLException {
+        crmDAO.deleteEmpresa(numero);
+    }
+
+    //BUSCAR
+    public LinkedHashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
+        return crmDAO.buscarEmpresas(phoneNumber, nombre, email, representante, direccion, cp, ciudad, comunidadAutonoma, paginaWeb);
+    }
+    public LinkedHashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
+        return crmDAO.buscarEmpleados(dni, nombre, apellidos, comision, incorporacion);
+    }
+
+    public Empresa infoCliente(String phoneNumber) throws ComandaException, SQLException {
+        return crmDAO.getEmpresaByPhone(phoneNumber);
+    }
+
+    public Comercial infoEmpleado(String dni) throws ComandaException, SQLException{
+        return crmDAO.getComercialByDni(dni);
+    }
+
+    //LISTAR
+    public LinkedHashMap<String,Empresa> listClientes()throws ComandaException, SQLException{
+        return crmDAO.allEmpresas();
+    }
+    public LinkedHashMap<String,Comercial> listEmpleados()throws ComandaException, SQLException{
+        return crmDAO.allComerciales();
+    }
+    public LinkedHashMap<String, Accion> listaAcciones()throws ComandaException, SQLException{
+        return crmDAO.allAcciones();
+    }
+
+
+    public ArrayList<RankingTO> ranking()throws ComandaException, SQLException{
+        return crmDAO.getRanking();
+    }
+
+    //UPDATE
+    public void modificarEmpresa(Empresa empresa) throws ComandaException, SQLException{
+        crmDAO.modificarEmpresa(empresa);
+    }
+
+
+
 }

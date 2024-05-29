@@ -8,6 +8,7 @@ import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -419,8 +420,21 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
-        update();
-        clearText();
+        int fila = tabla.getSelectedRow();
+        String valor = tabla.getModel().getValueAt(fila, 0).toString();
+        Empresa empresa = lista.get(valor);
+        try{
+            if(empresa!=null){
+                Validations.getInstance().valModificarEmpresa(email.getText(), contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText(), codigo.getText());
+                clear();
+                loadData(loadListaEmpresas());
+                javax.swing.JOptionPane.showMessageDialog(this, "Cliente modificado correctamente","Modificar Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+            clearText();
+        }catch(ComandaException e){
+            System.out.println(e.getMessage());
+        }
+
     }//GEN-LAST:event_modificarActionPerformed
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
@@ -440,8 +454,6 @@ public class OptionsEmpresas extends javax.swing.JPanel {
                 this.comunidad.setText(e.getComunidad_autonoma());
                 this.web.setText(e.getPagina_web());
             }
-            
-            
         }
     }//GEN-LAST:event_tablaMouseClicked
 

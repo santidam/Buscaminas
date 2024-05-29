@@ -2,21 +2,22 @@ package com.mycompany.crm.persistencia;
 
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
+import com.mycompany.crm.entity.RankingTO;
+import com.mycompany.crm.entity.acciones.Accion;
 import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.entity.acciones.Visita;
 import com.mycompany.crm.entity.acciones.Email;
 import com.mycompany.crm.exceptions.ComandaException;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 public class CrmDAO {
 
     //BUSCAR
-    public Map<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
-        Map<String, Empresa> empresas = new LinkedHashMap<>();
+    public LinkedHashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
+        LinkedHashMap<String, Empresa> empresas = new LinkedHashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM empresa WHERE " +
             "phone_number LIKE ? AND " +
@@ -59,8 +60,8 @@ public class CrmDAO {
         return empresas;
 
     }
-    public Map<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
-        Map<String, Comercial> comerciales = new LinkedHashMap<>();
+    public LinkedHashMap<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
+        LinkedHashMap<String, Comercial> comerciales = new LinkedHashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ?";
         PreparedStatement ps = c.prepareStatement(sql);
@@ -182,6 +183,54 @@ public class CrmDAO {
 
     //UPDATE
 
+    public void modificarEmpresa(Empresa empresa) throws SQLException, ComandaException{
+        if(!existeEmpresaByCodigo(empresa.getCodigo())){
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
+
+        Connection c = conectar();
+        String query = "UPDATE empresa SET email = ?, representante = ?, direccion = ?, CP = ?, ciudad = ?, comunidad_autonoma = ?, pagina_web = ? WHERE codigo = ?";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setString(1, empresa.getEmail());
+        ps.setString(2, empresa.getRepresentante());
+        ps.setString(3, empresa.getDireccion());
+        ps.setInt(4, empresa.getCp());
+        ps.setString(5, empresa.getCiudad());
+        ps.setString(6, empresa.getComunidad_autonoma());
+        ps.setString(7, empresa.getPagina_web());
+        ps.setString(8, empresa.getCodigo());
+        ps.executeUpdate();
+        ps.close();
+        desconectar(c);
+
+    }
+
+    //RANKING
+    public ArrayList<RankingTO> getRanking() throws SQLException, ComandaException{
+        Connection c = conectar();
+        ArrayList<RankingTO> empleados = new ArrayList<>();
+        String query = "SELECT c.nombre, a.comercial, COUNT(*) as acciones_totales FROM accion as a \n" +
+                "JOIN comercial as c ON a.comercial = c.dni\n" +
+                "GROUP BY comercial\n" +
+                "ORDER BY acciones_totales DESC";
+        Statement st = c.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        boolean hayContenido = rs.next();
+        if(!hayContenido){
+            throw new ComandaException(ComandaException.NO_CLIENTES);
+        }
+        while(hayContenido){
+            Comercial comercial = new Comercial(rs.getString("nombre"), rs.getString("comercial"));
+            RankingTO r = new RankingTO(comercial, rs.getInt("acciones_totales"));
+            empleados.add(r);
+            hayContenido = rs.next();
+        }
+        st.close();
+        rs.close();
+        desconectar(c);
+        return empleados;
+    }
+
     //GETTERS
     public Empresa getEmpresaByPhone(String phone) throws SQLException, ComandaException{
         if(!existeEmpresa(phone)){
@@ -221,10 +270,10 @@ public class CrmDAO {
         return comercial;
     }
 
-    public Map<String,Comercial> allComerciales() throws SQLException, ComandaException{
+    public LinkedHashMap<String,Comercial> allComerciales() throws SQLException, ComandaException{
         Connection c = conectar();
         Statement st = c.createStatement();
-        Map<String,Comercial> comerciales = new LinkedHashMap<>();
+        LinkedHashMap<String,Comercial> comerciales = new LinkedHashMap<>();
         Comercial comercial = null;
         String query = "SELECT * FROM comercial";
         ResultSet rs = st.executeQuery(query);
@@ -244,9 +293,9 @@ public class CrmDAO {
         return comerciales;
     }
 
-    public Map<String,Empresa> allEmpresas() throws SQLException, ComandaException{
+    public LinkedHashMap<String,Empresa> allEmpresas() throws SQLException, ComandaException{
         Connection c = conectar();
-        Map<String,Empresa> empresas = new LinkedHashMap<>();
+        LinkedHashMap<String,Empresa> empresas = new LinkedHashMap<>();
         Statement st = c.createStatement();
         Empresa emp = null;
         String query = "SELECT * FROM empresa";
@@ -265,6 +314,52 @@ public class CrmDAO {
         desconectar(c);
 
         return empresas;
+    }
+
+    public LinkedHashMap<String, Accion> allAcciones() throws SQLException, ComandaException{
+        Connection c = conectar();
+        LinkedHashMap<String,Accion> acciones = new LinkedHashMap<>();
+        Statement st = c.createStatement();
+        Accion accion = null;
+        String query = "SELECT * FROM accion as a\n";
+        ResultSet rs = st.executeQuery(query);
+        boolean hayContenido = rs.next();
+        if(!hayContenido){
+            throw new ComandaException(ComandaException.NO_CLIENTES);
+        }
+        while(hayContenido){
+            String tipo = rs.getString("tipo");
+            Comercial comercial = getComercialByDni(rs.getString("comercial"));
+            accion = getAccion(rs.getInt("accion_id"), tipo, comercial);
+            acciones.put(rs.getString("accion_id"),accion);
+            hayContenido = rs.next();
+        }
+        rs.close();
+        st.close();
+        desconectar(c);
+
+        return acciones;
+    }
+
+    private Accion getAccion(int accionId, String tipo, Comercial comercial) throws SQLException{
+        Connection c = conectar();
+        Accion accion = null;
+        String query = "SELECT * FROM accion as a\n"+
+        "JOIN accion_"+tipo+" as h ON a.accion_id = h.accionId\n"+
+                "WHERE a.accion_id = ?";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setInt(1, accionId);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            if (tipo.equalsIgnoreCase("visita")){
+                accion = new Visita((rs.getDate("fecha")), comercial, rs.getString("descripcion"), rs.getString("acuerdos"), rs.getString("direccion"));
+            }else if(tipo.equalsIgnoreCase("email")){
+                accion = new Email((rs.getDate("fecha")), comercial, rs.getString("descripcion"), rs.getString("email"), rs.getBoolean("es_promocion"));
+            }else{
+                accion = new Telefono((rs.getDate("fecha")), comercial, rs.getString("descripcion"), rs.getString("acuerdos"), rs.getString("numero_telefono"));
+            }
+        }
+        return accion;
     }
 
     public Empresa getEmpresaByEmail(String email) throws SQLException{
@@ -315,7 +410,22 @@ public class CrmDAO {
     private boolean existeEmpresa(String phoneNumber) throws SQLException {
         Connection c = conectar();
         Statement st = c.createStatement();
-        String query = "select * from Empresa where phone_number = '" + phoneNumber + "';";
+        String query = "select * from empresa where phone_number = '" + phoneNumber + "';";
+        ResultSet rs = st.executeQuery(query);
+        boolean existe = false;
+        if (rs.next()) {
+            existe = true;
+        }
+        rs.close();
+        st.close();
+        desconectar(c);
+        return existe;
+    }
+
+    private boolean existeEmpresaByCodigo(String codigo) throws SQLException {
+        Connection c = conectar();
+        Statement st = c.createStatement();
+        String query = "select * from empresa where codigo = '" + codigo + "';";
         ResultSet rs = st.executeQuery(query);
         boolean existe = false;
         if (rs.next()) {

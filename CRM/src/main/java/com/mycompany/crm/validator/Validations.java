@@ -9,6 +9,8 @@ package com.mycompany.crm.validator;
 import com.mycompany.crm.controller.Gestor;
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
+import com.mycompany.crm.entity.RankingTO;
+import com.mycompany.crm.entity.acciones.Accion;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.utils.CastData;
 
@@ -16,11 +18,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -78,7 +78,6 @@ public class Validations {
         }catch(ParseException e){
             System.out.println("No se puede modificar"); // Añadir excepcion formato fecha incorrecto
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
             throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
     }
@@ -133,8 +132,8 @@ public class Validations {
         return info;
     }
 
-    public Map<String,Empresa> valClientesList() throws ComandaException {
-        Map<String,Empresa> empresas = new LinkedHashMap<>();
+    public LinkedHashMap<String,Empresa> valClientesList() throws ComandaException {
+        LinkedHashMap<String,Empresa> empresas = new LinkedHashMap<>();
         try{
             empresas = gestor.listClientes();
             
@@ -145,8 +144,8 @@ public class Validations {
     }
 
 
-    public Map<String,Comercial> valEmpleadosList() throws ComandaException {
-        Map<String,Comercial> comerciales = new LinkedHashMap<>();
+    public LinkedHashMap<String,Comercial> valEmpleadosList() throws ComandaException {
+        LinkedHashMap<String,Comercial> comerciales = new LinkedHashMap<>();
         try{
             comerciales = gestor.listEmpleados();
             
@@ -156,9 +155,20 @@ public class Validations {
        return comerciales;
     }
 
+    public LinkedHashMap<String, Accion> valAccionesList() throws ComandaException {
+        LinkedHashMap<String,Accion> acciones = new LinkedHashMap<>();
+        try{
+            acciones = gestor.listaAcciones();
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return acciones;
+    }
+
 
    public void valRegistrarLlamada(String numero, String descripcion, Date fecha, String acuerdo) throws ComandaException{
-        boolean phoneValid = valPhone(numero);
+        valPhone(numero);
         try{
             gestor.registrarLlamada(descripcion, fecha, acuerdo, numero);
         }catch(SQLException e){
@@ -167,12 +177,34 @@ public class Validations {
     }
 
     public void valRegistrarVisita(String numero, String descripcion, Date fecha, String direccion, String acuerdo) throws ComandaException{
-        boolean phoneValid = valPhone(numero);
+        valPhone(numero);
         try{
             gestor.registrarVisita(descripcion, fecha, acuerdo, numero, direccion);
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public void valModificarEmpresa(String email, String representante, String direccion, String cp, String ciudad, String comunidad_autonoma, String pagina_web, String codigo) throws ComandaException{
+        valEmail(email);
+        valCP(cp);
+        try{
+            Empresa empresa = new Empresa(email, representante, direccion, Integer.parseInt(cp), ciudad, comunidad_autonoma, pagina_web, codigo);
+            gestor.modificarEmpresa(empresa);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
+        }
+    }
+
+    public ArrayList<RankingTO> ranking()throws ComandaException{
+        ArrayList<RankingTO> empleados = new ArrayList<>();
+        try{
+             empleados = gestor.ranking();
+        }catch(SQLException e){
+            throw new ComandaException(ComandaException.ERROR_SQL);
+        }
+        return empleados;
     }
 
     public boolean valLength(int argsLength,int lengthEsperada) throws ComandaException {

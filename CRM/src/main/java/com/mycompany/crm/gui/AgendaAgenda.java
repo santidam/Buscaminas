@@ -12,6 +12,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
+import com.mycompany.crm.exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
+
+
 /**
  *
  * @author admin
@@ -31,14 +35,14 @@ public class AgendaAgenda extends java.awt.Dialog {
     
     public Map<String,Accion> loadListaEmpresas(){
         Map<String,Accion> listaEmpresas = new LinkedHashMap<>();
-//        try {
-//            listaEmpresas = Validations.getInstance().valClientesList();
-//           
-//            
-//        } catch (ComandaException ex) {
-//            javax.swing.JOptionPane.showMessageDialog(this, ex ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-//
-//        }
+        try {
+            listaEmpresas = Validations.getInstance().valAccionesList();
+           
+            
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
         lista = listaEmpresas;
         return listaEmpresas;
     }
@@ -213,6 +217,16 @@ public class AgendaAgenda extends java.awt.Dialog {
 
         }
     }//GEN-LAST:event_tablaMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+
+            Validations.getInstance().valAccionesList();
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

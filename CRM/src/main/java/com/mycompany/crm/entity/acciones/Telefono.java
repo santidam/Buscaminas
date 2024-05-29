@@ -24,6 +24,6 @@ public class Telefono extends Hablado{
 
     @Override
     public String toString() {
-        return "Telefeno: " + numTelef + super.toString();
+        return super.toString() + "\t\tTelefeno: " + numTelef;
     }
 }

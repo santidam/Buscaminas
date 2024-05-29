@@ -40,6 +40,17 @@ public class Empresa {
         this.pagina_web = pagina_web;
     }
 
+    public Empresa(String email, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String pagina_web, String codigo){
+        this.email = email;
+        this.representante = representante;
+        this.direccion = direccion;
+        this.cp = cp;
+        this.ciudad = ciudad;
+        this.comunidad_autonoma = comunidad_autonoma;
+        this.pagina_web = pagina_web;
+        this.codigo = codigo;
+    }
+
 
     public String getNombre() {
         return nombre;

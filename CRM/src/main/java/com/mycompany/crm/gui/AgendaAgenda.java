@@ -4,6 +4,9 @@
  */
 package com.mycompany.crm.gui;
 
+import com.mycompany.crm.exceptions.ComandaException;
+import com.mycompany.crm.validator.Validations;
+
 /**
  *
  * @author admin
@@ -96,6 +99,12 @@ public class AgendaAgenda extends java.awt.Dialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try {
+
+            Validations.getInstance().valAccionesList();
+        } catch (ComandaException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

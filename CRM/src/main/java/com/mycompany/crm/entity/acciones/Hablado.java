@@ -21,4 +21,9 @@ public class Hablado extends Accion {
     public String getAcuerdos() {
         return acuerdos;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\t\tAcuerdos: " +this.acuerdos;
+    }
 }

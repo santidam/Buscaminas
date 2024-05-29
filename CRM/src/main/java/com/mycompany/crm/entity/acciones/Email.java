@@ -29,6 +29,10 @@ public class Email extends Accion {
 
     @Override
     public String toString() {
-        return "Email: " + email + super.toString();
+        String promo = "NO";
+        if(this.esPromocion){
+            promo = "SI";
+        }
+        return super.toString() + "\t\tEmail: " + email + "\t\tPromocion: " + promo;
     }
 }

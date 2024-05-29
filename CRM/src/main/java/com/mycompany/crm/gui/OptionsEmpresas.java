@@ -388,8 +388,6 @@ public class OptionsEmpresas extends javax.swing.JPanel {
 
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch(SQLException ex){
-            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: Una empresa con acciones en el historial no puede ser eliminada","ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_eliminarActionPerformed
@@ -405,6 +403,7 @@ public class OptionsEmpresas extends javax.swing.JPanel {
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
         try {
+
             Validations.getInstance().valAltaCliente(empresa.getText(), email.getText(),telefono.getText(),contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText());
             clear();
             loadData(loadListaEmpresas());

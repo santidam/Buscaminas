@@ -400,7 +400,7 @@ public class CrmDAO {
 
     public void deleteEmpresa(String phoneNumber) throws SQLException, ComandaException{
         if (!existeEmpresa(phoneNumber)) {
-            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+            throw new ComandaException(ComandaException.ERROR_TEL);
         }
         Connection c = conectar();
         String query = "Delete from empresa where phone_number = '"+phoneNumber+"'";
@@ -473,7 +473,7 @@ public class CrmDAO {
     //CONNECTION
 
     private Connection conectar() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/crm2";
+        String url = "jdbc:mysql://localhost:3306/crm";
         String user = "root";
         String pass = "";
         Connection c = DriverManager.getConnection(url, user, pass);

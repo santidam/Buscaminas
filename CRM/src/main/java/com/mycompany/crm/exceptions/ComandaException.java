@@ -28,6 +28,9 @@ public class ComandaException  extends Exception{
    public static final int ERROR_FECHA = 19;
     public static final int ERROR_SQL = 20;
    public static final int ERROR_PERMISOS = 21;
+    public static final int ERROR_LONGITUD_45 = 22;
+    public static final int ERROR_LONGITUD_65 = 23;
+    public static final int ERROR_LONGITUD_255 = 24;
    
    private final List<String> mensajes = Arrays.asList (
            "ERROR: EL FORMATO DEL DNI DEBE SER '12345678X'",
@@ -51,7 +54,10 @@ public class ComandaException  extends Exception{
            "ERROR: CODIGO POSTAL INVALIDO",
            "ERROR: DEBE INDICAR UNA FECHA",
            "ERROR: HA OCURRIDO UN ERROR CON LA BASE DE DATOS",
-           "ERROR: NO DISPONES DE LOS PERMISOS NECESARIOS PARA REALIZAR ESTA ACCION"
+           "ERROR: NO DISPONES DE LOS PERMISOS NECESARIOS PARA REALIZAR ESTA ACCION",
+           "ERROR: EL NOMBRE, EMAIL, CIUDAD, COMUNIDAD AUTÓNOMA, REPRESENTANTE 45 CARÁCTERES",
+           "ERROR: LA DIRECCIÓN NO PUEDE TENER MÁS DE 65 CARÁCTERES",
+           "ERROR: LA PÁGINA WEB NO PUEDE TENER MÁS DE 255 CARÁCTERES"
    );
 
     private final int code;

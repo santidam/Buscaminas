@@ -49,7 +49,7 @@ public class AgendaAgenda extends java.awt.Dialog {
     
     public void loadData(Map<String,Accion> listas){
         for (Accion e: listas.values()) {
-                model.addRow(new Object[]{e.getCodigo(),e.getTipo(), e.getFecha(),e.getEmpresa().getNombre(), "SI"});
+                model.addRow(new Object[]{""+e.getCodigo(),e.getTipo(), e.getFecha(),e.getEmpresa().getNombre(), e.getComercial().getNombre()});
         }
     }
     public void clearText(){
@@ -114,7 +114,7 @@ public class AgendaAgenda extends java.awt.Dialog {
 
             },
             new String [] {
-                "Código", "Tipo", "Fecha", "Empresa", "Completada"
+                "Código", "Tipo", "Fecha", "Empresa", "Comercial"
             }
         ) {
             boolean[] canEdit = new boolean [] {

@@ -19,6 +19,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Gestor {
 
@@ -55,12 +56,12 @@ public class Gestor {
     }
 
     public void registrarLlamada(String descripcion, Date fecha, String acuerdo, String numTelf) throws ComandaException, SQLException{
-        Telefono telf = new Telefono(fecha, comercial, descripcion, acuerdo, numTelf);
+        Telefono telf = new Telefono(fecha, this.comercial, descripcion, acuerdo, numTelf);
         crmDAO.registrarLlamada(telf);
     }
 
     public void registrarVisita(String descripcion, Date fecha, String acuerdo, String phone, String direccion) throws ComandaException, SQLException{
-        Visita visita = new Visita(fecha, comercial, descripcion, acuerdo, direccion);
+        Visita visita = new Visita(fecha, this.comercial, descripcion, acuerdo, direccion);
         crmDAO.registrarVisita(visita, phone);
     }
 
@@ -101,7 +102,7 @@ public class Gestor {
     }
 
 
-    public ArrayList<RankingTO> ranking()throws ComandaException, SQLException{
+    public Map<String,RankingTO> ranking()throws ComandaException, SQLException{
         return crmDAO.getRanking();
     }
 

@@ -12,10 +12,14 @@ public class RankingTO {
     
     Comercial comercial;
     int accionesTotales;
+    int accionLlamada;
+    int accionEmail;
+    int accionVisita;
 
     public RankingTO(Comercial comercial, int accionesTotales) {
         this.comercial = comercial;
         this.accionesTotales = accionesTotales;
+    
     }
     public int getAccionesTotales(){
         return this.accionesTotales;
@@ -24,4 +28,31 @@ public class RankingTO {
     public Comercial getComercial() {
         return comercial;
     }
+
+    public int getAccionLlamada() {
+        return accionLlamada;
+    }
+
+    public int getAccionEmail() {
+        return accionEmail;
+    }
+
+    public int getAccionVisita() {
+        return accionVisita;
+    }
+
+    public void setAccionLlamada(int accionLlamada) {
+        this.accionLlamada = accionLlamada;
+    }
+
+    public void setAccionEmail(int accionEmail) {
+        this.accionEmail = accionEmail;
+    }
+
+    public void setAccionVisita(int accionVisita) {
+        this.accionVisita = accionVisita;
+    }
+    
+    
+    
 }

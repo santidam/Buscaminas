@@ -68,6 +68,9 @@ public class Gestor {
     //BAJA
     public void bajaEmpleado(String dni) throws ComandaException, SQLException {
        //Hacer metodo
+        if (this.comercial.getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         crmDAO.deleteEmpleado(dni);
     }
     public void bajaEmpresa(String numero) throws ComandaException, SQLException {
@@ -108,6 +111,9 @@ public class Gestor {
 
     //UPDATE
     public void modificarEmpresa(Empresa empresa) throws ComandaException, SQLException{
+        if (this.comercial.getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         crmDAO.modificarEmpresa(empresa);
     }
 }

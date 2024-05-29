@@ -109,7 +109,4 @@ public class Gestor {
     public void modificarEmpresa(Empresa empresa) throws ComandaException, SQLException{
         crmDAO.modificarEmpresa(empresa);
     }
-
-
-
 }

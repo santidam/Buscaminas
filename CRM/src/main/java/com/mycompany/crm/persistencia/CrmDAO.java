@@ -180,6 +180,28 @@ public class CrmDAO {
 
     //UPDATE
 
+    public void modificarEmpresa(Empresa empresa) throws SQLException, ComandaException{
+        if(!existeEmpresaByCodigo(empresa.getCodigo())){
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+        }
+
+        Connection c = conectar();
+        String query = "UPDATE empresa SET email = ?, representante = ?, direccion = ?, CP = ?, ciudad = ?, comunidad_autonoma = ?, pagina_web = ? WHERE codigo = ?";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setString(1, empresa.getEmail());
+        ps.setString(2, empresa.getRepresentante());
+        ps.setString(3, empresa.getDireccion());
+        ps.setInt(4, empresa.getCp());
+        ps.setString(5, empresa.getCiudad());
+        ps.setString(6, empresa.getComunidad_autonoma());
+        ps.setString(7, empresa.getPagina_web());
+        ps.setString(8, empresa.getCodigo());
+        ps.executeUpdate();
+        ps.close();
+        desconectar(c);
+
+    }
+
     //GETTERS
     public Empresa getEmpresaByPhone(String phone) throws SQLException, ComandaException{
         if(!existeEmpresa(phone)){
@@ -313,7 +335,22 @@ public class CrmDAO {
     private boolean existeEmpresa(String phoneNumber) throws SQLException {
         Connection c = conectar();
         Statement st = c.createStatement();
-        String query = "select * from Empresa where phone_number = '" + phoneNumber + "';";
+        String query = "select * from empresa where phone_number = '" + phoneNumber + "';";
+        ResultSet rs = st.executeQuery(query);
+        boolean existe = false;
+        if (rs.next()) {
+            existe = true;
+        }
+        rs.close();
+        st.close();
+        desconectar(c);
+        return existe;
+    }
+
+    private boolean existeEmpresaByCodigo(String codigo) throws SQLException {
+        Connection c = conectar();
+        Statement st = c.createStatement();
+        String query = "select * from empresa where codigo = '" + codigo + "';";
         ResultSet rs = st.executeQuery(query);
         boolean existe = false;
         if (rs.next()) {

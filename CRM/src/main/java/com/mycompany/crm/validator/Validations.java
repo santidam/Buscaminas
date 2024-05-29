@@ -74,7 +74,6 @@ public class Validations {
         }catch(ParseException e){
             System.out.println("No se puede modificar"); // Añadir excepcion formato fecha incorrecto
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
             throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
     }
@@ -154,7 +153,7 @@ public class Validations {
 
 
    public void valRegistrarLlamada(String numero, String descripcion, Date fecha, String acuerdo) throws ComandaException{
-        boolean phoneValid = valPhone(numero);
+        valPhone(numero);
         try{
             gestor.registrarLlamada(descripcion, fecha, acuerdo, numero);
         }catch(SQLException e){
@@ -163,11 +162,23 @@ public class Validations {
     }
 
     public void valRegistrarVisita(String numero, String descripcion, Date fecha, String direccion, String acuerdo) throws ComandaException{
-        boolean phoneValid = valPhone(numero);
+        valPhone(numero);
         try{
             gestor.registrarVisita(descripcion, fecha, acuerdo, numero, direccion);
         }catch(SQLException e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void valModificarEmpresa(String email, String representante, String direccion, String cp, String ciudad, String comunidad_autonoma, String pagina_web, String codigo) throws ComandaException{
+        valEmail(email);
+        valCP(cp);
+        try{
+            Empresa empresa = new Empresa(email, representante, direccion, Integer.parseInt(cp), ciudad, comunidad_autonoma, pagina_web, codigo);
+            gestor.modificarEmpresa(empresa);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
         }
     }
 

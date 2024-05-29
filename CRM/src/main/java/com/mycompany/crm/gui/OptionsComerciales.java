@@ -364,7 +364,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
-        update();
+
         clearText();
     }//GEN-LAST:event_modificarActionPerformed
 

@@ -36,6 +36,7 @@ public class Gestor {
         }
     }
 
+    //REGISTRAR
     public void altaEmpresa(String nombre, String email, String phoneNumber, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String pagina_web) throws ComandaException, SQLException{
         Empresa empresa = new Empresa(nombre, email, phoneNumber, representante, direccion, cp, ciudad, comunidad_autonoma, pagina_web);
         crmDAO.insertarEmpresa(empresa);
@@ -49,33 +50,6 @@ public class Gestor {
         Email email = new Email(fecha, this.comercial, desc, correo, esPromocion);
         crmDAO.registrarEmail(email);
     }
-    public void bajaEmpleado(String dni) throws ComandaException, SQLException {
-       //Hacer metodo
-        crmDAO.deleteEmpleado(dni);
-    }
-    public void bajaEmpresa(String numero) throws ComandaException, SQLException {
-        crmDAO.deleteEmpresa(numero);
-    }
-    public HashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
-        return crmDAO.buscarEmpresas(phoneNumber, nombre, email, representante, direccion, cp, ciudad, comunidadAutonoma, paginaWeb);
-    }
-    public HashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
-        return crmDAO.buscarEmpleados(dni, nombre, apellidos, comision, incorporacion);
-    }
-    public Empresa infoCliente(String phoneNumber) throws ComandaException, SQLException {
-        return crmDAO.getEmpresaByPhone(phoneNumber);
-    }
-
-    public Comercial infoEmpleado(String dni) throws ComandaException, SQLException{
-        return crmDAO.getComercialByDni(dni);
-    }
-
-    public HashMap<String,Empresa> listClientes()throws ComandaException, SQLException{
-        return crmDAO.allEmpresas();
-    }
-    public HashMap<String,Comercial> listEmpleados()throws ComandaException, SQLException{
-        return crmDAO.allComerciales();
-    }
 
     public void registrarLlamada(String descripcion, Date fecha, String acuerdo, String numTelf) throws ComandaException, SQLException{
         Telefono telf = new Telefono(fecha, comercial, descripcion, acuerdo, numTelf);
@@ -86,4 +60,43 @@ public class Gestor {
         Visita visita = new Visita(fecha, comercial, descripcion, acuerdo, direccion);
         crmDAO.registrarVisita(visita, phone);
     }
+
+    //BAJA
+    public void bajaEmpleado(String dni) throws ComandaException, SQLException {
+       //Hacer metodo
+        crmDAO.deleteEmpleado(dni);
+    }
+    public void bajaEmpresa(String numero) throws ComandaException, SQLException {
+        crmDAO.deleteEmpresa(numero);
+    }
+
+    //BUSCAR
+    public HashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
+        return crmDAO.buscarEmpresas(phoneNumber, nombre, email, representante, direccion, cp, ciudad, comunidadAutonoma, paginaWeb);
+    }
+    public HashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
+        return crmDAO.buscarEmpleados(dni, nombre, apellidos, comision, incorporacion);
+    }
+
+    public Empresa infoCliente(String phoneNumber) throws ComandaException, SQLException {
+        return crmDAO.getEmpresaByPhone(phoneNumber);
+    }
+
+    public Comercial infoEmpleado(String dni) throws ComandaException, SQLException{
+        return crmDAO.getComercialByDni(dni);
+    }
+
+    //LISTAR
+    public HashMap<String,Empresa> listClientes()throws ComandaException, SQLException{
+        return crmDAO.allEmpresas();
+    }
+    public HashMap<String,Comercial> listEmpleados()throws ComandaException, SQLException{
+        return crmDAO.allComerciales();
+    }
+
+    //UPDATE
+    public void modificarEmpresa(Empresa empresa) throws ComandaException, SQLException{
+        crmDAO.modificarEmpresa(empresa);
+    }
+
 }

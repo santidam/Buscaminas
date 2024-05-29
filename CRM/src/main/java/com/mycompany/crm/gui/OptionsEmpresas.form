@@ -387,7 +387,6 @@
     <Component class="javax.swing.JButton" name="agregar1">
       <Properties>
         <Property name="text" type="java.lang.String" value="BUSCAR"/>
-        <Property name="actionCommand" type="java.lang.String" value="BUSCAR"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agregar1ActionPerformed"/>

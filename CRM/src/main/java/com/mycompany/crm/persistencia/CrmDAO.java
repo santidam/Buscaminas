@@ -2,6 +2,7 @@ package com.mycompany.crm.persistencia;
 
 import com.mycompany.crm.entity.Empresa;
 import com.mycompany.crm.entity.Comercial;
+import com.mycompany.crm.entity.RankingTO;
 import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.entity.acciones.Visita;
 import com.mycompany.crm.entity.acciones.Email;
@@ -9,12 +10,14 @@ import com.mycompany.crm.exceptions.ComandaException;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CrmDAO {
 
     //BUSCAR
-    public HashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
-        HashMap<String, Empresa> empresas = new HashMap<>();
+    public LinkedHashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
+        LinkedHashMap<String, Empresa> empresas = new LinkedHashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM empresa WHERE " +
             "phone_number LIKE ? AND " +
@@ -57,8 +60,8 @@ public class CrmDAO {
         return empresas;
 
     }
-    public HashMap<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
-        HashMap<String, Comercial> comerciales = new HashMap<>();
+    public LinkedHashMap<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
+        LinkedHashMap<String, Comercial> comerciales = new LinkedHashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ?";
         PreparedStatement ps = c.prepareStatement(sql);
@@ -202,6 +205,31 @@ public class CrmDAO {
 
     }
 
+    //RANKING
+    public LinkedHashMap<String,RankingTO> getRanking() throws SQLException, ComandaException{
+        Connection c = conectar();
+        LinkedHashMap<String, RankingTO> empleados = new LinkedHashMap<>();
+        String query = "SELECT c.nombre, a.comercial, COUNT(*) as acciones_totales FROM accion as a \n" +
+                "JOIN comercial as c ON a.comercial = c.dni\n" +
+                "GROUP BY comercial\n" +
+                "ORDER BY acciones_totales DESC";
+        Statement st = c.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        boolean hayContenido = rs.next();
+        if(!hayContenido){
+            throw new ComandaException(ComandaException.NO_CLIENTES);
+        }
+        while(hayContenido){
+            RankingTO r = new RankingTO(rs.getString("nombre"), rs.getString("comercial"), rs.getInt("acciones_totales"));
+            empleados.put(rs.getString("codigo"),r);
+            hayContenido = rs.next();
+        }
+        st.close();
+        rs.close();
+        desconectar(c);
+        return empleados;
+    }
+
     //GETTERS
     public Empresa getEmpresaByPhone(String phone) throws SQLException, ComandaException{
         if(!existeEmpresa(phone)){
@@ -241,10 +269,10 @@ public class CrmDAO {
         return comercial;
     }
 
-    public HashMap<String,Comercial> allComerciales() throws SQLException, ComandaException{
+    public LinkedHashMap<String,Comercial> allComerciales() throws SQLException, ComandaException{
         Connection c = conectar();
         Statement st = c.createStatement();
-        HashMap<String,Comercial> comerciales = new HashMap<>();
+        LinkedHashMap<String,Comercial> comerciales = new LinkedHashMap<>();
         Comercial comercial = null;
         String query = "SELECT * FROM comercial";
         ResultSet rs = st.executeQuery(query);
@@ -264,9 +292,9 @@ public class CrmDAO {
         return comerciales;
     }
 
-    public HashMap<String,Empresa> allEmpresas() throws SQLException, ComandaException{
+    public LinkedHashMap<String,Empresa> allEmpresas() throws SQLException, ComandaException{
         Connection c = conectar();
-        HashMap<String,Empresa> empresas = new HashMap<>();
+        LinkedHashMap<String,Empresa> empresas = new LinkedHashMap<>();
         Statement st = c.createStatement();
         Empresa emp = null;
         String query = "SELECT * FROM empresa";

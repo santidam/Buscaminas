@@ -4,6 +4,7 @@ package com.mycompany.crm.controller;
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.Empresa;
 
+import com.mycompany.crm.entity.RankingTO;
 import com.mycompany.crm.entity.acciones.Telefono;
 import com.mycompany.crm.entity.acciones.Visita;
 
@@ -16,6 +17,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Gestor {
 
@@ -71,10 +74,10 @@ public class Gestor {
     }
 
     //BUSCAR
-    public HashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
+    public LinkedHashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
         return crmDAO.buscarEmpresas(phoneNumber, nombre, email, representante, direccion, cp, ciudad, comunidadAutonoma, paginaWeb);
     }
-    public HashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
+    public LinkedHashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
         return crmDAO.buscarEmpleados(dni, nombre, apellidos, comision, incorporacion);
     }
 
@@ -87,16 +90,22 @@ public class Gestor {
     }
 
     //LISTAR
-    public HashMap<String,Empresa> listClientes()throws ComandaException, SQLException{
+    public LinkedHashMap<String,Empresa> listClientes()throws ComandaException, SQLException{
         return crmDAO.allEmpresas();
     }
-    public HashMap<String,Comercial> listEmpleados()throws ComandaException, SQLException{
+    public LinkedHashMap<String,Comercial> listEmpleados()throws ComandaException, SQLException{
         return crmDAO.allComerciales();
+    }
+
+    public LinkedHashMap<String, RankingTO> ranking()throws ComandaException, SQLException{
+        return crmDAO.getRanking();
     }
 
     //UPDATE
     public void modificarEmpresa(Empresa empresa) throws ComandaException, SQLException{
         crmDAO.modificarEmpresa(empresa);
     }
+
+
 
 }

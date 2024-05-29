@@ -126,14 +126,19 @@ public class AgendaVisita extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-        // TODO add your handling code here:
-        try {
+        if (date.getDate()==null || numero.getText().isEmpty() || descripcion.getText().isEmpty() || direccion.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }else{
+            try {
             Validations.getInstance().valRegistrarVisita(numero.getText(), descripcion.getText(), new Date(date.getDate().getTime()), direccion.getText(), acuerdos.getText());
             javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (ComandaException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+            } catch (ComandaException ex) {
+                javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+            }        
+        
     }//GEN-LAST:event_okBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

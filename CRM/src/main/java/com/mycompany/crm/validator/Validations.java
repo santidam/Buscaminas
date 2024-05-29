@@ -39,12 +39,14 @@ public class Validations {
         }
         return v;
     }
-    public boolean valLogin(String dni, String password) throws ComandaException, SQLException{
-//        if (!password.equals("1234")) {
-//            System.out.println("ERROR ContraseÃ±a");
-//            throw new ComandaException(ComandaException.ERROR_CONTRASEÑA);
-//        }
-        return gestor.login(dni,password);
+    public boolean valLogin(String dni, String password) throws ComandaException, SQLException{     
+        try{
+            return gestor.login(dni,password);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
+        }
+        
 
     }
 
@@ -87,11 +89,19 @@ public class Validations {
             gestor.registrarEmail(email, desc, fecha, esPromocion);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
         }
     }
     public void valBajaEmpleado(String dni) throws ComandaException, SQLException {
         
-        gestor.bajaEmpleado(dni);
+        try{
+            gestor.bajaEmpleado(dni);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
+        }
+        
+        
         
     }
     public void valBajaEmpresa(String numero) throws ComandaException, SQLException {
@@ -104,33 +114,17 @@ public class Validations {
         return gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
     }
     public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException{
-       
-        return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
-    }
-
-    public String valClienteInfo(String phone) throws ComandaException {
-        valPhone(phone);
-        String info = "";
-        try{
-            info = gestor.infoCliente(phone).toString();
+       try{
+            return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
         }catch(SQLException e){
             System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
         }
-        return info;
+        
         
     }
 
-    public String valEmpleadoInfo(String dni) throws ComandaException{
-        valDni(dni);
-        String info = "";
-        try{
-            info = gestor.infoEmpleado(dni).toString();
-        }catch(SQLException e){
-            System.out.println(e.getMessage()); //  TODO lanzar excepcion para recoger en boton
-            throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
-        }
-        return info;
-    }
+ 
 
     public LinkedHashMap<String,Empresa> valClientesList() throws ComandaException {
         LinkedHashMap<String,Empresa> empresas = new LinkedHashMap<>();

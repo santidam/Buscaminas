@@ -218,17 +218,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Contacto"/>
+        <Property name="text" type="java.lang.String" value="Contacto*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Email"/>
+        <Property name="text" type="java.lang.String" value="Email*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Direcci&#xf3;n"/>
+        <Property name="text" type="java.lang.String" value="Direcci&#xf3;n*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -238,12 +238,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
-        <Property name="text" type="java.lang.String" value="CP"/>
+        <Property name="text" type="java.lang.String" value="CP*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ciudad"/>
+        <Property name="text" type="java.lang.String" value="Ciudad*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="codigo">
@@ -271,7 +271,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Comunidad"/>
+        <Property name="text" type="java.lang.String" value="Comunidad*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="comunidad">

@@ -59,15 +59,15 @@ public class AgendaLlamada extends java.awt.Dialog {
         jPanel1.add(descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 186, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        jLabel4.setText("Descripción");
+        jLabel4.setText("Descripción*");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        jLabel2.setText("Numero Cliente");
+        jLabel2.setText("Numero Cliente*");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        jLabel3.setText("Fecha");
+        jLabel3.setText("Fecha*");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
@@ -118,13 +118,20 @@ public class AgendaLlamada extends java.awt.Dialog {
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
         // TODO add your handling code here:
-        try {
+        if (fecha.getDate()==null || numero.getText().isEmpty() || descripcion.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }else{
+            try {
             Validations.getInstance().valRegistrarLlamada(numero.getText(), descripcion.getText(), new Date(fecha.getDate().getTime()), acuerdo.getText());
             javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-    } catch (ComandaException ex) {
+            } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
                     }
+            }        
+        
+        
     }//GEN-LAST:event_okBtnActionPerformed
 
     /**

@@ -152,13 +152,13 @@ public class OptionsComerciales extends javax.swing.JPanel {
 
         jLabel3.setText("DNI *");
 
-        jLabel4.setText("Nombre");
+        jLabel4.setText("Nombre*");
 
-        jLabel5.setText("Apellidos");
+        jLabel5.setText("Apellidos*");
 
-        jLabel6.setText("Incorporación");
+        jLabel6.setText("Incorporación*");
 
-        jLabel7.setText("Comision");
+        jLabel7.setText("Comision*");
 
         codigo.setEditable(false);
         codigo.setEnabled(false);
@@ -326,7 +326,11 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-        try {
+        if (dni.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: PARA ELIMIAR UN COMERCIAL DEBES RELLENAR EL CAMPO DEL DNI","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }else{
+            try {
             Validations.getInstance().valBajaEmpleado(dni.getText());
             clear();
             loadData(loadListaComerciales());
@@ -340,6 +344,8 @@ public class OptionsComerciales extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(this, "ERROR: Una comercial con acciones en el historial no puede ser eliminada","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
+        }
+        
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void incorporacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incorporacionActionPerformed
@@ -352,7 +358,11 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        try {
+        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }else{
+             try {
             Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(),apellidos.getText(),comision.getText(), incorporacion.getText());
             clear();
             loadData(loadListaComerciales());
@@ -363,10 +373,18 @@ public class OptionsComerciales extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }
+        }
+       
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getText().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
+        }else{
+            
+           
+        }
         
     }//GEN-LAST:event_modificarActionPerformed
 
@@ -399,7 +417,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
 
         } catch (ComandaException | SQLException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-
+                
         }
     }//GEN-LAST:event_agregar1ActionPerformed
 

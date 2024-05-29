@@ -70,11 +70,11 @@ public class AgendaEmail extends java.awt.Dialog {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        jLabel2.setText("Email Cliente");
+        jLabel2.setText("Email Cliente*");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        jLabel3.setText("Fecha");
+        jLabel3.setText("Fecha*");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
@@ -127,7 +127,11 @@ public class AgendaEmail extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        try {
+        if (fecha.getDate()==null || email.getText().isEmpty() ) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }else{
+            try {
             boolean promocion = esPromocion.isSelected(); 
             if (fecha.getDate() == null) {
                 throw new ComandaException(ComandaException.ERROR_FECHA);
@@ -138,6 +142,9 @@ public class AgendaEmail extends java.awt.Dialog {
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
         }
+        }
+        
+        
     }//GEN-LAST:event_guardarActionPerformed
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed

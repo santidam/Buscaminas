@@ -367,7 +367,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
 
-        clearText();
+        
     }//GEN-LAST:event_modificarActionPerformed
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked

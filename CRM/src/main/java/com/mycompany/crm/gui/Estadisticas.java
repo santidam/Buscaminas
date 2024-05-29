@@ -53,9 +53,11 @@ public class Estadisticas extends javax.swing.JPanel {
         return listaComerciales;
     }
     public void loadData(Map<String,RankingTO> listas){
+        int n = 1;
         for (RankingTO e: listas.values()) {
-            model.addRow(new Object[]{""+e.getComercial().getDni(), e.getComercial().getNombre(),e.getAccionVisita(), e.getAccionLlamada(),e.getAccionEmail()});
+            model.addRow(new Object[]{n,""+e.getComercial().getDni(), e.getComercial().getNombre(),e.getAccionVisita(), e.getAccionLlamada(),e.getAccionEmail(),e.getAccionesTotales()});
             loadGraphic(e);
+            n++;
         }
     }
     
@@ -139,11 +141,11 @@ public class Estadisticas extends javax.swing.JPanel {
 
             },
             new String [] {
-                "DNI", "Nombre", "Visitas", "Llamadas", "Email"
+                "Puesto", "DNI", "Nombre", "Visitas", "Llamadas", "Email", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -202,7 +204,7 @@ public class Estadisticas extends javax.swing.JPanel {
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
         int linea = tabla.getSelectedRow();
         if (linea!=-1) {
-            String dni = (String)model.getValueAt(linea, 0);
+            String dni = (String)model.getValueAt(linea, 1);
             RankingTO e = lista.get(dni);
             if (e!=null) {
                 loadGraphic(e);

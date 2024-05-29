@@ -9,6 +9,7 @@ import com.mycompany.crm.entity.PruebaTO;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.sql.SQLException;
@@ -21,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.RingPlot;
 import org.jfree.data.general.DefaultPieDataset;
 
 /**
@@ -60,17 +62,20 @@ public class Estadisticas extends javax.swing.JPanel {
         datos.setValue("Completadas", t.getCompletadas());
         datos.setValue("Pendientes", t.getPendientes());
         
-        JFreeChart graphic = ChartFactory.createPieChart(
+        JFreeChart graphic = ChartFactory.createRingChart(
         "Tasa de finalización",
          datos,
          true,
          true,
          false
         );
+        graphic.setBackgroundPaint(Color.WHITE);
         
         ChartPanel panel = new ChartPanel(graphic);
         panel.setMouseWheelEnabled(true);
         panel.setPreferredSize(new Dimension(250,274));
+        RingPlot plot = (RingPlot) graphic.getPlot();
+        plot.setBackgroundPaint(Color.WHITE);
         
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(panel,BorderLayout.NORTH);
@@ -123,6 +128,8 @@ public class Estadisticas extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Estadisticas");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

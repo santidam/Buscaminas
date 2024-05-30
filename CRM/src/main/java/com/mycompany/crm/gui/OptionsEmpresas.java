@@ -423,6 +423,7 @@ public class OptionsEmpresas extends javax.swing.JPanel {
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
 
+
             if (this.empresa.getText().isEmpty() || contacto.getText().isEmpty() || email.getText().isEmpty() || telefono.getText().isEmpty() || direccion.getText().isEmpty() || cp.getText().isEmpty() || ciudad.getText().isEmpty() || comunidad.getText().isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
@@ -436,6 +437,7 @@ public class OptionsEmpresas extends javax.swing.JPanel {
                 }catch(ComandaException e){
                     javax.swing.JOptionPane.showMessageDialog(this, e, "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
                 }
+
         }
 
         

@@ -28,6 +28,7 @@ public class Estadisticas extends javax.swing.JPanel {
     private DefaultTableModel model ;
     private Map<String,RankingTO> lista;
     private JFreeChart chart;
+    private JFreeChart chart2;
     
     public Estadisticas() {
         initComponents();
@@ -50,21 +51,29 @@ public class Estadisticas extends javax.swing.JPanel {
     }
     public void loadData(Map<String,RankingTO> listas){
         int n = 1;
+        int visitas = 0;
+        int llamada = 0;
+        int email = 0;
         for (RankingTO e: listas.values()) {
             model.addRow(new Object[]{n,""+e.getComercial().getDni(), e.getComercial().getNombre(),e.getAccionVisita(), e.getAccionLlamada(),e.getAccionEmail(),e.getAccionesTotales()});
-            loadGraphic(e);
+            visitas += e.getAccionVisita();
+            llamada += e.getAccionLlamada();
+            email += e.getAccionEmail();
+//            loadGraphicComercial(e);
             n++;
         }
+        RankingTO r = new RankingTO(llamada,email,visitas);
+        loadGraphicGeneral(r);
     }
     
-     public void loadGraphic(RankingTO t){
+     public void loadGraphicComercial(RankingTO t){
         DefaultPieDataset datos = new DefaultPieDataset();
         datos.setValue("Visitas", t.getAccionVisita());
         datos.setValue("Llamadas", t.getAccionLlamada());
         datos.setValue("Email", t.getAccionEmail());
         
         JFreeChart graphic = ChartFactory.createRingChart(
-        "Estadisticas de acciones",
+        "Estadisticas de acciones individuales",
          datos,
          true,
          true,
@@ -76,9 +85,43 @@ public class Estadisticas extends javax.swing.JPanel {
         
         ChartPanel panel = new ChartPanel(chart);
         panel.setMouseWheelEnabled(true);
-        panel.setPreferredSize(new Dimension(600,250));
+        panel.setPreferredSize(new Dimension(300,250));
         RingPlot plot = (RingPlot) chart.getPlot();
         plot.setBackgroundPaint(Color.WHITE);
+         
+        jPanel2.setLayout(new BorderLayout());
+        jPanel2.add(panel,BorderLayout.NORTH);
+        
+        
+        jPanel2.removeAll(); 
+        jPanel2.setLayout(new BorderLayout());
+        jPanel2.add(panel, BorderLayout.NORTH);
+        jPanel2.revalidate(); 
+        jPanel2.repaint();   
+    }
+     public void loadGraphicGeneral(RankingTO t){
+        DefaultPieDataset datos = new DefaultPieDataset();
+        datos.setValue("Visitas", t.getAccionVisita());
+        datos.setValue("Llamadas", t.getAccionLlamada());
+        datos.setValue("Email", t.getAccionEmail());
+        
+        JFreeChart graphic = ChartFactory.createPieChart(
+        "Estadisticas de acciones Globales",
+         datos,
+         true,
+         true,
+         false
+        );
+        this.chart2 = graphic;
+        
+        graphic.setBackgroundPaint(Color.WHITE);
+        
+        ChartPanel panel = new ChartPanel(chart2);
+        panel.setMouseWheelEnabled(true);
+        panel.setPreferredSize(new Dimension(300,250));
+        
+//        RingPlot plot = (RingPlot) chart2.getPlot();
+//        plot.setBackgroundPaint(Color.WHITE);
          
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(panel,BorderLayout.NORTH);
@@ -90,6 +133,7 @@ public class Estadisticas extends javax.swing.JPanel {
         jPanel1.revalidate(); 
         jPanel1.repaint();   
     }
+     
     
     
    
@@ -112,6 +156,7 @@ public class Estadisticas extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -155,8 +200,9 @@ public class Estadisticas extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tabla);
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(600, 250));
-        jPanel1.setPreferredSize(new java.awt.Dimension(600, 250));
+        jPanel1.setPreferredSize(new java.awt.Dimension(300, 250));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -166,6 +212,21 @@ public class Estadisticas extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setMinimumSize(new java.awt.Dimension(600, 250));
+        jPanel2.setPreferredSize(new java.awt.Dimension(300, 250));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
         );
 
@@ -180,8 +241,12 @@ public class Estadisticas extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -191,8 +256,10 @@ public class Estadisticas extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -203,7 +270,7 @@ public class Estadisticas extends javax.swing.JPanel {
             String dni = (String)model.getValueAt(linea, 1);
             RankingTO e = lista.get(dni);
             if (e!=null) {
-                loadGraphic(e);
+                loadGraphicComercial(e);
                 chart.fireChartChanged();
 
             }
@@ -218,6 +285,7 @@ public class Estadisticas extends javax.swing.JPanel {
     private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

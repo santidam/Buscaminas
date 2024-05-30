@@ -22,6 +22,14 @@ public class AgendaLlamada extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
     }
+    public void clearText(){
+        numero.setText("");
+        descripcion.setText("");
+        fecha.setDate(null);
+        acuerdo.setText("");
+        
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,6 +54,7 @@ public class AgendaLlamada extends java.awt.Dialog {
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(650, 473));
         setModal(true);
+        setPreferredSize(new java.awt.Dimension(650, 473));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -125,7 +134,7 @@ public class AgendaLlamada extends java.awt.Dialog {
             try {
             Validations.getInstance().valRegistrarLlamada(numero.getText(), descripcion.getText(), new Date(fecha.getDate().getTime()), acuerdo.getText());
             javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
+            clearText();
             } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
                     }

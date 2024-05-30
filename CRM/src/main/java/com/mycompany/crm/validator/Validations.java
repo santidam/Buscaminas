@@ -137,6 +137,7 @@ public class Validations {
             
         }catch(SQLException e){
             System.out.println(e.getMessage()); // añadir lanzar excepcion comanda exception
+            throw new ComandaException(ComandaException.ERROR_SQL);
         }
         return empresas;
     }
@@ -160,6 +161,7 @@ public class Validations {
 
         }catch(SQLException e){
             System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
         }
         return acciones;
     }
@@ -171,6 +173,7 @@ public class Validations {
             gestor.registrarLlamada(descripcion, fecha, acuerdo, numero);
         }catch(SQLException e){
             System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
         }
     }
 
@@ -180,6 +183,7 @@ public class Validations {
             gestor.registrarVisita(descripcion, fecha, acuerdo, numero, direccion);
         }catch(SQLException e){
             System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
         }
     }
 

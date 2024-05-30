@@ -33,10 +33,10 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="208" max="-2" attributes="0"/>
-                      <Component id="labelInfo" min="-2" pref="187" max="-2" attributes="0"/>
+                      <Component id="labelInfo" min="-2" pref="381" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="235" max="32767" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,7 +60,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Roboto Black" size="18" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Seleciona una opcion"/>
+        <Property name="text" type="java.lang.String" value="Seleciona una opci&#xf3;n"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="opcion">

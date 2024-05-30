@@ -86,7 +86,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
         nombre.setText("");
         apellidos.setText("");
         comision.setText("");
-        incorporacion.setDate(new Date(1999, 1, 1));
+        incorporacion.setDate(null);
     }
 
     /**

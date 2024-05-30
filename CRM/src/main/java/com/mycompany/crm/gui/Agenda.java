@@ -42,7 +42,7 @@ public class Agenda extends javax.swing.JPanel {
         setBackground(new java.awt.Color(204, 204, 255));
 
         labelInfo.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
-        labelInfo.setText("Seleciona una opcion");
+        labelInfo.setText("Seleciona una opción");
 
         opcion.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         opcion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Programar visita", "Registrar llamada", "Enviar correo", "Ver Agenda" }));
@@ -73,8 +73,8 @@ public class Agenda extends javax.swing.JPanel {
                         .addComponent(okBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(208, 208, 208)
-                        .addComponent(labelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(235, Short.MAX_VALUE))
+                        .addComponent(labelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

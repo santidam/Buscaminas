@@ -91,10 +91,14 @@ public class Gestor {
     }
     public LinkedHashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, Date incorporacion) throws SQLException, ComandaException {
         String nuevaComision = "";
+        int num;
         if(comision.equalsIgnoreCase("")){
             nuevaComision = "0";
+            num = CastData.toInt(nuevaComision);
+        }else{
+            num = CastData.toInt(comision);
         }
-        Comercial comercial = new Comercial(dni, nombre, apellidos, CastData.toInt(nuevaComision), incorporacion);
+        Comercial comercial = new Comercial(dni, nombre, apellidos, num, incorporacion);
         return crmDAO.buscarEmpleados(comercial, comision);
     }
 

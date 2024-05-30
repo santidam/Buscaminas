@@ -359,7 +359,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }else{
-             try {
+            try {
             Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(),apellidos.getText(),comision.getText(), incorporacion.getText());
             clear();
             loadData(loadListaComerciales());

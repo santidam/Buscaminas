@@ -47,6 +47,9 @@ public class Gestor {
     }
 
     public void altaEmpleado(String dni, String name, String apellidos, int porcentajeComision, Date fechaIncorporacion) throws ComandaException, SQLException {
+        if (this.comercial.getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         Comercial comercial = new Comercial(dni, name, apellidos, porcentajeComision, fechaIncorporacion);
         crmDAO.insertarComercial(comercial);
     }

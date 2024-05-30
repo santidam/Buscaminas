@@ -202,6 +202,20 @@ public class Validations {
         }
     }
 
+    public void valModificarEmpleado(String dni, String porcentaje) throws ComandaException{
+        if (gestor.getComercial().getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
+
+        try{
+            Comercial comercial = new Comercial(dni, CastData.toInt(porcentaje));
+            gestor.modificarEmpleado(comercial);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
+        }
+    }
+
     public Map<String,RankingTO> ranking()throws ComandaException{
         Map<String,RankingTO> empleados = new LinkedHashMap<>();
         try{

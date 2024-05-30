@@ -19,7 +19,6 @@ public class Accion {
     private String tipo;
 
     public Accion(Date date, Comercial comercial, String descripcion) {
-        this.codigo = codigo;
         this.fecha = date;
         this.comercial = comercial;
         this.descripcion = descripcion;

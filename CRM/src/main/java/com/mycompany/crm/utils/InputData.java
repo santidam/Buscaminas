@@ -4,6 +4,8 @@
  */
 package com.mycompany.crm.utils;
 
+import com.mycompany.crm.exceptions.ComandaException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,7 +32,7 @@ public class InputData {
         return line;
     }
 
-    public static int inputInt(String msj) {
+    public static int inputInt(String msj) throws ComandaException {
         String num = inputStrLine(msj);
         return CastData.toInt(num);
     }

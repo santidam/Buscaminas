@@ -340,9 +340,6 @@ public class OptionsComerciales extends javax.swing.JPanel {
         } catch (ComandaException  ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
-        } catch(SQLException ex){
-            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: Una comercial con acciones en el historial no puede ser eliminada","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-
         }
         }
         

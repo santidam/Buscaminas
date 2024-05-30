@@ -85,14 +85,6 @@ public class Gestor {
         return crmDAO.buscarEmpleados(dni, nombre, apellidos, comision, incorporacion);
     }
 
-    public Empresa infoCliente(String phoneNumber) throws ComandaException, SQLException {
-        return crmDAO.getEmpresaByPhone(phoneNumber);
-    }
-
-    public Comercial infoEmpleado(String dni) throws ComandaException, SQLException{
-        return crmDAO.getComercialByDni(dni);
-    }
-
     //LISTAR
     public LinkedHashMap<String,Empresa> listClientes()throws ComandaException, SQLException{
         return crmDAO.allEmpresas();

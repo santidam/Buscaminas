@@ -33,8 +33,12 @@ public class Comercial {
         if(porcentajeComision < 0 || porcentajeComision > 10){
             throw new ComandaException(ComandaException.ERROR_COMISION_FORMATO);
         }
-        if(fechaIncorporacion.before(new Date(1900,1,1)) && fechaIncorporacion.after(new Date())){
+        if (fechaIncorporacion!=null) {
+            if(fechaIncorporacion.before(new Date(1900,1,1))){
+                
             throw new ComandaException(ComandaException.ERROR_RANGO_FECHAINCORPORACION);
+            }
+        
         }
         this.dni = dni;
         this.nombre = nombre;

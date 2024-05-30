@@ -30,9 +30,9 @@ public class Comercial {
         if(nombre.length() > 45 || apellidos.length() > 45){
             throw new ComandaException(ComandaException.ERROR_LONGITUD_45);
         }
-//        if(porcentajeComision < 0 || porcentajeComision > 10){
-//            throw new ComandaException(ComandaException.ERROR_COMISION_FORMATO);
-//        }
+        if(porcentajeComision < 0 || porcentajeComision > 10){
+            throw new ComandaException(ComandaException.ERROR_COMISION_FORMATO);
+        }
         if (fechaIncorporacion!=null) {
             if(fechaIncorporacion.before(new Date(1900,1,1))){
                 

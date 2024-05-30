@@ -18,16 +18,6 @@ public class Empresa {
     private String pagina_web;
 
     public Empresa(String nombre, String email, String phoneNumber, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String codigo, String pagina_web) throws ComandaException{
-        if(nombre.length() > 45 || email.length() > 45 || representante.length() > 45 || ciudad.length() > 45 || comunidad_autonoma.length() > 45){
-            throw new ComandaException(ComandaException.ERROR_LONGITUD_45);
-        }
-        if(direccion.length() > 65){
-            throw new ComandaException(ComandaException.ERROR_LONGITUD_65);
-        }
-        if(pagina_web.length() > 255){
-            throw new ComandaException(ComandaException.ERROR_LONGITUD_255);
-        }
-
         this.nombre = nombre;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -39,7 +29,20 @@ public class Empresa {
         this.codigo = codigo;
         this.pagina_web = pagina_web;
     }
-    public Empresa(String nombre, String email, String phoneNumber, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String pagina_web) {
+    public Empresa(String nombre, String email, String phoneNumber, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String pagina_web) throws ComandaException {
+        if(nombre.length() > 45 || email.length() > 45 || representante.length() > 45 || ciudad.length() > 45 || comunidad_autonoma.length() > 45){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_45);
+        }
+        if(direccion.length() > 65){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_65);
+        }
+        if(pagina_web.length() > 255){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_255);
+        }
+        if(cp < 0){
+            throw new ComandaException(ComandaException.ERROR_CP);
+        }
+
         this.nombre = nombre;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -61,6 +64,9 @@ public class Empresa {
         }
         if(pagina_web.length() > 255){
             throw new ComandaException(ComandaException.ERROR_LONGITUD_255);
+        }
+        if(cp < 0){
+            throw new ComandaException(ComandaException.ERROR_CP);
         }
         this.email = email;
         this.representante = representante;

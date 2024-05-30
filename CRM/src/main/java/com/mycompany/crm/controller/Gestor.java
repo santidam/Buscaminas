@@ -13,6 +13,7 @@ import com.mycompany.crm.entity.acciones.Email;
 
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.persistencia.CrmDAO;
+import com.mycompany.crm.utils.CastData;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -69,9 +70,6 @@ public class Gestor {
     //BAJA
     public void bajaEmpleado(String dni) throws ComandaException, SQLException {
        //Hacer metodo
-        if (this.comercial.getCodigo()!=1) {
-            throw new ComandaException(ComandaException.ERROR_PERMISOS);
-        }
         crmDAO.deleteEmpleado(dni);
     }
     public void bajaEmpresa(String numero) throws ComandaException, SQLException {
@@ -80,11 +78,20 @@ public class Gestor {
 
     //BUSCAR
     public LinkedHashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
-        return crmDAO.buscarEmpresas(phoneNumber, nombre, email, representante, direccion, cp, ciudad, comunidadAutonoma, paginaWeb);
+        String nuevaCp = "";
+        if(cp.equalsIgnoreCase("")){
+            nuevaCp = "0";
+        }
+        Empresa empresa = new Empresa(phoneNumber, nombre, email, representante, direccion, CastData.toInt(nuevaCp), ciudad, comunidadAutonoma, paginaWeb);
+        return crmDAO.buscarEmpresas(empresa, cp);
     }
-    public LinkedHashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, int comision, Date incorporacion) throws SQLException, ComandaException {
-        Comercial comercial = new Comercial(dni, nombre, apellidos, comision, incorporacion);
-        return crmDAO.buscarEmpleados(comercial);
+    public LinkedHashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, Date incorporacion) throws SQLException, ComandaException {
+        String nuevaComision = "";
+        if(comision.equalsIgnoreCase("")){
+            nuevaComision = "0";
+        }
+        Comercial comercial = new Comercial(dni, nombre, apellidos, CastData.toInt(nuevaComision), incorporacion);
+        return crmDAO.buscarEmpleados(comercial, comision);
     }
 
     //LISTAR
@@ -105,9 +112,6 @@ public class Gestor {
 
     //UPDATE
     public void modificarEmpresa(Empresa empresa) throws ComandaException, SQLException{
-        if (this.comercial.getCodigo()!=1) {
-            throw new ComandaException(ComandaException.ERROR_PERMISOS);
-        }
         crmDAO.modificarEmpresa(empresa);
     }
 

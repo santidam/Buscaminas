@@ -87,6 +87,9 @@ public class Validations {
     }
 
     public void valBajaEmpleado(String dni) throws ComandaException {
+        if (gestor.getComercial().getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         try{
             gestor.bajaEmpleado(dni);
         }catch(SQLException e){
@@ -117,13 +120,11 @@ public class Validations {
     public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, Date incorporacion) throws SQLException, ComandaException{
 
        try{
-            return gestor.busquedaEmpleado( dni, nombre,  apellidos,  CastData.toInt(comision),  incorporacion);
+            return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
         }catch(SQLException e){
             System.out.println(e.getMessage());
             throw new ComandaException(ComandaException.ERROR_SQL);
         }
-        
-        
     }
 
  
@@ -183,10 +184,13 @@ public class Validations {
     }
 
     public void valModificarEmpresa(String email, String representante, String direccion, String cp, String ciudad, String comunidad_autonoma, String pagina_web, String codigo) throws ComandaException{
+        if (gestor.getComercial().getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         valEmail(email);
         valCP(cp);
         try{
-            Empresa empresa = new Empresa(email, representante, direccion, Integer.parseInt(cp), ciudad, comunidad_autonoma, pagina_web, codigo);
+            Empresa empresa = new Empresa(email, representante, direccion, CastData.toInt(cp), ciudad, comunidad_autonoma, pagina_web, codigo);
             gestor.modificarEmpresa(empresa);
         }catch(SQLException e){
             System.out.println(e.getMessage());

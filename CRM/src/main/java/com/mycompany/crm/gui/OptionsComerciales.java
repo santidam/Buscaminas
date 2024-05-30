@@ -407,6 +407,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
 
     private void agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar1ActionPerformed
         try {
+
             Map<String,Comercial> newlist =  Validations.getInstance().valBusquedaEmpleado(dni.getText(),nombre.getText(), apellidos.getText(),comision.getText(), new Date(incorporacion.getDate().getTime()));
             clear();
             loadData(newlist);

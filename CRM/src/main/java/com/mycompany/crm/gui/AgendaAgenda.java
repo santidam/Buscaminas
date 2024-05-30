@@ -206,7 +206,7 @@ public class AgendaAgenda extends java.awt.Dialog {
                     this.acuerdo.setText(p.getAcuerdos());
                 }
                 if (e instanceof Visita p) {
-                    this.telefono.setText(p.getDireccion());
+                    this.telefono.setText(p.getEmpresa().getPhoneNumber());
                     this.acuerdo.setText(p.getAcuerdos());
                     this.direccion.setText(p.getDireccion());
                 }

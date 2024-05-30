@@ -28,7 +28,7 @@ public class CrmDAO {
             "CP LIKE ? AND " +
             "ciudad LIKE ? AND " +
             "comunidad_autonoma LIKE ? AND " +
-            "pagina_web LIKE ?";
+            "pagina_web LIKE ? ORDER BY codigo";
 
         PreparedStatement ps = c.prepareStatement(sql);
         
@@ -63,7 +63,7 @@ public class CrmDAO {
     public LinkedHashMap<String, Comercial> buscarEmpleados(Comercial comercial, String comision) throws SQLException, ComandaException {
         LinkedHashMap<String, Comercial> comerciales = new LinkedHashMap<>();
         Connection c = conectar();
-        String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ?";
+        String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ? ORDER BY codigo";
         PreparedStatement ps = c.prepareStatement(sql);
         if (comercial.getFechaIncorporacion()!=null) {
             ps.setString(5, "%" + comercial.getFechaIncorporacion() + "%");
@@ -74,7 +74,6 @@ public class CrmDAO {
         ps.setString(2, "%" + comercial.getNombre() + "%");
         ps.setString(3, "%" + comercial.getApellidos() + "%");
         ps.setString(4, "%" + comision + "%");
-        ps.setString(5, "%" + comercial.getFechaIncorporacion() + "%");
 
         ResultSet rs = ps.executeQuery();
         boolean tieneResultados = false;
@@ -494,7 +493,7 @@ public class CrmDAO {
     //CONNECTION
 
     private Connection conectar() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/crm2";
+        String url = "jdbc:mysql://localhost:3306/crm";
         String user = "root";
         String pass = "";
         Connection c = DriverManager.getConnection(url, user, pass);

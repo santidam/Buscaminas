@@ -35,7 +35,7 @@ public class ComandaException  extends Exception{
     public static final int ERROR_COMISION_FORMATO = 26;
     public static final int ERROR_RANGO_FECHAINCORPORACION = 27;
     public static final int ERROR_LONGITUD_100 = 28;
-    public static final int ERROR_LONGITUD_50 = 29;
+    public static final int ERROR_LONGITUD_9 = 29;
     public static final int ERROR_LONGITUD_60 = 30;
     public static final int ERROR_NUM_ENTERO = 31;
 
@@ -76,8 +76,8 @@ public class ComandaException  extends Exception{
             "ERROR: LA COMISIÓN DEBE SER UN NÚMERO ENTERO ENTRE 0 Y 10 (AMBOS INCLUIDOS)",
             "ERROR: LA FECHA NO PUEDE SER ANTERIOR A 1900 NI POSTERIOR A LA ACTUAL",
             "ERROR: EL EMAIL NO PUEDE TENER MÁS DE 100 CARÁCTERES",
-            "ERROR: EL TELÉFONO NO PUEDE TENER MÁS DE 50 CARÁCTERES",
-            "ERROR: EL TELÉFONO NO PUEDE TENER MÁS DE 60 CARÁCTERES",
+            "ERROR: EL TELÉFONO NO PUEDE TENER MÁS DE 9 CARÁCTERES",
+            "ERROR: LA DIRECCION NO PUEDE TENER MÁS DE 60 CARÁCTERES",
             "ERROR: DEBES INTRODUCIR UN NÚMERO ENTERO"
     );
 

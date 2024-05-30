@@ -191,6 +191,7 @@ public class AgendaAgenda extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        clearText();
         int linea = tabla.getSelectedRow();
         if (linea!=-1) {
             String codigo = (String)model.getValueAt(linea, 0);
@@ -207,6 +208,7 @@ public class AgendaAgenda extends java.awt.Dialog {
                 if (e instanceof Visita p) {
                     this.telefono.setText(p.getDireccion());
                     this.acuerdo.setText(p.getAcuerdos());
+                    this.direccion.setText(p.getDireccion());
                 }
                 if (e instanceof Email m) {
                     this.email.setText(m.getEmail());

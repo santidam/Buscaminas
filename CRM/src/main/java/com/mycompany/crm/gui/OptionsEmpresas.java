@@ -428,23 +428,21 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
-        int fila = tabla.getSelectedRow();
-        String valor = tabla.getModel().getValueAt(fila, 0).toString();
-        Empresa empresa = lista.get(valor);
+     
         if (this.empresa.getText().isEmpty() || contacto.getText().isEmpty() || email.getText().isEmpty() || telefono.getText().isEmpty() || direccion.getText().isEmpty() || cp.getText().isEmpty() || ciudad.getText().isEmpty() || comunidad.getText().isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }else{
             try{
-            if(empresa!=null){
                 Validations.getInstance().valModificarEmpresa(email.getText(), contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText(), codigo.getText());
                 clear();
                 loadData(loadListaEmpresas());
                 javax.swing.JOptionPane.showMessageDialog(this, "Cliente modificado correctamente","Modificar Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            }
+            
             clearText();
         }catch(ComandaException e){
-            System.out.println(e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, e,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
         }
         }   
         

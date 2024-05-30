@@ -22,6 +22,14 @@ public class AgendaVisita extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
     }
+    public void clearText(){
+        numero.setText("");
+        descripcion.setText("");
+        direccion.setText("");
+        date.setDate(null);
+        acuerdos.setText("");
+         
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -133,7 +141,7 @@ public class AgendaVisita extends java.awt.Dialog {
             try {
             Validations.getInstance().valRegistrarVisita(numero.getText(), descripcion.getText(), new Date(date.getDate().getTime()), direccion.getText(), acuerdos.getText());
             javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-
+            clearText();
             } catch (ComandaException ex) {
                 javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
             }

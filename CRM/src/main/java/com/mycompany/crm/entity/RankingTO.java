@@ -16,6 +16,15 @@ public class RankingTO {
     int accionEmail;
     int accionVisita;
 
+    public RankingTO(int accionLlamada, int accionEmail, int accionVisita) {
+        this.accionLlamada = accionLlamada;
+        this.accionEmail = accionEmail;
+        this.accionVisita = accionVisita;
+        this.accionesTotales = accionEmail+accionLlamada+accionVisita;
+    }
+
+    
+
     public RankingTO(Comercial comercial, int accionesTotales) {
         this.comercial = comercial;
         this.accionesTotales = accionesTotales;

@@ -22,6 +22,14 @@ public class AgendaEmail extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
     }
+    public void clearText(){
+        email.setText("");
+        desc.setText("");
+        esPromocion.setSelected(false);
+        fecha.setDate(null);
+        
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,7 +146,7 @@ public class AgendaEmail extends java.awt.Dialog {
             }
             Validations.getInstance().valAccionEmail(email.getText(), desc.getText(), promocion,new Date(fecha.getDate().getTime()));
             JOptionPane.showMessageDialog(this, "Email registrado correctamente", "Accion Email", JOptionPane.INFORMATION_MESSAGE);
-            
+            clearText();
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
         }

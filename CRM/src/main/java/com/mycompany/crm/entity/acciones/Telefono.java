@@ -8,7 +8,6 @@ import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 
 import java.util.Date;
-import java.util.HashSet;
 
 public class Telefono extends Hablado{
 
@@ -16,8 +15,8 @@ public class Telefono extends Hablado{
 
     public Telefono(Date fecha, Comercial comercial, String descripcion, String acuerdos, String numTelef) throws ComandaException {
         super(fecha,comercial, descripcion, acuerdos);
-        if(numTelef.length() > 12){
-            throw new ComandaException(ComandaException.ERROR_LONGITUD_12);
+        if(numTelef.length() > 50){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_50);
         }
         this.numTelef = numTelef;
     }

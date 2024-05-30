@@ -78,11 +78,15 @@ public class Gestor {
 
     //BUSCAR
     public LinkedHashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
-        String nuevaCp = "";
+        String nuevaCp="";
+        int num;
         if(cp.equalsIgnoreCase("")){
-            nuevaCp = "0";
+            nuevaCp = "1";
+            num = CastData.toInt(nuevaCp);
+        }else{
+            num = CastData.toInt(cp);
         }
-        Empresa empresa = new Empresa(phoneNumber, nombre, email, representante, direccion, CastData.toInt(nuevaCp), ciudad, comunidadAutonoma, paginaWeb);
+        Empresa empresa = new Empresa(nombre,  email, phoneNumber, representante, direccion, num, ciudad, comunidadAutonoma, paginaWeb);
         return crmDAO.buscarEmpresas(empresa, cp);
     }
     public LinkedHashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, Date incorporacion) throws SQLException, ComandaException {
@@ -113,6 +117,10 @@ public class Gestor {
     //UPDATE
     public void modificarEmpresa(Empresa empresa) throws ComandaException, SQLException{
         crmDAO.modificarEmpresa(empresa);
+    }
+
+    public void modificarEmpleado(Comercial comercial) throws ComandaException, SQLException{
+        crmDAO.modificarComercial(comercial);
     }
 
     public Comercial getComercial() {

@@ -380,8 +380,16 @@ public class OptionsComerciales extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }else{
-            
-           
+            try{
+                Validations.getInstance().valModificarEmpleado(dni.getText(), comision.getText());
+                clear();
+                loadData(loadListaComerciales());
+                javax.swing.JOptionPane.showMessageDialog(this, "Empleado modificado correctamente","Modificar Empleado",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                clearText();
+            }catch(ComandaException e){
+                javax.swing.JOptionPane.showMessageDialog(this, e, "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+
         }
         
     }//GEN-LAST:event_modificarActionPerformed

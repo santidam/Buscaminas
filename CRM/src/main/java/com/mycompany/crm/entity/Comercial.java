@@ -52,6 +52,14 @@ public class Comercial {
         this.dni = dni;
         this.nombre = nombre;
     }
+    public Comercial(String dni, int porcentajeComision) throws ComandaException{
+        if(porcentajeComision < 0 || porcentajeComision > 10){
+            throw new ComandaException(ComandaException.ERROR_COMISION_FORMATO);
+        }
+        this.dni = dni;
+        this.porcentajeComision = porcentajeComision;
+    }
+
     
 
     public String getDni() {

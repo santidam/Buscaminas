@@ -210,6 +210,22 @@ public class CrmDAO {
 
     }
 
+    public void modificarComercial(Comercial comercial) throws SQLException, ComandaException{
+        if(!existeEmpresaByCodigo(comercial.getDni())){
+            throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
+        }
+
+        Connection c = conectar();
+        String query = "UPDATE comercial SET porcentaje_comisicon = ? WHERE dni = ?";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setInt(1, comercial.getPorcentajeComision());
+        ps.setString(2, comercial.getDni());
+        ps.executeUpdate();
+        ps.close();
+        desconectar(c);
+    }
+
+
     //RANKING
     public Map<String,RankingTO> getRanking() throws SQLException, ComandaException{
         Connection c = conectar();

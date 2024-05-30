@@ -52,7 +52,16 @@ public class Empresa {
         this.pagina_web = pagina_web;
     }
 
-    public Empresa(String email, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String pagina_web, String codigo){
+    public Empresa(String email, String representante, String direccion, int cp, String ciudad, String comunidad_autonoma, String pagina_web, String codigo) throws ComandaException{
+        if(email.length() > 45 || representante.length() > 45 || ciudad.length() > 45 || comunidad_autonoma.length() > 45){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_45);
+        }
+        if(direccion.length() > 65){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_65);
+        }
+        if(pagina_web.length() > 255){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_255);
+        }
         this.email = email;
         this.representante = representante;
         this.direccion = direccion;

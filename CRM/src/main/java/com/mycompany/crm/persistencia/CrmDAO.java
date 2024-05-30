@@ -288,7 +288,7 @@ public class CrmDAO {
         Statement st = c.createStatement();
         LinkedHashMap<String,Comercial> comerciales = new LinkedHashMap<>();
         Comercial comercial = null;
-        String query = "SELECT * FROM comercial";
+        String query = "SELECT * FROM comercial ORDER BY codigo";
         ResultSet rs = st.executeQuery(query);
         boolean hayContenido = rs.next();
         if(!hayContenido){
@@ -311,7 +311,7 @@ public class CrmDAO {
         LinkedHashMap<String,Empresa> empresas = new LinkedHashMap<>();
         Statement st = c.createStatement();
         Empresa emp = null;
-        String query = "SELECT * FROM empresa";
+        String query = "SELECT * FROM empresa ORDER BY codigo";
         ResultSet rs = st.executeQuery(query);
         boolean hayContenido = rs.next();
         if(!hayContenido){

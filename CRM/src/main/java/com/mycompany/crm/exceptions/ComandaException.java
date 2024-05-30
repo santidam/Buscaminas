@@ -31,8 +31,10 @@ public class ComandaException  extends Exception{
     public static final int ERROR_LONGITUD_45 = 22;
     public static final int ERROR_LONGITUD_65 = 23;
     public static final int ERROR_LONGITUD_255 = 24;
-   
-   private final List<String> mensajes = Arrays.asList (
+    public static final int ERROR_ELIMANAR_CON_ACCIONES = 25;
+
+
+    private final List<String> mensajes = Arrays.asList (
            "ERROR: EL FORMATO DEL DNI DEBE SER '12345678X'",
            "ERROR: NUMERO DE TELEFONO INVALIDO",
            "ERROR: CORREO INVALIDO",
@@ -55,9 +57,10 @@ public class ComandaException  extends Exception{
            "ERROR: DEBE INDICAR UNA FECHA",
            "ERROR: HA OCURRIDO UN ERROR CON LA BASE DE DATOS",
            "ERROR: NO DISPONES DE LOS PERMISOS NECESARIOS PARA REALIZAR ESTA ACCION",
-           "ERROR: EL NOMBRE, EMAIL, CIUDAD, COMUNIDAD AUTÓNOMA, REPRESENTANTE 45 CARÁCTERES",
+           "ERROR: EL NOMBRE, EMAIL, CIUDAD, COMUNIDAD AUTÓNOMA, REPRESENTANTE NO PUEDE TENER MÁS DE 45 CARÁCTERES",
            "ERROR: LA DIRECCIÓN NO PUEDE TENER MÁS DE 65 CARÁCTERES",
-           "ERROR: LA PÁGINA WEB NO PUEDE TENER MÁS DE 255 CARÁCTERES"
+           "ERROR: LA PÁGINA WEB NO PUEDE TENER MÁS DE 255 CARÁCTERES",
+           "ERROR: NO SE PUEDE BORRAR UN CLIENTE O EMPLEADO QUE TENGA ALGUNA ACCION EN EL HISTORIAL"
    );
 
     private final int code;

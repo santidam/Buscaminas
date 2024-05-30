@@ -39,12 +39,14 @@ public class Validations {
         }
         return v;
     }
-    public boolean valLogin(String dni, String password) throws ComandaException, SQLException{
-//        if (!password.equals("1234")) {
-//            System.out.println("ERROR ContraseÃ±a");
-//            throw new ComandaException(ComandaException.ERROR_CONTRASEÑA);
-//        }
-        return gestor.login(dni,password);
+    public boolean valLogin(String dni, String password) throws ComandaException, SQLException{     
+        try{
+            return gestor.login(dni,password);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
+        }
+        
 
     }
 
@@ -84,8 +86,10 @@ public class Validations {
             gestor.registrarEmail(email, desc, fecha, esPromocion);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
         }
     }
+
     public void valBajaEmpleado(String dni) throws ComandaException {
         try{
             gestor.bajaEmpleado(dni);
@@ -93,24 +97,34 @@ public class Validations {
             System.out.println(e.getMessage());
             throw new ComandaException(ComandaException.ERROR_SQL);
         }
+
     }
     public void valBajaEmpresa(String numero) throws ComandaException{
         try{
             gestor.bajaEmpresa(numero);
         }catch(SQLException e){
             System.out.println(e.getMessage());
-            throw new ComandaException(ComandaException.ERROR_SQL);
+            throw new ComandaException(ComandaException.ERROR_ELIMANAR_CON_ACCIONES);
         }
 
     }
     public Map<String, Empresa> valBusquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
-       
         return gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
     }
     public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException{
-       
-        return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
+
+       try{
+            return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
+        }
+        
+        
     }
+
+ 
+
 
     public LinkedHashMap<String,Empresa> valClientesList() throws ComandaException {
         LinkedHashMap<String,Empresa> empresas = new LinkedHashMap<>();
@@ -332,22 +346,20 @@ public class Validations {
         }
     }
     public boolean valCP(String cp) throws ComandaException {
-         boolean esCorrecto = true;
-        if(cp.length() == 5) {
+        boolean esCorrecto = true;
+        if (cp.length()> 0 & cp.length() <= 5) {
             for (int i = 0; i < cp.length(); i++) {
                 if (!Character.isDigit(cp.charAt(i))) {
-                    System.out.println("El codgio postal introducido no es valido");
+
                     esCorrecto = false;
                     throw new ComandaException(ComandaException.ERROR_CP);
                 }
             }
-       }else{
+        } else {
             System.out.println("El codgio postal introducido no es valido");
             esCorrecto = false;
             throw new ComandaException(ComandaException.ERROR_CP);
         }
         return esCorrecto;
     }
-
-    
 }

@@ -15,8 +15,8 @@ public class Telefono extends Hablado{
 
     public Telefono(Date fecha, Comercial comercial, String descripcion, String acuerdos, String numTelef) throws ComandaException {
         super(fecha,comercial, descripcion, acuerdos);
-        if(numTelef.length() > 50){
-            throw new ComandaException(ComandaException.ERROR_LONGITUD_50);
+        if(numTelef.length()!=9){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_9);
         }
         this.numTelef = numTelef;
     }

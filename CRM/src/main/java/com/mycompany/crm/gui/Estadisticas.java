@@ -9,13 +9,17 @@ import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;;
+import java.awt.Dimension;import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.RingPlot;
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -29,6 +33,8 @@ public class Estadisticas extends javax.swing.JPanel {
     private Map<String,RankingTO> lista;
     private JFreeChart chart;
     private JFreeChart chart2;
+    private Timer timer;
+    private double rotationAngle = 0.0;
     
     public Estadisticas() {
         initComponents();
@@ -73,7 +79,7 @@ public class Estadisticas extends javax.swing.JPanel {
         datos.setValue("Email", t.getAccionEmail());
         
         JFreeChart graphic = ChartFactory.createRingChart(
-        "Estadisticas de acciones individuales",
+        "Estadisticas de acciones de "+t.getComercial().getNombre(),
          datos,
          true,
          true,
@@ -92,12 +98,17 @@ public class Estadisticas extends javax.swing.JPanel {
         jPanel2.setLayout(new BorderLayout());
         jPanel2.add(panel,BorderLayout.NORTH);
         
+       
+        
         
         jPanel2.removeAll(); 
         jPanel2.setLayout(new BorderLayout());
         jPanel2.add(panel, BorderLayout.NORTH);
         jPanel2.revalidate(); 
-        jPanel2.repaint();   
+        jPanel2.repaint();
+        
+         girar(plot);
+//        plot.setStartAngle(rotationAngle);
     }
      public void loadGraphicGeneral(RankingTO t){
         DefaultPieDataset datos = new DefaultPieDataset();
@@ -120,6 +131,9 @@ public class Estadisticas extends javax.swing.JPanel {
         panel.setMouseWheelEnabled(true);
         panel.setPreferredSize(new Dimension(300,250));
         
+        PiePlot plot = (PiePlot) chart2.getPlot();
+        plot.setBackgroundPaint(Color.WHITE);
+        
 //        RingPlot plot = (RingPlot) chart2.getPlot();
 //        plot.setBackgroundPaint(Color.WHITE);
          
@@ -131,8 +145,29 @@ public class Estadisticas extends javax.swing.JPanel {
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(panel, BorderLayout.NORTH);
         jPanel1.revalidate(); 
-        jPanel1.repaint();   
+        jPanel1.repaint();  
+        
+         girar(plot);
+        
     }
+     public void girar(PiePlot p ){
+         if (timer!=null) {
+             timer.stop();
+         }
+         timer = new Timer (100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               rotationAngle += 2.5;
+               p.setStartAngle(rotationAngle);
+                if (chart2!=null) {
+                    PiePlot plot2 = (PiePlot) chart2.getPlot();
+                    plot2.setStartAngle(rotationAngle);
+                }
+               
+            }
+         });
+         timer.start();
+     }
      
     
     

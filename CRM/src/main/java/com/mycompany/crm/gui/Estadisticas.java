@@ -79,7 +79,7 @@ public class Estadisticas extends javax.swing.JPanel {
         datos.setValue("Email", t.getAccionEmail());
         
         JFreeChart graphic = ChartFactory.createRingChart(
-        "Estadisticas de acciones individuales",
+        "Estadisticas de acciones de "+t.getComercial().getNombre(),
          datos,
          true,
          true,
@@ -107,6 +107,7 @@ public class Estadisticas extends javax.swing.JPanel {
         jPanel2.revalidate(); 
         jPanel2.repaint();
         
+         girar(plot);
 //        plot.setStartAngle(rotationAngle);
     }
      public void loadGraphicGeneral(RankingTO t){
@@ -144,8 +145,12 @@ public class Estadisticas extends javax.swing.JPanel {
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(panel, BorderLayout.NORTH);
         jPanel1.revalidate(); 
-        jPanel1.repaint();   
+        jPanel1.repaint();  
         
+         girar(plot);
+        
+    }
+     public void girar(PiePlot p ){
          if (timer!=null) {
              timer.stop();
          }
@@ -153,7 +158,7 @@ public class Estadisticas extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                rotationAngle += 2.5;
-               plot.setStartAngle(rotationAngle);
+               p.setStartAngle(rotationAngle);
                 if (chart2!=null) {
                     PiePlot plot2 = (PiePlot) chart2.getPlot();
                     plot2.setStartAngle(rotationAngle);
@@ -162,7 +167,7 @@ public class Estadisticas extends javax.swing.JPanel {
             }
          });
          timer.start();
-    }
+     }
      
     
     

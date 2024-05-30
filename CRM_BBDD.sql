@@ -1,15 +1,15 @@
 CREATE DATABASE  IF NOT EXISTS `crm` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `crm`;
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
 --
--- Host: localhost    Database: crm
+-- Host: 127.0.0.1    Database: crm
 -- ------------------------------------------------------
--- Server version	5.5.5-10.4.32-MariaDB
+-- Server version	10.4.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,7 +23,7 @@ USE `crm`;
 
 DROP TABLE IF EXISTS `accion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `accion` (
   `accion_id` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` varchar(20) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `accion` (
   KEY `fk_empresa_idx` (`empresa`),
   CONSTRAINT `fk_comercial` FOREIGN KEY (`comercial`) REFERENCES `comercial` (`dni`) ON UPDATE CASCADE,
   CONSTRAINT `fk_empresa` FOREIGN KEY (`empresa`) REFERENCES `empresa` (`phone_number`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `accion` (
 
 LOCK TABLES `accion` WRITE;
 /*!40000 ALTER TABLE `accion` DISABLE KEYS */;
-INSERT INTO `accion` VALUES (1,'visita','2024-05-28','prueba','admin','111222333'),(2,'email','2024-05-29','em','admin','111222333'),(3,'visita','2024-05-30','pruebaEliminar','admin','666777888'),(4,'visita','2024-05-23','prueba','admin','999999999');
+INSERT INTO `accion` VALUES (1,'visita','2024-05-28','prueba','admin','111222333'),(2,'email','2024-05-29','em','admin','111222333'),(3,'visita','2024-05-30','pruebaEliminar','admin','666777888'),(4,'visita','2024-05-23','prueba','admin','999999999'),(5,'visita','2024-05-01','Venta','78945612p','601996497'),(6,'visita','2024-05-01','Compra','78945612p','601996497'),(7,'telefono','2024-05-01','1','78945612p','601996497'),(8,'telefono','1999-05-01','2','78945612p','601996497'),(9,'email','2024-05-01','1','78945612p','600398340'),(10,'visita','2024-05-01','1','12345678z','600439316'),(11,'visita','2024-05-02','1','12345678z','600439316'),(12,'telefono','2024-05-01','1','12345678z','600439316'),(13,'email','2024-05-01','1','12345678z','000000000'),(14,'visita','2024-05-01','1','11111111p','600398340'),(15,'visita','2024-05-01','1','11111111p','600398340'),(16,'visita','2024-05-03','1','14235678u','000000000'),(17,'visita','2024-05-03','1','46528793t','600439316');
 /*!40000 ALTER TABLE `accion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +55,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `accion_email`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `accion_email` (
   `accionId` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE `accion_email` (
 
 LOCK TABLES `accion_email` WRITE;
 /*!40000 ALTER TABLE `accion_email` DISABLE KEYS */;
-INSERT INTO `accion_email` VALUES (2,'vampyr@gmail.com',0);
+INSERT INTO `accion_email` VALUES (2,'vampyr@gmail.com',0),(9,'labecaina@biada.net',0),(13,'ofipack.sefed@gmail.com',1);
 /*!40000 ALTER TABLE `accion_email` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +81,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `accion_telefono`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `accion_telefono` (
   `accionId` int(11) NOT NULL,
   `numero_telefono` varchar(12) NOT NULL,
@@ -97,6 +97,7 @@ CREATE TABLE `accion_telefono` (
 
 LOCK TABLES `accion_telefono` WRITE;
 /*!40000 ALTER TABLE `accion_telefono` DISABLE KEYS */;
+INSERT INTO `accion_telefono` VALUES (7,'601996497',''),(8,'601996497','2'),(12,'600439316','');
 /*!40000 ALTER TABLE `accion_telefono` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,7 +107,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `accion_visita`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `accion_visita` (
   `accionId` int(11) NOT NULL,
   `direccion` varchar(60) NOT NULL,
@@ -122,7 +123,7 @@ CREATE TABLE `accion_visita` (
 
 LOCK TABLES `accion_visita` WRITE;
 /*!40000 ALTER TABLE `accion_visita` DISABLE KEYS */;
-INSERT INTO `accion_visita` VALUES (1,'asdf','laldsf'),(3,'asf','asdf'),(4,'Calm Belt','nada');
+INSERT INTO `accion_visita` VALUES (1,'asdf','laldsf'),(3,'asf','asdf'),(4,'Calm Belt','nada'),(5,'Calle falsa 123',''),(6,'Calle falsa 123',''),(10,'1',''),(11,'1',''),(14,'1',''),(15,'1',''),(16,'1',''),(17,'1','');
 /*!40000 ALTER TABLE `accion_visita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +133,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `comercial`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comercial` (
   `dni` varchar(20) NOT NULL,
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
@@ -162,7 +163,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `empresa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `empresa` (
   `phone_number` varchar(50) NOT NULL,
   `nombre` varchar(45) NOT NULL,
@@ -193,6 +194,8 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'crm'
 --
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `borrar_prefijo_telefono` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -200,8 +203,6 @@ UNLOCK TABLES;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `borrar_prefijo_telefono`()
 BEGIN
@@ -216,8 +217,8 @@ BEGIN
     if done then
 		leave borrar_loop;
 	end if;
-    UPDATE empresa SET phone_number = REPLACE(phone_number, '+34', '');
-    UPDATE empresa SET phone_number = REPLACE(phone_number, ' ', '');
+    UPDATE empresa SET phone_number = REPLACE(REPLACE(phone_number, '+34', ''), ' ', '') WHERE phone_number = nuevoTel;
+    
     end loop;
     close borrar_cursor; 
 
@@ -227,6 +228,8 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `borrar_telefonos_Longitud_erronea` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -234,8 +237,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `borrar_telefonos_Longitud_erronea`()
 BEGIN
@@ -263,42 +264,8 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `new_procedure` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `new_procedure`()
-BEGIN
-DECLARE done INT DEFAULT 0;
-    DECLARE nuevoTel VARCHAR(50);
-    DECLARE borrar_cursor CURSOR FOR SELECT phone_number from empresa;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-
-    
-    open borrar_cursor;
-    borrar_loop: LOOP
-    FETCH borrar_cursor INTO nuevoTel;
-    if done then
-		leave borrar_loop;
-	end if;
-    If LENGTH(nuevoTel) != 9 THEN
-		DELETE FROM empresa WHERE phone_number = nuevoTel;
-	END IF;
-    end loop;
-    close borrar_cursor; 
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `registrar_accion` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -306,8 +273,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `registrar_accion`(IN tipo VARCHAR(20), IN fecha DATE, IN descripcion VARCHAR(255), IN comercial VARCHAR(20), IN phone VARCHAR(50), out id int)
 BEGIN
@@ -319,6 +284,8 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `registrar_accion_email` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -326,8 +293,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `registrar_accion_email`(IN tipo VARCHAR(20), IN fecha DATE, IN descripcion VARCHAR(255), IN comercial VARCHAR(20), IN phone VARCHAR(50), IN email VARCHAR(100), IN esPromocion TINYINT(1))
 BEGIN
@@ -352,6 +317,8 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `registrar_accion_llamada` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -359,8 +326,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `registrar_accion_llamada`(IN tipo VARCHAR(20), IN fecha DATE, IN descripcion VARCHAR(255), IN comercial VARCHAR(20), IN phone VARCHAR(50), IN acuerdos VARCHAR(255))
 BEGIN
@@ -383,6 +348,8 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `registrar_accion_visita` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -390,8 +357,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `registrar_accion_visita`(IN tipo VARCHAR(20), IN fecha DATE, IN descripcion VARCHAR(255), IN comercial VARCHAR(20), IN phone VARCHAR(50), IN acuerdos VARCHAR(255), IN direccion varchar(60))
 BEGIN
@@ -424,4 +389,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-31  0:11:31
+-- Dump completed on 2024-05-31  1:22:29

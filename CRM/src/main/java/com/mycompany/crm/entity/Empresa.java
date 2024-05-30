@@ -42,9 +42,7 @@ public class Empresa {
         if(cp < 0){
             throw new ComandaException(ComandaException.ERROR_CP);
         }
-        if (phoneNumber.length()!=9) {
-            throw new ComandaException(ComandaException.ERROR_LONGITUD_9);
-        }
+        
 
         this.nombre = nombre;
         this.email = email;

@@ -65,17 +65,13 @@ public class Validations {
         }
     }
 
-    public void valAltaEmpleado(String dni, String name, String apellidos, String porcentajeComision, String fechaIncorporacion) throws ComandaException{
+    public void valAltaEmpleado(String dni, String name, String apellidos, String porcentajeComision, Date fechaIncorporacion) throws ComandaException{
+        if (gestor.getComercial().getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         valDni(dni);
-        valName(name, "nombre");
-        valName(apellidos, "apellido");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         try{
-            Date sqlDate = new java.sql.Date(dateFormat.parse(fechaIncorporacion).getTime());
-            gestor.altaEmpleado(dni, name,apellidos, Integer.parseInt(porcentajeComision), sqlDate);
-
-        }catch(ParseException e){
-            System.out.println("No se puede modificar"); // Añadir excepcion formato fecha incorrecto
+            gestor.altaEmpleado(dni, name, apellidos, CastData.toInt(porcentajeComision), fechaIncorporacion);
         } catch (SQLException ex) {
             throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
@@ -108,13 +104,20 @@ public class Validations {
         }
 
     }
-    public Map<String, Empresa> valBusquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
-        return gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
+    public Map<String, Empresa> valBusquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws ComandaException{
+        LinkedHashMap<String,Empresa> empresa = new LinkedHashMap<>();
+        try{
+            empresa = gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
+        }
+        return empresa;
     }
-    public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException{
+    public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, Date incorporacion) throws SQLException, ComandaException{
 
        try{
-            return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
+            return gestor.busquedaEmpleado( dni, nombre,  apellidos,  CastData.toInt(comision),  incorporacion);
         }catch(SQLException e){
             System.out.println(e.getMessage());
             throw new ComandaException(ComandaException.ERROR_SQL);

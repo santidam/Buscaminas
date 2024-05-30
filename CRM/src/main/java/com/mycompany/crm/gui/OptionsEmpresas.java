@@ -470,7 +470,7 @@ public class OptionsEmpresas extends javax.swing.JPanel {
             clearText();
             javax.swing.JOptionPane.showMessageDialog(this, "Buscando clientes","Clientes",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (ComandaException | SQLException ex) {
+        } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }  

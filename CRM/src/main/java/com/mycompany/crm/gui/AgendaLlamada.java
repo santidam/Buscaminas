@@ -133,7 +133,7 @@ public class AgendaLlamada extends java.awt.Dialog {
         }else{
             try {
             Validations.getInstance().valRegistrarLlamada(numero.getText(), descripcion.getText(), new Date(fecha.getDate().getTime()), acuerdo.getText());
-            javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Acción registrada correctamente","Registrar acción",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             clearText();
             } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);

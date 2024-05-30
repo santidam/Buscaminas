@@ -140,7 +140,7 @@ public class AgendaVisita extends java.awt.Dialog {
         }else{
             try {
             Validations.getInstance().valRegistrarVisita(numero.getText(), descripcion.getText(), new Date(date.getDate().getTime()), direccion.getText(), acuerdos.getText());
-            javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Accion registrada correctamente","Registrar acción",javax.swing.JOptionPane.INFORMATION_MESSAGE);
             clearText();
             } catch (ComandaException ex) {
                 javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);

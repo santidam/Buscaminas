@@ -91,10 +91,11 @@ public class Validations {
             throw new ComandaException(ComandaException.ERROR_PERMISOS);
         }
         try{
+            valDni(dni);
             gestor.bajaEmpleado(dni);
         }catch(SQLException e){
             System.out.println(e.getMessage());
-            throw new ComandaException(ComandaException.ERROR_SQL);
+            throw new ComandaException(ComandaException.ERROR_ELIMANAR_CON_ACCIONES);
         }
 
     }
@@ -117,7 +118,7 @@ public class Validations {
         }
         return empresa;
     }
-    public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, Date incorporacion) throws SQLException, ComandaException{
+    public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, Date incorporacion) throws ComandaException{
 
        try{
             return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);

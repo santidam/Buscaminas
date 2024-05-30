@@ -2,6 +2,8 @@ package com.mycompany.crm.entity;
 
 import com.mycompany.crm.exceptions.ComandaException;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class Comercial {
@@ -34,9 +36,11 @@ public class Comercial {
             throw new ComandaException(ComandaException.ERROR_COMISION_FORMATO);
         }
         if (fechaIncorporacion!=null) {
-            if(fechaIncorporacion.before(new Date(1900,1,1))){
+            LocalDate fecha = LocalDate.of(2000, 1, 1);
+            Date date = Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            if(fechaIncorporacion.before(date)){
                 
-            throw new ComandaException(ComandaException.ERROR_RANGO_FECHAINCORPORACION);
+                throw new ComandaException(ComandaException.ERROR_RANGO_FECHAINCORPORACION);
             }
         
         }

@@ -74,8 +74,6 @@ public class CrmDAO {
         ps.setString(2, "%" + comercial.getNombre() + "%");
         ps.setString(3, "%" + comercial.getApellidos() + "%");
         ps.setString(4, "%" + comision + "%");
-        ps.setString(5, "%" + comercial.getFechaIncorporacion() + "%");
-
         ResultSet rs = ps.executeQuery();
         boolean tieneResultados = false;
         while (rs.next()) {
@@ -211,12 +209,12 @@ public class CrmDAO {
     }
 
     public void modificarComercial(Comercial comercial) throws SQLException, ComandaException{
-        if(!existeEmpresaByCodigo(comercial.getDni())){
+        if(!existeComercial(comercial.getDni())){
             throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
         }
 
         Connection c = conectar();
-        String query = "UPDATE comercial SET porcentaje_comisicon = ? WHERE dni = ?";
+        String query = "UPDATE comercial SET porcentaje_comision = ? WHERE dni = ?";
         PreparedStatement ps = c.prepareStatement(query);
         ps.setInt(1, comercial.getPorcentajeComision());
         ps.setString(2, comercial.getDni());
@@ -421,7 +419,7 @@ public class CrmDAO {
 
     public void deleteEmpresa(String phoneNumber) throws SQLException, ComandaException{
         if (!existeEmpresa(phoneNumber)) {
-            throw new ComandaException(ComandaException.ERROR_TEL);
+            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
         }
         Connection c = conectar();
         String query = "Delete from empresa where phone_number = '"+phoneNumber+"'";
@@ -478,15 +476,16 @@ public class CrmDAO {
 
     private boolean existeComercial(String dni) throws SQLException{
         Connection c = conectar();
-        Statement st = c.createStatement();
-        String query = "select * from comercial where dni = '" + dni + "';";
-        ResultSet rs = st.executeQuery(query);
+        String query = "select * from comercial where dni = ?";
+        PreparedStatement ps = c.prepareStatement(query);
+        ps.setString(1, dni);
+        ResultSet rs = ps.executeQuery();
         boolean existe = false;
         if (rs.next()) {
             existe = true;
         }
         rs.close();
-        st.close();
+        ps.close();
         desconectar(c);
         return existe;
     }
@@ -494,7 +493,7 @@ public class CrmDAO {
     //CONNECTION
 
     private Connection conectar() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/crm2";
+        String url = "jdbc:mysql://localhost:3306/crm";
         String user = "root";
         String pass = "";
         Connection c = DriverManager.getConnection(url, user, pass);

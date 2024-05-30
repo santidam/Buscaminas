@@ -54,7 +54,6 @@ public class LoginFrame extends javax.swing.JFrame {
         exitBtn = new javax.swing.JPanel();
         exitText = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
-        btnPrueba = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -219,14 +218,6 @@ public class LoginFrame extends javax.swing.JFrame {
 
         bg.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 40));
 
-        btnPrueba.setText("Click Me");
-        btnPrueba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPruebaActionPerformed(evt);
-            }
-        });
-        bg.add(btnPrueba, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, -1, -1));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -343,15 +334,6 @@ public class LoginFrame extends javax.swing.JFrame {
         exitText.setForeground(Color.black);
     }//GEN-LAST:event_exitTextMouseExited
 
-    private void btnPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPruebaActionPerformed
-                MenuPrincipal m = new MenuPrincipal();
-                m.setSize(810, 461);
-                m.setLocationRelativeTo(null);
-                m.setVisible(true);
-                this.dispose();
-        
-    }//GEN-LAST:event_btnPruebaActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -394,7 +376,6 @@ public class LoginFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
-    private javax.swing.JButton btnPrueba;
     private javax.swing.JPanel exitBtn;
     private javax.swing.JLabel exitText;
     private javax.swing.JLabel fondo;

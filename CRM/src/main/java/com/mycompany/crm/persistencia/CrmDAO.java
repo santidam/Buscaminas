@@ -31,7 +31,7 @@ public class CrmDAO {
             "pagina_web LIKE ?";
 
         PreparedStatement ps = c.prepareStatement(sql);
-
+        
         ps.setString(1, "%" + empresa.getPhoneNumber() + "%");
         ps.setString(2, "%" + empresa.getNombre() + "%");
         ps.setString(3, "%" + empresa.getEmail() + "%");
@@ -65,6 +65,11 @@ public class CrmDAO {
         Connection c = conectar();
         String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ?";
         PreparedStatement ps = c.prepareStatement(sql);
+        if (comercial.getFechaIncorporacion()!=null) {
+            ps.setString(5, "%" + comercial.getFechaIncorporacion() + "%");
+        }else{
+            ps.setString(5, "%" + "" + "%");
+        }
         ps.setString(1, "%" + comercial.getDni() + "%");
         ps.setString(2, "%" + comercial.getNombre() + "%");
         ps.setString(3, "%" + comercial.getApellidos() + "%");
@@ -473,7 +478,7 @@ public class CrmDAO {
     //CONNECTION
 
     private Connection conectar() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/crm";
+        String url = "jdbc:mysql://localhost:3306/crm2";
         String user = "root";
         String pass = "";
         Connection c = DriverManager.getConnection(url, user, pass);

@@ -8,6 +8,7 @@ import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -85,7 +86,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
         nombre.setText("");
         apellidos.setText("");
         comision.setText("");
-        incorporacion.setText("");
+        incorporacion.setDate(new Date(1999, 1, 1));
     }
 
     /**
@@ -355,12 +356,12 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getText().isEmpty()) {
+        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getDate() == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }else{
             try {
-            Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(),apellidos.getText(),comision.getText(), incorporacion.getText());
+            Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(),apellidos.getText(),comision.getText(), new Date(incorporacion.getDate().getTime()));
             clear();
             loadData(loadListaComerciales());
             clearText();
@@ -375,7 +376,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
-        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getText().isEmpty()) {
+        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getDateFormatString().isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }else{
@@ -396,7 +397,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
                 this.nombre.setText(e.getNombre());
                 this.apellidos.setText(e.getApellidos());
                 this.comision.setText(""+e.getPorcentajeComision());
-                this.incorporacion.setText(""+e.getFechaIncorporacion());
+                this.incorporacion.setDate(e.getFechaIncorporacion());
             }
             
             
@@ -406,7 +407,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
 
     private void agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar1ActionPerformed
         try {
-            Map<String,Comercial> newlist =  Validations.getInstance().valBusquedaEmpleado(dni.getText(),nombre.getText(), apellidos.getText(),comision.getText(), incorporacion.getText());
+            Map<String,Comercial> newlist =  Validations.getInstance().valBusquedaEmpleado(dni.getText(),nombre.getText(), apellidos.getText(),comision.getText(), new Date(incorporacion.getDate().getTime()));
             clear();
             loadData(newlist);
             clearText();

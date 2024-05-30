@@ -32,6 +32,7 @@ public class ComandaException  extends Exception{
     public static final int ERROR_LONGITUD_65 = 23;
     public static final int ERROR_LONGITUD_255 = 24;
     public static final int ERROR_ELIMANAR_CON_ACCIONES = 25;
+    public static final int ERROR_COMISION_FORMATO = 26;
 
 
     private final List<String> mensajes = Arrays.asList (
@@ -60,7 +61,8 @@ public class ComandaException  extends Exception{
            "ERROR: EL NOMBRE, EMAIL, CIUDAD, COMUNIDAD AUTÓNOMA, REPRESENTANTE NO PUEDE TENER MÁS DE 45 CARÁCTERES",
            "ERROR: LA DIRECCIÓN NO PUEDE TENER MÁS DE 65 CARÁCTERES",
            "ERROR: LA PÁGINA WEB NO PUEDE TENER MÁS DE 255 CARÁCTERES",
-           "ERROR: NO SE PUEDE BORRAR UN CLIENTE O EMPLEADO QUE TENGA ALGUNA ACCION EN EL HISTORIAL"
+           "ERROR: NO SE PUEDE BORRAR UN CLIENTE O EMPLEADO QUE TENGA ALGUNA ACCION EN EL HISTORIAL",
+            "ERROR: LA COMISIÓN DEBE SER UN NÚMERO ENTERO"
    );
 
     private final int code;

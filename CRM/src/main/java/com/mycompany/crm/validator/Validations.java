@@ -66,6 +66,9 @@ public class Validations {
     }
 
     public void valAltaEmpleado(String dni, String name, String apellidos, String porcentajeComision, Date fechaIncorporacion) throws ComandaException{
+        if (gestor.getComercial().getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         valDni(dni);
         try{
             gestor.altaEmpleado(dni, name, apellidos, CastData.toInt(porcentajeComision), fechaIncorporacion);
@@ -111,10 +114,10 @@ public class Validations {
         }
         return empresa;
     }
-    public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException{
+    public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, Date incorporacion) throws SQLException, ComandaException{
 
        try{
-            return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
+            return gestor.busquedaEmpleado( dni, nombre,  apellidos,  CastData.toInt(comision),  incorporacion);
         }catch(SQLException e){
             System.out.println(e.getMessage());
             throw new ComandaException(ComandaException.ERROR_SQL);

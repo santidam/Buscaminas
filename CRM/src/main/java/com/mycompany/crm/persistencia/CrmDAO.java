@@ -60,16 +60,16 @@ public class CrmDAO {
         return empresas;
 
     }
-    public LinkedHashMap<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
+    public LinkedHashMap<String, Comercial> buscarEmpleados(Comercial comercial) throws SQLException, ComandaException {
         LinkedHashMap<String, Comercial> comerciales = new LinkedHashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ?";
         PreparedStatement ps = c.prepareStatement(sql);
-        ps.setString(1, "%" + dni + "%");
-        ps.setString(2, "%" + nombre + "%");
-        ps.setString(3, "%" + apellidos + "%");
-        ps.setString(4, "%" + comision + "%");
-        ps.setString(5, "%" + incorporacion + "%");
+        ps.setString(1, "%" + comercial.getDni() + "%");
+        ps.setString(2, "%" + comercial.getNombre() + "%");
+        ps.setString(3, "%" + comercial.getApellidos() + "%");
+        ps.setString(4, "%" + comercial.getPorcentajeComision() + "%");
+        ps.setString(5, "%" + comercial.getFechaIncorporacion() + "%");
 
         ResultSet rs = ps.executeQuery();
         boolean tieneResultados = false;

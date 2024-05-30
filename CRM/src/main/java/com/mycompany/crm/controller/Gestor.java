@@ -47,9 +47,7 @@ public class Gestor {
     }
 
     public void altaEmpleado(String dni, String name, String apellidos, int porcentajeComision, Date fechaIncorporacion) throws ComandaException, SQLException {
-        if (this.comercial.getCodigo()!=1) {
-            throw new ComandaException(ComandaException.ERROR_PERMISOS);
-        }
+
         Comercial comercial = new Comercial(dni, name, apellidos, porcentajeComision, fechaIncorporacion);
         crmDAO.insertarComercial(comercial);
     }
@@ -84,8 +82,9 @@ public class Gestor {
     public LinkedHashMap<String,Empresa> busquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
         return crmDAO.buscarEmpresas(phoneNumber, nombre, email, representante, direccion, cp, ciudad, comunidadAutonoma, paginaWeb);
     }
-    public LinkedHashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
-        return crmDAO.buscarEmpleados(dni, nombre, apellidos, comision, incorporacion);
+    public LinkedHashMap<String, Comercial> busquedaEmpleado(String dni, String nombre, String apellidos, int comision, Date incorporacion) throws SQLException, ComandaException {
+        Comercial comercial = new Comercial(dni, nombre, apellidos, comision, incorporacion);
+        return crmDAO.buscarEmpleados(comercial);
     }
 
     //LISTAR
@@ -110,5 +109,9 @@ public class Gestor {
             throw new ComandaException(ComandaException.ERROR_PERMISOS);
         }
         crmDAO.modificarEmpresa(empresa);
+    }
+
+    public Comercial getComercial() {
+        return comercial;
     }
 }

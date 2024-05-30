@@ -7,6 +7,7 @@ package com.mycompany.crm.entity.acciones;
 
 import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.entity.Empresa;
+import com.mycompany.crm.exceptions.ComandaException;
 
 import java.util.Date;
 
@@ -18,8 +19,14 @@ public class Accion {
     private int codigo;
     private String tipo;
 
-    public Accion(Date date, Comercial comercial, String descripcion) {
-        this.fecha = date;
+    public Accion(Date fecha, Comercial comercial, String descripcion) throws ComandaException{
+        if(descripcion.length() > 255){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_255);
+        }
+        if(fecha.before(new Date(1900,1,1)) && fecha.after(new Date())){
+            throw new ComandaException(ComandaException.ERROR_RANGO_FECHAINCORPORACION);
+        }
+        this.fecha = fecha;
         this.comercial = comercial;
         this.descripcion = descripcion;
     }

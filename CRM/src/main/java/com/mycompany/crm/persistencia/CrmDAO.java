@@ -358,7 +358,7 @@ public class CrmDAO {
         return acciones;
     }
 
-    private Accion getAccion(int accionId, String tipo, Comercial comercial) throws SQLException{
+    private Accion getAccion(int accionId, String tipo, Comercial comercial) throws SQLException, ComandaException{
         Connection c = conectar();
         Accion accion = null;
         String query = "SELECT * FROM accion as a\n"+

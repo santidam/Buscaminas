@@ -1,5 +1,7 @@
 package com.mycompany.crm.entity;
 
+import com.mycompany.crm.exceptions.ComandaException;
+
 import java.util.Date;
 
 public class Comercial {
@@ -24,7 +26,16 @@ public class Comercial {
         this.fechaIncorporacion = fechaIncorporacion;
         this.contrasenya = contrasenya;
     }
-    public Comercial(String dni, String nombre, String apellidos, int porcentajeComision, Date fechaIncorporacion) {
+    public Comercial(String dni, String nombre, String apellidos, int porcentajeComision, Date fechaIncorporacion) throws ComandaException {
+        if(nombre.length() > 45 || apellidos.length() > 45){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_45);
+        }
+        if(porcentajeComision < 0 || porcentajeComision > 10){
+            throw new ComandaException(ComandaException.ERROR_COMISION_FORMATO);
+        }
+        if(fechaIncorporacion.before(new Date(1900,1,1)) && fechaIncorporacion.after(new Date())){
+            throw new ComandaException(ComandaException.ERROR_RANGO_FECHAINCORPORACION);
+        }
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;

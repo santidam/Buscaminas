@@ -52,33 +52,26 @@ public class Validations {
 
     public void valAltaCliente(String nombre, String email, String phoneNumber, String representante, String direccion, String cp, String ciudad, String comunidad_autonoma, String pagina_web) throws ComandaException {
         if (valPhone(phoneNumber)) {
-                if (valName(nombre, "nombre")) {
-                    if (valName(representante, "apellido")) {
-                        if (valEmail(email)) {
-                            if (valCP(cp)) {
-                                try{
-                                    gestor.altaEmpresa(nombre, email, phoneNumber, representante, direccion, CastData.toInt(cp), ciudad, comunidad_autonoma, pagina_web);
-                                }catch(SQLException e){
-                                    System.out.println(e.getMessage());
-                                }
-                            }
-                        }
+            if (valEmail(email)) {
+                if (valCP(cp)) {
+                    try{
+                        gestor.altaEmpresa(nombre, email, phoneNumber, representante, direccion, CastData.toInt(cp), ciudad, comunidad_autonoma, pagina_web);
+                    }catch(SQLException e){
+                        System.out.println(e.getMessage());
+                        throw new ComandaException(ComandaException.ERROR_SQL);
                     }
                 }
             }
+        }
     }
 
-    public void valAltaEmpleado(String dni, String name, String apellidos, String porcentajeComision, String fechaIncorporacion) throws ComandaException{
+    public void valAltaEmpleado(String dni, String name, String apellidos, String porcentajeComision, Date fechaIncorporacion) throws ComandaException{
+        if (gestor.getComercial().getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         valDni(dni);
-        valName(name, "nombre");
-        valName(apellidos, "apellido");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         try{
-            Date sqlDate = new java.sql.Date(dateFormat.parse(fechaIncorporacion).getTime());
-            gestor.altaEmpleado(dni, name,apellidos, Integer.parseInt(porcentajeComision), sqlDate);
-
-        }catch(ParseException e){
-            System.out.println("No se puede modificar"); // Añadir excepcion formato fecha incorrecto
+            gestor.altaEmpleado(dni, name, apellidos, CastData.toInt(porcentajeComision), fechaIncorporacion);
         } catch (SQLException ex) {
             throw new ComandaException(ComandaException.EMPLEADO_EXISTE);
         }
@@ -92,39 +85,50 @@ public class Validations {
             throw new ComandaException(ComandaException.ERROR_SQL);
         }
     }
-    public void valBajaEmpleado(String dni) throws ComandaException, SQLException {
-        
+
+    public void valBajaEmpleado(String dni) throws ComandaException {
+        if (gestor.getComercial().getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         try{
             gestor.bajaEmpleado(dni);
         }catch(SQLException e){
             System.out.println(e.getMessage());
             throw new ComandaException(ComandaException.ERROR_SQL);
         }
-        
-        
-        
+
     }
-    public void valBajaEmpresa(String numero) throws ComandaException, SQLException {
-        
-        gestor.bajaEmpresa(numero);
-        
+    public void valBajaEmpresa(String numero) throws ComandaException{
+        try{
+            gestor.bajaEmpresa(numero);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_ELIMANAR_CON_ACCIONES);
+        }
+
     }
-    public Map<String, Empresa> valBusquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException{
-       
-        return gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
+    public Map<String, Empresa> valBusquedaEmpresa(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws ComandaException{
+        LinkedHashMap<String,Empresa> empresa = new LinkedHashMap<>();
+        try{
+            empresa = gestor.busquedaEmpresa( phoneNumber, nombre,  email,  representante,  direccion,  cp,  ciudad,  comunidadAutonoma,  paginaWeb);
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            throw new ComandaException(ComandaException.ERROR_SQL);
+        }
+        return empresa;
     }
-    public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException{
+    public Map<String, Comercial> valBusquedaEmpleado(String dni, String nombre, String apellidos, String comision, Date incorporacion) throws SQLException, ComandaException{
+
        try{
             return gestor.busquedaEmpleado( dni, nombre,  apellidos,  comision,  incorporacion);
         }catch(SQLException e){
             System.out.println(e.getMessage());
             throw new ComandaException(ComandaException.ERROR_SQL);
         }
-        
-        
     }
 
  
+
 
     public LinkedHashMap<String,Empresa> valClientesList() throws ComandaException {
         LinkedHashMap<String,Empresa> empresas = new LinkedHashMap<>();
@@ -184,10 +188,13 @@ public class Validations {
     }
 
     public void valModificarEmpresa(String email, String representante, String direccion, String cp, String ciudad, String comunidad_autonoma, String pagina_web, String codigo) throws ComandaException{
+        if (gestor.getComercial().getCodigo()!=1) {
+            throw new ComandaException(ComandaException.ERROR_PERMISOS);
+        }
         valEmail(email);
         valCP(cp);
         try{
-            Empresa empresa = new Empresa(email, representante, direccion, Integer.parseInt(cp), ciudad, comunidad_autonoma, pagina_web, codigo);
+            Empresa empresa = new Empresa(email, representante, direccion, CastData.toInt(cp), ciudad, comunidad_autonoma, pagina_web, codigo);
             gestor.modificarEmpresa(empresa);
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -205,16 +212,6 @@ public class Validations {
         return empleados;
     }
 
-    public boolean valLength(int argsLength,int lengthEsperada) throws ComandaException {
-        boolean Validacion = false;
-        if (argsLength == lengthEsperada){
-            Validacion = true;
-        } else {
-            System.out.println("ERROR. El número de argumentos es incorrecto.");
-            throw new ComandaException(ComandaException.ARGS_INCORRECTOS);
-        }
-        return Validacion;
-    }
     public boolean valPhone(String tel)throws ComandaException{
         //TODO Valentina
         boolean esCorrecto = true;
@@ -360,22 +357,20 @@ public class Validations {
         }
     }
     public boolean valCP(String cp) throws ComandaException {
-         boolean esCorrecto = true;
-        if(cp.length() == 5) {
+        boolean esCorrecto = true;
+        if (cp.length()> 0 & cp.length() <= 5) {
             for (int i = 0; i < cp.length(); i++) {
                 if (!Character.isDigit(cp.charAt(i))) {
-                    System.out.println("El codgio postal introducido no es valido");
+
                     esCorrecto = false;
                     throw new ComandaException(ComandaException.ERROR_CP);
                 }
             }
-       }else{
+        } else {
             System.out.println("El codgio postal introducido no es valido");
             esCorrecto = false;
             throw new ComandaException(ComandaException.ERROR_CP);
         }
         return esCorrecto;
     }
-
-    
 }

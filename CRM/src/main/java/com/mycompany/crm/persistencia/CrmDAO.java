@@ -16,7 +16,7 @@ import java.util.*;
 public class CrmDAO {
 
     //BUSCAR
-    public LinkedHashMap<String, Empresa> buscarEmpresas(String phoneNumber, String nombre, String email, String representante, String direccion, String cp, String ciudad, String comunidadAutonoma, String paginaWeb) throws SQLException, ComandaException {
+    public LinkedHashMap<String, Empresa> buscarEmpresas(Empresa empresa, String cp) throws SQLException, ComandaException {
         LinkedHashMap<String, Empresa> empresas = new LinkedHashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM empresa WHERE " +
@@ -32,15 +32,15 @@ public class CrmDAO {
 
         PreparedStatement ps = c.prepareStatement(sql);
 
-        ps.setString(1, "%" + phoneNumber + "%");
-        ps.setString(2, "%" + nombre + "%");
-        ps.setString(3, "%" + email + "%");
-        ps.setString(4, "%" + representante + "%");
-        ps.setString(5, "%" + direccion + "%");
+        ps.setString(1, "%" + empresa.getPhoneNumber() + "%");
+        ps.setString(2, "%" + empresa.getNombre() + "%");
+        ps.setString(3, "%" + empresa.getEmail() + "%");
+        ps.setString(4, "%" + empresa.getRepresentante() + "%");
+        ps.setString(5, "%" + empresa.getDireccion() + "%");
         ps.setString(6, "%" + cp + "%");
-        ps.setString(7, "%" + ciudad + "%");
-        ps.setString(8, "%" + comunidadAutonoma + "%");
-        ps.setString(9, "%" + paginaWeb + "%");
+        ps.setString(7, "%" + empresa.getCiudad() + "%");
+        ps.setString(8, "%" + empresa.getComunidad_autonoma() + "%");
+        ps.setString(9, "%" + empresa.getPagina_web() + "%");
 
 
         ResultSet rs = ps.executeQuery();
@@ -60,16 +60,16 @@ public class CrmDAO {
         return empresas;
 
     }
-    public LinkedHashMap<String, Comercial> buscarEmpleados(String dni, String nombre, String apellidos, String comision, String incorporacion) throws SQLException, ComandaException {
+    public LinkedHashMap<String, Comercial> buscarEmpleados(Comercial comercial, String comision) throws SQLException, ComandaException {
         LinkedHashMap<String, Comercial> comerciales = new LinkedHashMap<>();
         Connection c = conectar();
         String sql = "SELECT * FROM comercial WHERE dni LIKE ? AND nombre LIKE ? AND apellidos LIKE ? AND porcentaje_comision LIKE ? AND fecha_incorporacion LIKE ?";
         PreparedStatement ps = c.prepareStatement(sql);
-        ps.setString(1, "%" + dni + "%");
-        ps.setString(2, "%" + nombre + "%");
-        ps.setString(3, "%" + apellidos + "%");
+        ps.setString(1, "%" + comercial.getDni() + "%");
+        ps.setString(2, "%" + comercial.getNombre() + "%");
+        ps.setString(3, "%" + comercial.getApellidos() + "%");
         ps.setString(4, "%" + comision + "%");
-        ps.setString(5, "%" + incorporacion + "%");
+        ps.setString(5, "%" + comercial.getFechaIncorporacion() + "%");
 
         ResultSet rs = ps.executeQuery();
         boolean tieneResultados = false;
@@ -288,7 +288,7 @@ public class CrmDAO {
         Statement st = c.createStatement();
         LinkedHashMap<String,Comercial> comerciales = new LinkedHashMap<>();
         Comercial comercial = null;
-        String query = "SELECT * FROM comercial";
+        String query = "SELECT * FROM comercial ORDER BY codigo";
         ResultSet rs = st.executeQuery(query);
         boolean hayContenido = rs.next();
         if(!hayContenido){
@@ -311,7 +311,7 @@ public class CrmDAO {
         LinkedHashMap<String,Empresa> empresas = new LinkedHashMap<>();
         Statement st = c.createStatement();
         Empresa emp = null;
-        String query = "SELECT * FROM empresa";
+        String query = "SELECT * FROM empresa ORDER BY codigo";
         ResultSet rs = st.executeQuery(query);
         boolean hayContenido = rs.next();
         if(!hayContenido){
@@ -358,7 +358,7 @@ public class CrmDAO {
         return acciones;
     }
 
-    private Accion getAccion(int accionId, String tipo, Comercial comercial) throws SQLException{
+    private Accion getAccion(int accionId, String tipo, Comercial comercial) throws SQLException, ComandaException{
         Connection c = conectar();
         Accion accion = null;
         String query = "SELECT * FROM accion as a\n"+
@@ -377,9 +377,10 @@ public class CrmDAO {
             }
         }
         return accion;
+
     }
 
-    public Empresa getEmpresaByEmail(String email) throws SQLException{
+    public Empresa getEmpresaByEmail(String email) throws SQLException, ComandaException{
         Connection c = conectar();
         String query = "select * from empresa where email = ?";
         PreparedStatement ps = c.prepareStatement(query);
@@ -399,7 +400,7 @@ public class CrmDAO {
 
     public void deleteEmpresa(String phoneNumber) throws SQLException, ComandaException{
         if (!existeEmpresa(phoneNumber)) {
-            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+            throw new ComandaException(ComandaException.ERROR_TEL);
         }
         Connection c = conectar();
         String query = "Delete from empresa where phone_number = '"+phoneNumber+"'";
@@ -417,7 +418,7 @@ public class CrmDAO {
         String query = "Delete from comercial where dni = ?";
         PreparedStatement ps = c.prepareStatement(query);
         ps.setString(1, dni);
-        ps.executeQuery();
+        ps.executeUpdate();
         ps.close();
         c.close();
     }
@@ -472,7 +473,7 @@ public class CrmDAO {
     //CONNECTION
 
     private Connection conectar() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/crm2";
+        String url = "jdbc:mysql://localhost:3306/crm";
         String user = "root";
         String pass = "";
         Connection c = DriverManager.getConnection(url, user, pass);

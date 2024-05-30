@@ -387,8 +387,6 @@ public class OptionsEmpresas extends javax.swing.JPanel {
 
         } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch(SQLException ex){
-            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: Una empresa con acciones en el historial no puede ser eliminada","ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_eliminarActionPerformed
@@ -403,48 +401,45 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        
-        if (empresa.getText().isEmpty() || contacto.getText().isEmpty() || email.getText().isEmpty() || telefono.getText().isEmpty() || direccion.getText().isEmpty() || cp.getText().isEmpty() || ciudad.getText().isEmpty() || comunidad.getText().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
-        }else{          
-            try {
-                
-            Validations.getInstance().valAltaCliente(empresa.getText(), email.getText(),telefono.getText(),contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText());
-            clear();
-            loadData(loadListaEmpresas());
-            clearText();
-            javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente","Alta Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (ComandaException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+            if (empresa.getText().isEmpty() || contacto.getText().isEmpty() || email.getText().isEmpty() || telefono.getText().isEmpty() || direccion.getText().isEmpty() || cp.getText().isEmpty() || ciudad.getText().isEmpty() || comunidad.getText().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)", "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
 
-        }
-        }
-        
-        
-        
+            } else {
+                try {
+                    Validations.getInstance().valAltaCliente(empresa.getText(), email.getText(), telefono.getText(), contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText());
+                    clear();
+                    loadData(loadListaEmpresas());
+                    clearText();
+                    javax.swing.JOptionPane.showMessageDialog(this, "Cliente registrado correctamente", "Alta Cliente", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (ComandaException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(this, ex, "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            }
         
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
-     
-        if (this.empresa.getText().isEmpty() || contacto.getText().isEmpty() || email.getText().isEmpty() || telefono.getText().isEmpty() || direccion.getText().isEmpty() || cp.getText().isEmpty() || ciudad.getText().isEmpty() || comunidad.getText().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
-        }else{
-            try{
-                Validations.getInstance().valModificarEmpresa(email.getText(), contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText(), codigo.getText());
-                clear();
-                loadData(loadListaEmpresas());
-                javax.swing.JOptionPane.showMessageDialog(this, "Cliente modificado correctamente","Modificar Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            
-            clearText();
-        }catch(ComandaException e){
-            javax.swing.JOptionPane.showMessageDialog(this, e,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+            if (this.empresa.getText().isEmpty() || contacto.getText().isEmpty() || email.getText().isEmpty() || telefono.getText().isEmpty() || direccion.getText().isEmpty() || cp.getText().isEmpty() || ciudad.getText().isEmpty() || comunidad.getText().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+            }else{
+                try{
+                    Validations.getInstance().valModificarEmpresa(email.getText(), contacto.getText(), direccion.getText(), cp.getText(), ciudad.getText(), comunidad.getText(), web.getText(), codigo.getText());
+                    clear();
+                    loadData(loadListaEmpresas());
+                    javax.swing.JOptionPane.showMessageDialog(this, "Cliente modificado correctamente","Modificar Cliente",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    clearText();
+                }catch(ComandaException e){
+                    javax.swing.JOptionPane.showMessageDialog(this, e, "ERROR", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
 
         }
-        }   
+
         
 
     }//GEN-LAST:event_modificarActionPerformed
@@ -477,11 +472,12 @@ public class OptionsEmpresas extends javax.swing.JPanel {
             clearText();
             javax.swing.JOptionPane.showMessageDialog(this, "Buscando clientes","Clientes",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (ComandaException | SQLException ex) {
+        } catch (ComandaException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }  
     }//GEN-LAST:event_agregar1ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -519,3 +515,4 @@ public class OptionsEmpresas extends javax.swing.JPanel {
     private javax.swing.JTextField web;
     // End of variables declaration//GEN-END:variables
 }
+

@@ -28,8 +28,23 @@ public class ComandaException  extends Exception{
    public static final int ERROR_FECHA = 19;
     public static final int ERROR_SQL = 20;
    public static final int ERROR_PERMISOS = 21;
-   
-   private final List<String> mensajes = Arrays.asList (
+    public static final int ERROR_LONGITUD_45 = 22;
+    public static final int ERROR_LONGITUD_65 = 23;
+    public static final int ERROR_LONGITUD_255 = 24;
+    public static final int ERROR_ELIMANAR_CON_ACCIONES = 25;
+    public static final int ERROR_COMISION_FORMATO = 26;
+    public static final int ERROR_RANGO_FECHAINCORPORACION = 27;
+    public static final int ERROR_LONGITUD_100 = 28;
+    public static final int ERROR_LONGITUD_12 = 29;
+    public static final int ERROR_LONGITUD_60 = 30;
+
+
+
+
+
+
+
+    private final List<String> mensajes = Arrays.asList (
            "ERROR: EL FORMATO DEL DNI DEBE SER '12345678X'",
            "ERROR: NUMERO DE TELEFONO INVALIDO",
            "ERROR: CORREO INVALIDO",
@@ -51,8 +66,17 @@ public class ComandaException  extends Exception{
            "ERROR: CODIGO POSTAL INVALIDO",
            "ERROR: DEBE INDICAR UNA FECHA",
            "ERROR: HA OCURRIDO UN ERROR CON LA BASE DE DATOS",
-           "ERROR: NO DISPONES DE LOS PERMISOS NECESARIOS PARA REALIZAR ESTA ACCION"
-   );
+           "ERROR: NO DISPONES DE LOS PERMISOS NECESARIOS PARA REALIZAR ESTA ACCION",
+           "ERROR: EL NOMBRE, EMAIL, CIUDAD, COMUNIDAD AUTÓNOMA, REPRESENTANTE NO PUEDE TENER MÁS DE 45 CARÁCTERES",
+           "ERROR: LA DIRECCIÓN NO PUEDE TENER MÁS DE 65 CARÁCTERES",
+           "ERROR: LA PÁGINA WEB Y LA DESCRIPCION NO PUEDE TENER MÁS DE 255 CARÁCTERES",
+           "ERROR: NO SE PUEDE BORRAR UN CLIENTE O EMPLEADO QUE TENGA ALGUNA ACCION EN EL HISTORIAL",
+            "ERROR: LA COMISIÓN DEBE SER UN NÚMERO ENTERO ENTRE 0 Y 10 (AMBOS INCLUIDOS)",
+            "ERROR: LA FECHA NO PUEDE SER ANTERIOR A 1900 NI POSTERIOR A LA ACTUAL",
+            "ERROR: EL EMAIL NO PUEDE TENER MÁS DE 100 CARÁCTERES",
+            "ERROR: EL TELÉFONO NO PUEDE TENER MÁS DE 12 CARÁCTERES",
+            "ERROR: EL TELÉFONO NO PUEDE TENER MÁS DE 60 CARÁCTERES"
+    );
 
     private final int code;
 

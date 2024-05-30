@@ -8,6 +8,7 @@ import com.mycompany.crm.entity.Comercial;
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import java.awt.Dialog;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -85,7 +86,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
         nombre.setText("");
         apellidos.setText("");
         comision.setText("");
-        incorporacion.setText("");
+        incorporacion.setDate(null);
     }
 
     /**
@@ -113,7 +114,6 @@ public class OptionsComerciales extends javax.swing.JPanel {
         nombre = new javax.swing.JTextField();
         comision = new javax.swing.JTextField();
         apellidos = new javax.swing.JTextField();
-        incorporacion = new javax.swing.JTextField();
         agregar = new javax.swing.JButton();
         modificar = new javax.swing.JButton();
         limpiar = new javax.swing.JButton();
@@ -121,6 +121,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         agregar1 = new javax.swing.JButton();
+        incorporacion = new com.toedter.calendar.JDateChooser();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,9 +164,9 @@ public class OptionsComerciales extends javax.swing.JPanel {
         codigo.setEditable(false);
         codigo.setEnabled(false);
 
-        incorporacion.addActionListener(new java.awt.event.ActionListener() {
+        apellidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                incorporacionActionPerformed(evt);
+                apellidosActionPerformed(evt);
             }
         });
 
@@ -269,12 +270,12 @@ public class OptionsComerciales extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(eliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addComponent(limpiar))
-                    .addComponent(incorporacion, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
                     .addComponent(apellidos, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dni, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(63, 63, 63))
+                    .addComponent(dni, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(incorporacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -307,21 +308,25 @@ public class OptionsComerciales extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(comision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(incorporacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(modificar)
-                    .addComponent(eliminar)
-                    .addComponent(limpiar)
-                    .addComponent(agregar1)
-                    .addComponent(agregar))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(comision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(modificar)
+                            .addComponent(eliminar)
+                            .addComponent(limpiar)
+                            .addComponent(agregar1)
+                            .addComponent(agregar))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(incorporacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -340,17 +345,10 @@ public class OptionsComerciales extends javax.swing.JPanel {
         } catch (ComandaException  ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
-        } catch(SQLException ex){
-            javax.swing.JOptionPane.showMessageDialog(this, "ERROR: Una comercial con acciones en el historial no puede ser eliminada","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
-
         }
         }
         
     }//GEN-LAST:event_eliminarActionPerformed
-
-    private void incorporacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incorporacionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_incorporacionActionPerformed
 
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
 //        clear();
@@ -358,12 +356,12 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getText().isEmpty()) {
+        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getDate() == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }else{
-             try {
-            Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(),apellidos.getText(),comision.getText(), incorporacion.getText());
+            try {
+            Validations.getInstance().valAltaEmpleado(dni.getText(), nombre.getText(),apellidos.getText(),comision.getText(), new Date(incorporacion.getDate().getTime()));
             clear();
             loadData(loadListaComerciales());
             clearText();
@@ -378,7 +376,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
     }//GEN-LAST:event_agregarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
-        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getText().isEmpty()) {
+        if (this.dni.getText().isEmpty() || nombre.getText().isEmpty() || apellidos.getText().isEmpty() || comision.getText().isEmpty() || incorporacion.getDateFormatString().isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "ERROR: TODOS LOS CAMPOS OBLIGATORIOS DEBEN ESTAR COMPLETOS (*)","ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
 
         }else{
@@ -399,7 +397,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
                 this.nombre.setText(e.getNombre());
                 this.apellidos.setText(e.getApellidos());
                 this.comision.setText(""+e.getPorcentajeComision());
-                this.incorporacion.setText(""+e.getFechaIncorporacion());
+                this.incorporacion.setDate(e.getFechaIncorporacion());
             }
             
             
@@ -409,7 +407,8 @@ public class OptionsComerciales extends javax.swing.JPanel {
 
     private void agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar1ActionPerformed
         try {
-            Map<String,Comercial> newlist =  Validations.getInstance().valBusquedaEmpleado(dni.getText(),nombre.getText(), apellidos.getText(),comision.getText(), incorporacion.getText());
+
+            Map<String,Comercial> newlist =  Validations.getInstance().valBusquedaEmpleado(dni.getText(),nombre.getText(), apellidos.getText(),comision.getText(), new Date(incorporacion.getDate().getTime()));
             clear();
             loadData(newlist);
             clearText();
@@ -421,6 +420,10 @@ public class OptionsComerciales extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_agregar1ActionPerformed
 
+    private void apellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apellidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_apellidosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
@@ -430,7 +433,7 @@ public class OptionsComerciales extends javax.swing.JPanel {
     private javax.swing.JTextField comision;
     private javax.swing.JTextField dni;
     private javax.swing.JButton eliminar;
-    private javax.swing.JTextField incorporacion;
+    private com.toedter.calendar.JDateChooser incorporacion;
     private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

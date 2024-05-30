@@ -5,6 +5,7 @@
 package com.mycompany.crm.entity.acciones;
 
 import com.mycompany.crm.entity.Comercial;
+import com.mycompany.crm.exceptions.ComandaException;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -13,8 +14,11 @@ public class Hablado extends Accion {
 
     private String acuerdos;
 
-    public Hablado(Date fecha, Comercial comercial, String descripcion, String acuerdos) {
+    public Hablado(Date fecha, Comercial comercial, String descripcion, String acuerdos) throws ComandaException {
         super(fecha, comercial, descripcion);
+        if(acuerdos.length() > 255){
+            throw new ComandaException(ComandaException.ERROR_LONGITUD_255);
+        }
         this.acuerdos = acuerdos;
     }
 

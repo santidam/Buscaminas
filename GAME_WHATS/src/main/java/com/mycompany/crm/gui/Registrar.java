@@ -13,7 +13,7 @@ import javax.swing.GroupLayout;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 import org.netbeans.validation.api.ui.swing.ValidationPanel;
-import org.openide.util.Exceptions;
+//import org.openide.util.Exceptions;
 
 /**
  *

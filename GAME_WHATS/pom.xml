@@ -82,38 +82,42 @@
                 <artifactId>postgresql</artifactId>
             <version>42.7.1</version>
         </dependency>
-        <!-- Dependencia para validation-api -->
+    <!-- Dependency for ValidationApi.jar -->
     <dependency>
         <groupId>org.netbeans.validation</groupId>
         <artifactId>validation-api</artifactId>
         <version>1.0</version>
     </dependency>
-    
-    <!-- Dependencia para org-openide-modules -->
+
+    <!-- Dependency for org-openide-modules.jar -->
     <dependency>
-        <groupId>org.netbeans.validation</groupId>
-        <artifactId>org-openide-modules</artifactId>
+        <groupId>org.netbeans.openide</groupId>
+        <artifactId>openide-modules</artifactId>
         <version>1.0</version>
     </dependency>
-    
-    <!-- Dependencia para org-openide-util-lookup -->
+
+    <!-- Dependency for org-openide-util.jar -->
     <dependency>
-        <groupId>org.netbeans.validation</groupId>
-        <artifactId>org-openide-util-lookup</artifactId>
+        <groupId>org.netbeans.openide</groupId>
+        <artifactId>openide-util</artifactId>
         <version>1.0</version>
     </dependency>
-    
-    <!-- Dependencia para org-openide-util-ui -->
+
+    <!-- Dependency for org-openide-util-lookup.jar -->
     <dependency>
-        <groupId>org.netbeans.validation</groupId>
-        <artifactId>org-openide-util-ui</artifactId>
+        <groupId>org.netbeans.openide</groupId>
+        <artifactId>openide-util-lookup</artifactId>
         <version>1.0</version>
     </dependency>
-        <dependency>
-            <groupId>org.netbeans.external</groupId>
-            <artifactId>ValidationAPI</artifactId>
-            <version>RELEASE180</version>
-        </dependency>
+
+    <!-- Dependency for org-openide-util-ui.jar -->
+    <dependency>
+        <groupId>org.netbeans.openide</groupId>
+        <artifactId>openide-util-ui</artifactId>
+        <version>1.0</version>
+    </dependency>
+
+
     </dependencies>
     <name>GAME_WHATS</name>
 </project>

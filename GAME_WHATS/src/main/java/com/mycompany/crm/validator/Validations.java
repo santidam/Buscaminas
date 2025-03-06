@@ -9,7 +9,7 @@ package com.mycompany.crm.validator;
 import com.mycompany.crm.controller.Gestor;
 import com.mycompany.crm.entity.RankingTO;
 import com.mycompany.crm.entity.User;
-import com.mycompany.crm.entity.acciones.Partida;
+import com.mycompany.crm.entity.Partida;
 
 import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.utils.CastData;

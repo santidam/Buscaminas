@@ -27,9 +27,11 @@ public class Registrar extends javax.swing.JDialog {
     public ValidationGroup group;
     public Validations validations = Validations.getInstance();
     
+    
     public Registrar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        nombre.setName("prueba");
        // cambiarIdioma(ListaIdiomas.getItemAt(ListaIdiomas.getSelectedIndex()));
         String idioma = ListaIdiomas.getItemAt(ListaIdiomas.getSelectedIndex());
         Locale.setDefault(new Locale(idioma)); // Cambia a "ca" para catalán
@@ -44,7 +46,7 @@ public class Registrar extends javax.swing.JDialog {
         
         ValidationGroup group = validationPanel1.getValidationGroup();
         group.add(nombre, StringValidators.REQUIRE_NON_EMPTY_STRING,
-                StringValidators.NO_WHITESPACE, StringValidators.EMAIL_ADDRESS);
+                StringValidators.NO_WHITESPACE);
         //group.add(nombre, StringValidators.NO_WHITESPACE);
         //group.add(nombre, StringValidators.EMAIL_ADDRESS);
         group.add(password, StringValidators.REQUIRE_NON_EMPTY_STRING);

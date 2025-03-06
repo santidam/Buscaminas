@@ -1,9 +1,9 @@
 package com.mycompany.crm.persistencia;
 
 
+import com.mycompany.crm.entity.Partida;
 import com.mycompany.crm.entity.RankingTO;
 import com.mycompany.crm.entity.User;
-import com.mycompany.crm.entity.acciones.Partida;
 
 import com.mycompany.crm.exceptions.ComandaException;
 
@@ -41,11 +41,11 @@ public class GameDAO {
     
      public boolean insertarPartida(Partida partida)throws SQLException{
          Connection c = conectar();
-       String query = "INSERT INTO users (id_user, puntuacion, victoria) VALUES(?, ?, ?)";
+       String query = "INSERT INTO scores (id_user, puntuacion, victoria) VALUES(?, ?, ?)";
        PreparedStatement ps = c.prepareStatement(query);
-       ps.setString(1, partida.getUser().getNombre());
-       ps.setString(2, ""+partida.getPuntos());
-       ps.setString(3, ""+partida.isVictoria());
+       ps.setInt(1, partida.getUser().getId());
+       ps.setInt(2, partida.getPuntos());
+       ps.setBoolean(3, partida.isVictoria());
        
         int filasAfectadas = ps.executeUpdate();
         
@@ -108,7 +108,7 @@ public class GameDAO {
         String query = "SELECT * FROM users WHERE nombre = '" + name + "';";
         ResultSet rs = st.executeQuery(query);
         if(rs.next()){
-            user = new User(rs.getString("password"), rs.getString("nombre"));
+            user = new User(rs.getString("password"), rs.getString("nombre"),rs.getInt("id_user"));
         }
         rs.close();
         st.close();

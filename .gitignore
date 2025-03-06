@@ -1,2 +1,4 @@
 /CRM/target/
 /GAME_WHATS/target/
+/GAME_WHATS/POM.xml
+/GAME_WHATS/src/main/java/com/mycompany/crm/persistencia/GameDAO.java

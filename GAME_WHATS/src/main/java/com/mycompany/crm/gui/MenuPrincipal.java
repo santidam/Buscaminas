@@ -236,7 +236,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void listaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaClientesActionPerformed
 //        ListaClientes l = new ListaClientes();
 //        cambiarPanel(l);
-        Jugar p = new Jugar();
+        Jugar p = new Jugar(10,10,10);
         cambiarPanel(p);
 //        p.setSize(663, 566);
 //        p.setLocation(0, 0);

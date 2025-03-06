@@ -12,11 +12,22 @@ public class User {
     
     String nombre;
     String password;
+    int id;
     
     public User(String password, String nombre){
         this.nombre = nombre;
         this.password = password;
     }
+    public User(String password, String nombre, int id){
+        this.nombre = nombre;
+        this.password = password;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+    
 
     public User(String nombre) {
         this.nombre = nombre;

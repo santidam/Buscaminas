@@ -17,6 +17,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import org.apache.logging.log4j.core.osgi.BundleContextSelector;
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.ui.ValidationGroup;
 //import lectorExcel.ExcelLoader;
 
 /**
@@ -28,8 +31,51 @@ public class LoginFrame extends javax.swing.JFrame {
     int xMouse, yMouse;
     public LoginFrame() {
         initComponents();
+        userText.setName("username");
+        passText.setName("password");
+     
+        cambiarIdioma("es");
+        
+        
         
     }
+    
+    
+    
+    private void cambiarIdioma(String idioma) {
+//    Locale.setDefault(new Locale(idioma));
+//    
+//    ResourceBundle bundle = ResourceBundle.getBundle(
+//            "org.netbeans.validation.api.builtin.stringvalidation.Bundle",
+//            Locale.getDefault()
+//    );
+
+    
+    Validations.getInstance().valSetBundle(idioma);
+    ResourceBundle bundle = Validations.getInstance().valGetBundle();
+    
+    System.out.println("Idioma seleccionado: " + Locale.getDefault().getLanguage());
+    System.out.println("Mensaje cargado: " + bundle.getString("MSG_SOME_VALIDATION"));
+    
+    ValidationGroup group1 = validationPanel2.getValidationGroup();
+    ValidationGroup group2 = validationPanel1.getValidationGroup();
+
+    group1.add(userText, StringValidators.REQUIRE_NON_EMPTY_STRING, StringValidators.NO_WHITESPACE);
+    group2.add(passText, StringValidators.REQUIRE_NON_EMPTY_STRING);
+
+    validate();
+    repaint();
+    
+    loginBtnTxt.setText(bundle.getString("BTN_ENTRAR"));
+    loginBtnTxt1.setText(bundle.getString("BTN_REGISTRARSE"));
+    titulo.setText(bundle.getString("LABEL_INICIAR_SERSION"));
+    userLabel.setText(bundle.getString("LABEL_USUARIO"));
+    userLabel1.setText(bundle.getString("LABEL_CONTRASENA"));
+    
+    
+    
+}
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,6 +89,7 @@ public class LoginFrame extends javax.swing.JFrame {
         bg = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         logname = new javax.swing.JLabel();
+        validationPanel1 = new org.netbeans.validation.api.ui.swing.ValidationPanel();
         fondo = new javax.swing.JLabel();
         icono = new javax.swing.JLabel();
         titulo = new javax.swing.JLabel();
@@ -59,6 +106,8 @@ public class LoginFrame extends javax.swing.JFrame {
         header = new javax.swing.JPanel();
         loginBtn1 = new javax.swing.JPanel();
         loginBtnTxt1 = new javax.swing.JLabel();
+        ListaIdiomas = new javax.swing.JComboBox<>();
+        validationPanel2 = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -75,8 +124,11 @@ public class LoginFrame extends javax.swing.JFrame {
         logname.setFont(new java.awt.Font("Roboto Black", 1, 36)); // NOI18N
         logname.setForeground(new java.awt.Color(60, 119, 199));
         logname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logname.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/letrasCRM5.png"))); // NOI18N
-        bg.add(logname, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 250, 330, -1));
+        logname.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/WhatsGames3.png"))); // NOI18N
+        bg.add(logname, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 330, 90));
+
+        validationPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        bg.add(validationPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 320, 40));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo2.jpg"))); // NOI18N
         fondo.setText("jLabel1");
@@ -265,6 +317,24 @@ public class LoginFrame extends javax.swing.JFrame {
 
         bg.add(loginBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 120, 40));
 
+        ListaIdiomas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Castellano", "Catalán", "Francés", "Inglés" }));
+        ListaIdiomas.setAlignmentY(50.0F);
+        ListaIdiomas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        ListaIdiomas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ListaIdiomasItemStateChanged(evt);
+            }
+        });
+        ListaIdiomas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListaIdiomasActionPerformed(evt);
+            }
+        });
+        bg.add(ListaIdiomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 420, 100, 40));
+
+        validationPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        bg.add(validationPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 320, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -339,7 +409,7 @@ public class LoginFrame extends javax.swing.JFrame {
             
         } catch (ComandaException | SQLException ex) {
             System.out.println(ex.getMessage());
-            javax.swing.JOptionPane.showMessageDialog(this, ex ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage() ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginBtnTxtMouseClicked
 
@@ -374,7 +444,9 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void loginBtnTxt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnTxt1MouseClicked
         //registrar
-        Registrar registro = new Registrar(this, true);
+        //Registrar registro = new Registrar(this, true);
+        PruebaRegistro registro = new PruebaRegistro(this, true);
+        
         registro.setVisible(true);
         
     }//GEN-LAST:event_loginBtnTxt1MouseClicked
@@ -390,6 +462,27 @@ public class LoginFrame extends javax.swing.JFrame {
         loginBtn1.setBackground(new Color (100,116,129));
 
     }//GEN-LAST:event_loginBtnTxt1MouseExited
+
+    private void ListaIdiomasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaIdiomasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ListaIdiomasActionPerformed
+
+    private void ListaIdiomasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ListaIdiomasItemStateChanged
+        // TODO add your handling code here:
+       String s =  (String)ListaIdiomas.getSelectedItem();
+       String idioma = "";
+       
+       System.out.println("prueba combo");
+       switch(s){
+           case "Castellano" -> idioma = "es";
+           case "Catalán" -> idioma = "ca";
+           case "Francés" -> idioma = "fr";
+           case "Inglés" -> idioma = "eng";
+       }
+        System.out.println(idioma);
+        cambiarIdioma(idioma);
+        
+    }//GEN-LAST:event_ListaIdiomasItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -407,15 +500,14 @@ public class LoginFrame extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex.getMessage());
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -432,6 +524,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ListaIdiomas;
     private javax.swing.JPanel bg;
     private javax.swing.JPanel exitBtn;
     private javax.swing.JLabel exitText;
@@ -451,5 +544,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel userLabel;
     private javax.swing.JLabel userLabel1;
     private javax.swing.JTextField userText;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel1;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel2;
     // End of variables declaration//GEN-END:variables
 }

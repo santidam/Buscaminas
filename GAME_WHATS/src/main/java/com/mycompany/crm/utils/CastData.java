@@ -16,7 +16,6 @@ public class CastData {
             numEntero = Integer.parseInt(num);
         }catch(NumberFormatException e){
             System.out.println("ERROR. Debes poner un número entero entre [-2147483648, 2147483647]");
-            throw new ComandaException(ComandaException.ERROR_NUM_ENTERO);
         }
         return numEntero;
     }

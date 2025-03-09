@@ -1,6 +1,7 @@
 package com.mycompany.crm.persistencia;
 
 
+import com.mycompany.crm.controller.Gestor;
 import com.mycompany.crm.entity.Partida;
 import com.mycompany.crm.entity.RankingTO;
 import com.mycompany.crm.entity.User;
@@ -15,7 +16,10 @@ public class GameDAO {
 
     //BUSCAR
    
-    
+    private Gestor gestor;
+    public GameDAO(Gestor gestor){
+        this.gestor = gestor;
+    }
 
 
     //INSERTAR/REGISTRAR
@@ -23,7 +27,7 @@ public class GameDAO {
 
    public boolean insertarUsuario(User user) throws SQLException, ComandaException {
         if (existUser(user.getNombre())) {
-            throw new ComandaException(ComandaException.ERROR_USER);
+            throw new ComandaException(gestor.getBundle().getString("ERROR_USUARIO_EXISTE"));
        }
        Connection c = conectar();
        String query = "INSERT INTO users (nombre, password) VALUES(?, ?)";
@@ -100,7 +104,7 @@ public class GameDAO {
 
     public User getUserByUsername(String name) throws SQLException, ComandaException{
         if(!existUser(name)){
-            throw new ComandaException(ComandaException.NOEXISTE_EMPLEADO);
+            throw new ComandaException(gestor.getBundle().getString("ERROR_USUARIO_NO_ENCONTRADO"));
         }
         Connection c = conectar();
         User user = null;
@@ -128,7 +132,7 @@ public class GameDAO {
 
     public void deleteUser(String nameString) throws SQLException, ComandaException{
         if (!existUser(nameString)) {
-            throw new ComandaException(ComandaException.NOEXISTE_CLIENTE);
+            throw new ComandaException(gestor.getBundle().getString("ERROR_USUARIO_INEXISTENTE"));
         }
         Connection c = conectar();
         String query = "Delete from users where nombre = '"+nameString+"'";

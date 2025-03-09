@@ -5,8 +5,11 @@
 package com.mycompany.crm.gui;
 
 //import com.mycompany.crm.gui.*;
+import com.mycompany.crm.validator.Validations;
+import com.mysql.cj.xdevapi.Schema;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.ResourceBundle;
 import javax.swing.JPanel;
 
 /**
@@ -19,9 +22,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
      * Creates new form MenuPrincipal
      */
     int xMouse, yMouse;
+    ResourceBundle bundle;
 
     public MenuPrincipal() {
         initComponents();
+        bundle = Validations.getInstance().valGetBundle();
+        btnJugar.setText(bundle.getString("BTN_PLAY"));
+        btnRanking.setText(bundle.getString("BTN_RANKING"));
+        btnEstadisticas.setText(bundle.getString("BTN_STATS"));
+        btnBorrarCuenta.setText(bundle.getString("BTN_DELETE_ACCOUNT"));
+        cerrarSesionBtn.setText(bundle.getString("BTN_EXIT"));
     }
     public void cambiarPanel(JPanel m){
         m.setSize(630, 460);
@@ -48,12 +58,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         contenido = new javax.swing.JPanel();
         textBienvenida = new javax.swing.JLabel();
         cerrarSesionBtn = new javax.swing.JButton();
-        listaEmpleados = new javax.swing.JButton();
-        listaClientes = new javax.swing.JButton();
+        btnEstadisticas = new javax.swing.JButton();
+        btnJugar = new javax.swing.JButton();
         exitBtn = new javax.swing.JPanel();
         exitText = new javax.swing.JLabel();
-        listaEmpleados1 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnRanking = new javax.swing.JButton();
+        btnBorrarCuenta = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -118,23 +128,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         bg.add(cerrarSesionBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 400, 147, 36));
 
-        listaEmpleados.setText("ESTADÍSTICAS");
-        listaEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        listaEmpleados.addActionListener(new java.awt.event.ActionListener() {
+        btnEstadisticas.setText("ESTADÍSTICAS");
+        btnEstadisticas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEstadisticas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listaEmpleadosActionPerformed(evt);
+                btnEstadisticasActionPerformed(evt);
             }
         });
-        bg.add(listaEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 147, 32));
+        bg.add(btnEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 147, 32));
 
-        listaClientes.setText("JUGAR");
-        listaClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        listaClientes.addActionListener(new java.awt.event.ActionListener() {
+        btnJugar.setText("JUGAR");
+        btnJugar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnJugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listaClientesActionPerformed(evt);
+                btnJugarActionPerformed(evt);
             }
         });
-        bg.add(listaClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 147, 34));
+        bg.add(btnJugar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 147, 34));
 
         exitBtn.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -167,22 +177,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         bg.add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 40));
 
-        listaEmpleados1.setText("RANKING");
-        listaEmpleados1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        listaEmpleados1.addActionListener(new java.awt.event.ActionListener() {
+        btnRanking.setText("RANKING");
+        btnRanking.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRanking.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listaEmpleados1ActionPerformed(evt);
+                btnRankingActionPerformed(evt);
             }
         });
-        bg.add(listaEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 147, 32));
+        bg.add(btnRanking, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 147, 32));
 
-        jButton1.setText("BORRAR CUENTA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrarCuenta.setText("BORRAR CUENTA");
+        btnBorrarCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBorrarCuentaActionPerformed(evt);
             }
         });
-        bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 140, 30));
+        bg.add(btnBorrarCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 140, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo2.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -228,12 +238,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         yMouse = evt.getY();
     }//GEN-LAST:event_headerMousePressed
 
-    private void listaEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaEmpleadosActionPerformed
+    private void btnEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticasActionPerformed
         EstadisticasUser a = new EstadisticasUser();
         cambiarPanel(a);
-    }//GEN-LAST:event_listaEmpleadosActionPerformed
+    }//GEN-LAST:event_btnEstadisticasActionPerformed
 
-    private void listaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaClientesActionPerformed
+    private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
 //        ListaClientes l = new ListaClientes();
 //        cambiarPanel(l);
         Jugar p = new Jugar(10,10,10);
@@ -246,12 +256,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
 //        contenido.add(p,BorderLayout.CENTER);
 //        contenido.revalidate();
 //        contenido.repaint();
-    }//GEN-LAST:event_listaClientesActionPerformed
+    }//GEN-LAST:event_btnJugarActionPerformed
 
-    private void listaEmpleados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaEmpleados1ActionPerformed
+    private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
         Ranking e = new Ranking();
         cambiarPanel(e);
-    }//GEN-LAST:event_listaEmpleados1ActionPerformed
+    }//GEN-LAST:event_btnRankingActionPerformed
 
     private void exitTextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTextMouseExited
         //        exitBtn.setBackground(new Color(0,51,102));
@@ -267,11 +277,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitTextMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBorrarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarCuentaActionPerformed
 
         //Borrar Cuenta
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnBorrarCuentaActionPerformed
 
                                    
 
@@ -281,16 +291,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
+    private javax.swing.JButton btnBorrarCuenta;
+    private javax.swing.JButton btnEstadisticas;
+    private javax.swing.JButton btnJugar;
+    private javax.swing.JButton btnRanking;
     private javax.swing.JButton cerrarSesionBtn;
     private javax.swing.JPanel contenido;
     private javax.swing.JPanel exitBtn;
     private javax.swing.JLabel exitText;
     private javax.swing.JPanel header;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton listaClientes;
-    private javax.swing.JButton listaEmpleados;
-    private javax.swing.JButton listaEmpleados1;
     private javax.swing.JLabel textBienvenida;
     // End of variables declaration//GEN-END:variables
 }

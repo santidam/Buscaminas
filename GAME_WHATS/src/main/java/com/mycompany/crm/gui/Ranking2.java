@@ -41,6 +41,7 @@ public class Ranking2 extends javax.swing.JPanel {
     
     public Ranking2() {
         initComponents();
+        jPanelDemasJugadores.setBackground(Color.white);
         model = (DefaultTableModel) tabla.getModel();
 //        loadData(loadListaRanking());
         
@@ -116,14 +117,14 @@ public class Ranking2 extends javax.swing.JPanel {
             jPanelPrimero.setVisible(true);
             
             NombreP.setText(primerJugador.getUser().getNombre());
-            NumVictoriasP.setText(String.valueOf(primerJugador.getPartidasGanadas()));
-            numPartidasTotP.setText(String.valueOf(primerJugador.getPartidasJugadas()));
+            NumVictoriasP.setText("Wins: " + String.valueOf(primerJugador.getPartidasGanadas()));
+            numPartidasTotP.setText("Total: " + String.valueOf(primerJugador.getPartidasJugadas()) + "");
             
             double winrateP = (primerJugador.getPartidasJugadas() > 0) 
                   ? ((double) primerJugador.getPartidasGanadas() / primerJugador.getPartidasJugadas()) * 100
                   : 0;
     
-            PorcVictoriasP.setText(String.format("%.2f%%", winrateP)); // Mostrar con dos decimales
+            PorcVictoriasP.setText("W/r: " + String.format("%.2f%%", winrateP)); // Mostrar con dos decimales
             
             if (rankingList.size() >= 2) { 
                 RankingTO segundoJugador = rankingList.get(1);
@@ -131,14 +132,14 @@ public class Ranking2 extends javax.swing.JPanel {
                 jPanelSegundo.setVisible(true);
 
                 nombreS.setText(segundoJugador.getUser().getNombre());
-                numVictoriasS.setText(String.valueOf(segundoJugador.getPartidasGanadas()));
-                numPartidasTotS.setText(String.valueOf(segundoJugador.getPartidasJugadas()));
+                numVictoriasS.setText("Wins: " + String.valueOf(segundoJugador.getPartidasGanadas()));
+                numPartidasTotS.setText("Total: " + String.valueOf(segundoJugador.getPartidasJugadas()));
                 
                 double winrateS = (primerJugador.getPartidasJugadas() > 0) 
                   ? ((double) segundoJugador.getPartidasGanadas() / segundoJugador.getPartidasJugadas()) * 100
                   : 0;
     
-                porcVictoriasS.setText(String.format("%.2f%%", winrateS)); // Mostrar con dos decimales
+                porcVictoriasS.setText("W/r: " + String.format("%.2f%%", winrateS)); // Mostrar con dos decimales
                 
                 if (rankingList.size() >= 3) {
                     RankingTO tercerJugador = rankingList.get(2);
@@ -146,14 +147,14 @@ public class Ranking2 extends javax.swing.JPanel {
                     jPanelTercero.setVisible(true);
                     
                     nombreT.setText(tercerJugador.getUser().getNombre());
-                    numVictoriasT.setText(String.valueOf(tercerJugador.getPartidasGanadas()));
-                    numPartidasTotT.setText(String.valueOf(tercerJugador.getPartidasJugadas()));
+                    numVictoriasT.setText("Wins: " + String.valueOf(tercerJugador.getPartidasGanadas()));
+                    numPartidasTotT.setText("Total: " + String.valueOf(tercerJugador.getPartidasJugadas()));
                     
                     double winrateT = (primerJugador.getPartidasJugadas() > 0) 
                         ? ((double) tercerJugador.getPartidasGanadas() / tercerJugador.getPartidasJugadas()) * 100
                         : 0;
     
-                    porcVictoriasT.setText(String.format("%.2f%%", winrateT)); // Mostrar con dos decimales
+                    porcVictoriasT.setText("W/r: " + String.format("%.2f%%", winrateT)); // Mostrar con dos decimales
                     
                     if (rankingList.size() >= 4) {
                         jPanelDemasJugadores.setVisible(true);
@@ -200,40 +201,40 @@ public class Ranking2 extends javax.swing.JPanel {
             if (rankingList.size() >= 1){
                 RankingTO primerJugador = rankingList.get(0);
                 NombreP.setText(primerJugador.getUser().getNombre());
-                NumVictoriasP.setText(String.valueOf(primerJugador.getPartidasGanadas()));
-                numPartidasTotP.setText(String.valueOf(primerJugador.getPartidasJugadas()));
+                NumVictoriasP.setText("Wins: " + String.valueOf(primerJugador.getPartidasGanadas()));
+                numPartidasTotP.setText("Total: " + String.valueOf(primerJugador.getPartidasJugadas()));
 
                 double winrateP = (primerJugador.getPartidasJugadas() > 0) 
                       ? ((double) primerJugador.getPartidasGanadas() / primerJugador.getPartidasJugadas()) * 100
                       : 0;
 
-                PorcVictoriasP.setText(String.format("%.2f%%", winrateP)); // Mostrar con dos decimales
+                PorcVictoriasP.setText("W/r: " + String.format("%.2f%%", winrateP)); // Mostrar con dos decimales
 
                 if (rankingList.size() >= 2) {
                     RankingTO segundoJugador = rankingList.get(1);
 
                     nombreS.setText(segundoJugador.getUser().getNombre());
-                    numVictoriasS.setText(String.valueOf(segundoJugador.getPartidasGanadas()));
-                    numPartidasTotS.setText(String.valueOf(segundoJugador.getPartidasJugadas()));
+                    numVictoriasS.setText("Wins: " + String.valueOf(segundoJugador.getPartidasGanadas()));
+                    numPartidasTotS.setText("Total: " + String.valueOf(segundoJugador.getPartidasJugadas()));
 
                     double winrateS = (primerJugador.getPartidasJugadas() > 0) 
                       ? ((double) segundoJugador.getPartidasGanadas() / segundoJugador.getPartidasJugadas()) * 100
                       : 0;
 
-                    porcVictoriasS.setText(String.format("%.2f%%", winrateS)); // Mostrar con dos decimales
+                    porcVictoriasS.setText("W/r: " + String.format("%.2f%%", winrateS)); // Mostrar con dos decimales
 
                     if (rankingList.size() >= 3) {
                         RankingTO tercerJugador = rankingList.get(2);
                     
                         nombreT.setText(tercerJugador.getUser().getNombre());
-                        numVictoriasT.setText(String.valueOf(tercerJugador.getPartidasGanadas()));
-                        numPartidasTotT.setText(String.valueOf(tercerJugador.getPartidasJugadas()));
+                        numVictoriasT.setText("Wins: " + String.valueOf(tercerJugador.getPartidasGanadas()));
+                        numPartidasTotT.setText("Total: " + String.valueOf(tercerJugador.getPartidasJugadas()));
 
                         double winrateT = (primerJugador.getPartidasJugadas() > 0) 
                             ? ((double) tercerJugador.getPartidasGanadas() / tercerJugador.getPartidasJugadas()) * 100
                             : 0;
 
-                        porcVictoriasT.setText(String.format("%.2f%%", winrateT)); // Mostrar con dos decimales
+                        porcVictoriasT.setText("W/r: " + String.format("%.2f%%", winrateT)); // Mostrar con dos decimales
                         
                         if (rankingList.size() >= 4) {
                             for (int i = 3; i < rankingList.size(); i++) {
@@ -284,38 +285,38 @@ public void ordenarPorWinrate() {
         if (rankingList.size() >= 1) {
             RankingTO primerJugador = rankingList.get(0);
             NombreP.setText(primerJugador.getUser().getNombre());
-            NumVictoriasP.setText(String.valueOf(primerJugador.getPartidasGanadas()));
-            numPartidasTotP.setText(String.valueOf(primerJugador.getPartidasJugadas()));
+            NumVictoriasP.setText("Wins: " + String.valueOf(primerJugador.getPartidasGanadas()));
+            numPartidasTotP.setText("Total: " + String.valueOf(primerJugador.getPartidasJugadas()));
 
             double winrateP = (primerJugador.getPartidasJugadas() > 0) 
                               ? ((double) primerJugador.getPartidasGanadas() / primerJugador.getPartidasJugadas()) * 100
                               : 0;
 
-            PorcVictoriasP.setText(String.format("%.2f%%", winrateP)); // Mostrar con dos decimales
+            PorcVictoriasP.setText("W/r: " + String.format("%.2f%%", winrateP)); // Mostrar con dos decimales
 
             if (rankingList.size() >= 2) {
                 RankingTO segundoJugador = rankingList.get(1);
                 nombreS.setText(segundoJugador.getUser().getNombre());
-                numVictoriasS.setText(String.valueOf(segundoJugador.getPartidasGanadas()));
-                numPartidasTotS.setText(String.valueOf(segundoJugador.getPartidasJugadas()));
+                numVictoriasS.setText("Wins: " + String.valueOf(segundoJugador.getPartidasGanadas()));
+                numPartidasTotS.setText("Total: " + String.valueOf(segundoJugador.getPartidasJugadas()));
 
                 double winrateS = (segundoJugador.getPartidasJugadas() > 0) 
                                   ? ((double) segundoJugador.getPartidasGanadas() / segundoJugador.getPartidasJugadas()) * 100
                                   : 0;
 
-                porcVictoriasS.setText(String.format("%.2f%%", winrateS)); // Mostrar con dos decimales
+                porcVictoriasS.setText("W/r: " + String.format("%.2f%%", winrateS)); // Mostrar con dos decimales
 
                 if (rankingList.size() >= 3) {
                     RankingTO tercerJugador = rankingList.get(2);
                     nombreT.setText(tercerJugador.getUser().getNombre());
-                    numVictoriasT.setText(String.valueOf(tercerJugador.getPartidasGanadas()));
-                    numPartidasTotT.setText(String.valueOf(tercerJugador.getPartidasJugadas()));
+                    numVictoriasT.setText("Wins: " + String.valueOf(tercerJugador.getPartidasGanadas()));
+                    numPartidasTotT.setText("Total: " + String.valueOf(tercerJugador.getPartidasJugadas()));
 
                     double winrateT = (tercerJugador.getPartidasJugadas() > 0) 
                                       ? ((double) tercerJugador.getPartidasGanadas() / tercerJugador.getPartidasJugadas()) * 100
                                       : 0;
 
-                    porcVictoriasT.setText(String.format("%.2f%%", winrateT)); // Mostrar con dos decimales
+                    porcVictoriasT.setText("W/r: " + String.format("%.2f%%", winrateT)); // Mostrar con dos decimales
                     
                     if (rankingList.size() >= 4) {
                         for (int i = 3; i < rankingList.size(); i++) {
@@ -362,38 +363,38 @@ public void ordenarPorWinrate() {
         if (rankingList.size() >= 1) {
             RankingTO primerJugador = rankingList.get(0);
             NombreP.setText(primerJugador.getUser().getNombre());
-            NumVictoriasP.setText(String.valueOf(primerJugador.getPartidasGanadas()));
-            numPartidasTotP.setText(String.valueOf(primerJugador.getPartidasJugadas()));
+            NumVictoriasP.setText("Wins: " + String.valueOf(primerJugador.getPartidasGanadas()));
+            numPartidasTotP.setText("Total: " + String.valueOf(primerJugador.getPartidasJugadas()));
 
             double winrateP = (primerJugador.getPartidasJugadas() > 0) 
                               ? ((double) primerJugador.getPartidasGanadas() / primerJugador.getPartidasJugadas()) * 100
                               : 0;
 
-            PorcVictoriasP.setText(String.format("%.2f%%", winrateP)); // Mostrar con dos decimales
+            PorcVictoriasP.setText("W/r: " + String.format("%.2f%%", winrateP)); // Mostrar con dos decimales
 
             if (rankingList.size() >= 2) {
                 RankingTO segundoJugador = rankingList.get(1);
                 nombreS.setText(segundoJugador.getUser().getNombre());
-                numVictoriasS.setText(String.valueOf(segundoJugador.getPartidasGanadas()));
-                numPartidasTotS.setText(String.valueOf(segundoJugador.getPartidasJugadas()));
+                numVictoriasS.setText("Wins: " + String.valueOf(segundoJugador.getPartidasGanadas()));
+                numPartidasTotS.setText("Total: " + String.valueOf(segundoJugador.getPartidasJugadas()));
 
                 double winrateS = (segundoJugador.getPartidasJugadas() > 0) 
                                   ? ((double) segundoJugador.getPartidasGanadas() / segundoJugador.getPartidasJugadas()) * 100
                                   : 0;
 
-                porcVictoriasS.setText(String.format("%.2f%%", winrateS)); // Mostrar con dos decimales
+                porcVictoriasS.setText("W/r: " + String.format("%.2f%%", winrateS)); // Mostrar con dos decimales
 
                 if (rankingList.size() >= 3) {
                     RankingTO tercerJugador = rankingList.get(2);
                     nombreT.setText(tercerJugador.getUser().getNombre());
-                    numVictoriasT.setText(String.valueOf(tercerJugador.getPartidasGanadas()));
-                    numPartidasTotT.setText(String.valueOf(tercerJugador.getPartidasJugadas()));
+                    numVictoriasT.setText("Wins: " + String.valueOf(tercerJugador.getPartidasGanadas()));
+                    numPartidasTotT.setText("Total: " + String.valueOf(tercerJugador.getPartidasJugadas()));
 
                     double winrateT = (tercerJugador.getPartidasJugadas() > 0) 
                                       ? ((double) tercerJugador.getPartidasGanadas() / tercerJugador.getPartidasJugadas()) * 100
                                       : 0;
 
-                    porcVictoriasT.setText(String.format("%.2f%%", winrateT)); // Mostrar con dos decimales
+                    porcVictoriasT.setText("W/r: " + String.format("%.2f%%", winrateT)); // Mostrar con dos decimales
                     
                     if (rankingList.size() >= 4) {
                         for (int i = 3; i < rankingList.size(); i++) {
@@ -445,12 +446,12 @@ public void filterRanking() {
         if (filteredList.size() >= 1) {
             RankingTO primerJugador = filteredList.get(0);
             NombreP.setText(primerJugador.getUser().getNombre());
-            NumVictoriasP.setText(String.valueOf(primerJugador.getPartidasGanadas()));
-            numPartidasTotP.setText(String.valueOf(primerJugador.getPartidasJugadas()));
+            NumVictoriasP.setText("Wins: " + String.valueOf(primerJugador.getPartidasGanadas()));
+            numPartidasTotP.setText("Total: " + String.valueOf(primerJugador.getPartidasJugadas()));
             double winrateP = (primerJugador.getPartidasJugadas() > 0)
                     ? ((double) primerJugador.getPartidasGanadas() / primerJugador.getPartidasJugadas()) * 100
                     : 0;
-            PorcVictoriasP.setText(String.format("%.2f%%", winrateP));
+            PorcVictoriasP.setText("W/r: " + String.format("%.2f%%", winrateP));
             jPanelPrimero.setVisible(true);
             Medalla1.setVisible(true);
         } else {
@@ -462,12 +463,12 @@ public void filterRanking() {
         if (filteredList.size() >= 2) {
             RankingTO segundoJugador = filteredList.get(1);
             nombreS.setText(segundoJugador.getUser().getNombre());
-            numVictoriasS.setText(String.valueOf(segundoJugador.getPartidasGanadas()));
-            numPartidasTotS.setText(String.valueOf(segundoJugador.getPartidasJugadas()));
+            numVictoriasS.setText("Wins: " + String.valueOf(segundoJugador.getPartidasGanadas()));
+            numPartidasTotS.setText("Total: " + String.valueOf(segundoJugador.getPartidasJugadas()));
             double winrateS = (segundoJugador.getPartidasJugadas() > 0)
                     ? ((double) segundoJugador.getPartidasGanadas() / segundoJugador.getPartidasJugadas()) * 100
                     : 0;
-            porcVictoriasS.setText(String.format("%.2f%%", winrateS));
+            porcVictoriasS.setText("W/r: " + String.format("%.2f%%", winrateS));
             jPanelSegundo.setVisible(true);
             medalla2.setVisible(true);
         } else {
@@ -479,12 +480,12 @@ public void filterRanking() {
         if (filteredList.size() >= 3) {
             RankingTO tercerJugador = filteredList.get(2);
             nombreT.setText(tercerJugador.getUser().getNombre());
-            numVictoriasT.setText(String.valueOf(tercerJugador.getPartidasGanadas()));
-            numPartidasTotT.setText(String.valueOf(tercerJugador.getPartidasJugadas()));
+            numVictoriasT.setText("Wins: " + String.valueOf(tercerJugador.getPartidasGanadas()));
+            numPartidasTotT.setText("Total: " + String.valueOf(tercerJugador.getPartidasJugadas()));
             double winrateT = (tercerJugador.getPartidasJugadas() > 0)
                     ? ((double) tercerJugador.getPartidasGanadas() / tercerJugador.getPartidasJugadas()) * 100
                     : 0;
-            porcVictoriasT.setText(String.format("%.2f%%", winrateT));
+            porcVictoriasT.setText("W/r: " + String.format("%.2f%%", winrateT));
             jPanelTercero.setVisible(true);
             medalla3.setVisible(true);
         } else {

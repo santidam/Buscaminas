@@ -8,22 +8,14 @@ package com.mycompany.crm.entity;
  *
  * @author admin
  */
-public class RankingTO {
-    User user;
-    int partidasGanadas;
+public class RankingTO2 {
+    private User user;
+    private int partidasGanadas;
     private int partidasJugadas;  // Nuevo campo
 
-
-    public RankingTO(User user, int partidasGanadas, int partidasJugadas) {
+    public RankingTO2(User user, int partidasGanadas, int partidasJugadas) {
         this.user = user;
         this.partidasGanadas = partidasGanadas;
-        this.partidasJugadas = partidasJugadas;
-    }
-    
-     public int getPartidasJugadas() {
-        return partidasJugadas;
-    }
-     public void setPartidasJugadas(int partidasJugadas) {
         this.partidasJugadas = partidasJugadas;
     }
 
@@ -35,12 +27,20 @@ public class RankingTO {
         return partidasGanadas;
     }
 
+    public int getPartidasJugadas() {
+        return partidasJugadas;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
 
-    public void setPartidasGanadas(int partidasGandas) {
-        this.partidasGanadas = partidasGandas;
+    public void setPartidasGanadas(int partidasGanadas) {
+        this.partidasGanadas = partidasGanadas;
     }
-    
+
+    public void setPartidasJugadas(int partidasJugadas) {
+        this.partidasJugadas = partidasJugadas;
+    }
 }
+

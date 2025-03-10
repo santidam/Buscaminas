@@ -4,6 +4,7 @@ package com.mycompany.crm.persistencia;
 import com.mycompany.crm.controller.Gestor;
 import com.mycompany.crm.entity.Partida;
 import com.mycompany.crm.entity.RankingTO;
+import com.mycompany.crm.entity.RankingTO2;
 import com.mycompany.crm.entity.User;
 
 import com.mycompany.crm.exceptions.ComandaException;
@@ -68,27 +69,29 @@ public class GameDAO {
 
     //RANKING
     
-    public ArrayList<RankingTO> RankingTO() throws SQLException, ComandaException{
+     public ArrayList<RankingTO> RankingTO() throws SQLException, ComandaException{
         
        ArrayList<RankingTO> lista = new ArrayList<>();
     
         Connection c = conectar();
-        String query = "SELECT u.nombre AS nombre, COUNT(s.puntuacion) AS ranking " +
+        String query = "SELECT u.nombre AS nombre, " +
+                       "COUNT(CASE WHEN s.victoria = true THEN 1 END) AS partidasGanadas, " +
+                       "COUNT(s.id_user) AS partidasJugadas " +
                        "FROM users u " +
                        "JOIN scores s ON u.id_user = s.id_user " +
-                       "WHERE s.victoria = true " +
                        "GROUP BY u.nombre " +
-                       "ORDER BY ranking DESC, u.nombre ASC";
+                       "ORDER BY partidasGanadas DESC, u.nombre ASC";
 
         Statement st = c.createStatement();
         ResultSet rs = st.executeQuery(query); // Corrección: se usa executeQuery() en vez de execute()
 
         while (rs.next()) {
             String nombre = rs.getString("nombre");
-            int ranking = rs.getInt("ranking");
+            int partidasGanadas = rs.getInt("partidasGanadas");
+            int partidasJugadas = rs.getInt("partidasJugadas");
 
             User user = new User(nombre); // Corrección: Crear correctamente el objeto User
-            RankingTO rankingTO = new RankingTO(user, ranking); // Corrección: Crear correctamente RankingTO
+            RankingTO rankingTO = new RankingTO(user, partidasGanadas, partidasJugadas); // Corrección: Crear correctamente RankingTO
             lista.add(rankingTO);
         }
 
@@ -98,6 +101,37 @@ public class GameDAO {
 
     return lista;
     }
+     
+//    public ArrayList<RankingTO> RankingTO() throws SQLException, ComandaException{
+//        
+//       ArrayList<RankingTO> lista = new ArrayList<>();
+//    
+//        Connection c = conectar();
+//        String query = "SELECT u.nombre AS nombre, COUNT(s.puntuacion) AS ranking " +
+//                       "FROM users u " +
+//                       "JOIN scores s ON u.id_user = s.id_user " +
+//                       "WHERE s.victoria = true " +
+//                       "GROUP BY u.nombre " +
+//                       "ORDER BY ranking DESC, u.nombre ASC";
+//
+//        Statement st = c.createStatement();
+//        ResultSet rs = st.executeQuery(query); // Corrección: se usa executeQuery() en vez de execute()
+//
+//        while (rs.next()) {
+//            String nombre = rs.getString("nombre");
+//            int ranking = rs.getInt("ranking");
+//
+//            User user = new User(nombre); // Corrección: Crear correctamente el objeto User
+//            RankingTO rankingTO = new RankingTO(user, ranking); // Corrección: Crear correctamente RankingTO
+//            lista.add(rankingTO);
+//        }
+//
+//        rs.close(); // Corrección: Cerrar el ResultSet
+//        st.close();
+//        c.close();
+//
+//    return lista;
+//    }
 
     //GETTERS
     

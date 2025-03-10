@@ -49,7 +49,7 @@ public class Ranking extends javax.swing.JPanel {
     
     public void loadData(ArrayList<RankingTO> listas){
         for (RankingTO e: listas) {
-                model.addRow(new Object[]{e.getUser().getNombre(), ""+e.getPartidasGandas()});
+                model.addRow(new Object[]{e.getUser().getNombre(), ""+e.getPartidasGanadas()});
         }
     }
    

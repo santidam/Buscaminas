@@ -12,6 +12,7 @@ import com.mycompany.crm.entity.User;
 import com.mycompany.crm.entity.Partida;
 
 import com.mycompany.crm.exceptions.ComandaException;
+import com.mycompany.crm.persistencia.GameDAO;
 import com.mycompany.crm.utils.CastData;
 
 import java.text.ParseException;
@@ -67,9 +68,9 @@ public class Validations {
     
     //BAJAS
     
-    public void valBajaUser(String nombre) throws ComandaException{
+    public void valBajaUser() throws ComandaException{
         try{
-            gestor.bajaUser(nombre);
+            gestor.bajaUser();
         }catch(SQLException e){
             System.out.println(e.getMessage());
             throw new ComandaException(gestor.getBundle().getString("ERROR_BAJA_USUARIO"));
@@ -98,4 +99,8 @@ public class Validations {
     public ResourceBundle valGetBundle() {
         return gestor.getBundle();
     }   
+
+    public GameDAO valGetDAO() {
+        return gestor.getDAO();
+    }
 }

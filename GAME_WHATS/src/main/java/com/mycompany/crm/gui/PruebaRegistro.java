@@ -108,7 +108,7 @@ public class PruebaRegistro extends JDialog {
     private void jButton1ActionPerformed(ActionEvent evt) {
         try {
             validations.valRegistrarUser(nombre.getText(), new String(password.getPassword()));
-            JOptionPane.showMessageDialog(this, "Usuario registrado correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, validations.valGetBundle().getString("MSG_USUARIO_REGISTRADO"), "OK", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         } catch (ComandaException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);

@@ -5,12 +5,15 @@
 package com.mycompany.crm.gui;
 
 //import com.mycompany.crm.gui.*;
+import com.mycompany.crm.exceptions.ComandaException;
 import com.mycompany.crm.validator.Validations;
 import com.mysql.cj.xdevapi.Schema;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ResourceBundle;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -26,10 +29,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     public MenuPrincipal() {
         initComponents();
+        textBienvenida.setText(Validations.getInstance().valGetBundle().getString("MSG_BIENVENIDA"));
         bundle = Validations.getInstance().valGetBundle();
         btnJugar.setText(bundle.getString("BTN_PLAY"));
         btnRanking.setText(bundle.getString("BTN_RANKING"));
-        btnEstadisticas.setText(bundle.getString("BTN_STATS"));
         btnBorrarCuenta.setText(bundle.getString("BTN_DELETE_ACCOUNT"));
         cerrarSesionBtn.setText(bundle.getString("BTN_EXIT"));
     }
@@ -58,7 +61,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         contenido = new javax.swing.JPanel();
         textBienvenida = new javax.swing.JLabel();
         cerrarSesionBtn = new javax.swing.JButton();
-        btnEstadisticas = new javax.swing.JButton();
         btnJugar = new javax.swing.JButton();
         exitBtn = new javax.swing.JPanel();
         exitText = new javax.swing.JLabel();
@@ -128,15 +130,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         bg.add(cerrarSesionBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 400, 147, 36));
 
-        btnEstadisticas.setText("ESTADÍSTICAS");
-        btnEstadisticas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEstadisticas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEstadisticasActionPerformed(evt);
-            }
-        });
-        bg.add(btnEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 147, 32));
-
         btnJugar.setText("JUGAR");
         btnJugar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnJugar.addActionListener(new java.awt.event.ActionListener() {
@@ -192,7 +185,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 btnBorrarCuentaActionPerformed(evt);
             }
         });
-        bg.add(btnBorrarCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 140, 30));
+        bg.add(btnBorrarCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 140, 60));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo2.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -238,15 +231,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         yMouse = evt.getY();
     }//GEN-LAST:event_headerMousePressed
 
-    private void btnEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticasActionPerformed
-        EstadisticasUser a = new EstadisticasUser();
-        cambiarPanel(a);
-    }//GEN-LAST:event_btnEstadisticasActionPerformed
-
     private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
 //        ListaClientes l = new ListaClientes();
 //        cambiarPanel(l);
-        Jugar p = new Jugar(10,10,10);
+        Jugar3 p = new Jugar3(10,10,10);
         cambiarPanel(p);
 //        p.setSize(663, 566);
 //        p.setLocation(0, 0);
@@ -259,7 +247,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnJugarActionPerformed
 
     private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
-        Ranking e = new Ranking();
+        Ranking2 e = new Ranking2();
         cambiarPanel(e);
     }//GEN-LAST:event_btnRankingActionPerformed
 
@@ -281,6 +269,30 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         //Borrar Cuenta
         
+        int confirmacion = JOptionPane.showConfirmDialog(
+        this, 
+        Validations.getInstance().valGetBundle().getString("MSG_CONFIRMAR_BORRADO"), 
+        Validations.getInstance().valGetBundle().getString("MSG_TITULO_BORRADO"), 
+        JOptionPane.YES_NO_OPTION, 
+        JOptionPane.WARNING_MESSAGE
+    );
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                Validations.getInstance().valBajaUser(); // Llamar al método que ya tienes hecho
+                javax.swing.JOptionPane.showMessageDialog(this, Validations.getInstance().valGetBundle().getString("MSG_CUENTA_BORRADA") ,"MESSAGE",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                LoginFrame l = new LoginFrame();
+                l.setSize(810  , 500);
+                l.setLocationRelativeTo(null);
+                l.setVisible(true);
+                this.dispose();
+
+            } catch (ComandaException ex) {
+                javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage() ,"ERROR",javax.swing.JOptionPane.ERROR_MESSAGE);
+
+            }
+    }
+        
     }//GEN-LAST:event_btnBorrarCuentaActionPerformed
 
                                    
@@ -292,7 +304,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnBorrarCuenta;
-    private javax.swing.JButton btnEstadisticas;
     private javax.swing.JButton btnJugar;
     private javax.swing.JButton btnRanking;
     private javax.swing.JButton cerrarSesionBtn;

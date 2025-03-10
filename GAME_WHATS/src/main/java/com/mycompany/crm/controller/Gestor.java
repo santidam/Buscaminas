@@ -66,8 +66,8 @@ public class Gestor {
 
     //BAJA
  
-    public void bajaUser(String nombreString) throws ComandaException, SQLException {
-        gameDAO.deleteUser(nombreString);
+    public void bajaUser() throws ComandaException, SQLException {
+        gameDAO.deleteUser(this.user.getNombre());
 
     }
     
@@ -75,6 +75,10 @@ public class Gestor {
     
     public ArrayList<RankingTO> mostrarRanking() throws SQLException, ComandaException{
         return gameDAO.RankingTO();
+    }
+
+    public GameDAO getDAO() {
+        return gameDAO;
     }
 
 
